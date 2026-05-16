@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f2f2f7;min-height:100vh;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;min-height:100vh;background:#f2f2f7;display:flex;flex-direction:column}
+/* topbar */
+.topbar{background:#fff;padding:48px 16px 10px;border-bottom:0.5px solid #e0e0e0;display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.topbar-left h1{font-size:20px;font-weight:600;color:#111;margin:0}
+.topbar-left p{font-size:12px;color:#aaa;margin:2px 0 0}
+.gear-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;flex-shrink:0}
+.gear-btn i{font-size:18px;color:#555}
+/* nav */
+.navbar{display:flex;background:#fff;border-top:0.5px solid #e0e0e0;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:390px;z-index:100}
+.ntab{flex:1;padding:8px 4px 10px;text-align:center;font-size:10px;color:#999;cursor:pointer}
+.ntab.a{color:#1a73e8}.ntab i{display:block;font-size:20px;margin-bottom:2px}
+/* screens */
+.screen{display:none;padding:14px 14px 90px;overflow-y:auto;flex:1}
+.screen.active{display:block}
+/* cards */
+.card{background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:10px;border:0.5px solid #e8e8e8}
+.clbl{font-size:10px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px;display:flex;align-items:center;gap:4px}
+/* welcome */
+.welcome{background:#1a73e8;border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.whi{font-size:11px;color:rgba(255,255,255,.7);margin-bottom:2px}
+.wname{font-size:17px;font-weight:600;color:#fff}
+.wsub{font-size:11px;color:rgba(255,255,255,.6);margin-top:3px}
+/* home location */
+.home-loc-row{display:flex;align-items:center;gap:7px;background:#f0faf4;border:0.5px solid #c5e8cc;border-radius:9px;padding:8px 10px}
+.home-loc-row i{font-size:15px;color:#34a853}
+.home-loc-row span{font-size:12px;color:#333;flex:1}
+.home-loc-row .edb{font-size:11px;color:#1a73e8;cursor:pointer;white-space:nowrap}
+.auto-btn{display:flex;align-items:center;gap:5px;background:#e8f0fe;border-radius:8px;padding:7px 10px;margin-top:6px;cursor:pointer}
+.auto-btn i{font-size:13px;color:#1a73e8}.auto-btn span{font-size:11px;color:#1a73e8}
+/* dest input */
+.dinput{display:flex;align-items:center;gap:7px;background:#f7f9ff;border:0.5px solid #d0dcf0;border-radius:9px;padding:9px 11px}
+.dinput i{font-size:15px;color:#1a73e8}
+.dinput input{border:none;background:transparent;font-size:13px;color:#333;flex:1;outline:none}
+.dinput input::placeholder{color:#bbb}
+/* purpose */
+.purp-wrap{margin-top:10px;position:relative}
+.purp-lbl{font-size:10px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.purp-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.pb{border:0.5px solid #ddd;border-radius:9px;padding:8px 0;text-align:center;font-size:12px;color:#777;background:#fafafa;cursor:pointer;transition:all .15s;position:relative;user-select:none}
+.pb.a{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:500}
+.pb.a-green{border-color:#34a853;background:#e6f4ea;color:#34a853;font-weight:500}
+.wdd{display:none;position:absolute;top:calc(100% + 4px);left:0;width:100%;background:#fff;border:0.5px solid #d0dcf0;border-radius:10px;z-index:60;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.wdd.open{display:block}
+.wdd-item{padding:9px 13px;font-size:12px;color:#444;cursor:pointer;border-bottom:0.5px solid #f0f0f0;display:flex;align-items:center;gap:6px}
+.wdd-item:last-child{border-bottom:none}
+.wdd-item.sel,.wdd-item:hover{background:#e8f0fe;color:#1a73e8;font-weight:500}
+/* drive btn */
+.drive-wrap{display:flex;flex-direction:column;align-items:center;margin:18px 0 10px;gap:8px}
+.dbtn{width:124px;height:124px;border-radius:50%;background:#34a853;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;box-shadow:0 4px 20px rgba(52,168,83,.35);transition:transform .1s}
+.dbtn:active{transform:scale(.96)}
+.dbtn i{font-size:34px}.dbtn span{font-size:13px;font-weight:600;margin-top:3px}
+.dhint{font-size:11px;color:#bbb;text-align:center}
+/* active trip */
+.trip-card{background:#fff;border-radius:18px;padding:18px 14px;margin-bottom:10px;border:0.5px solid #e8e8e8;text-align:center}
+.badge-gps{display:inline-flex;align-items:center;gap:4px;background:#e6f4ea;color:#1b7a42;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+.badge-pause{display:inline-flex;align-items:center;gap:4px;background:#fff3e0;color:#e65100;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+.badge-home{display:inline-flex;align-items:center;gap:4px;background:#e8f0fe;color:#1a73e8;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+.gdot{width:6px;height:6px;border-radius:50%;background:#34a853;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.tm-lbl{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px}
+.tm-val{font-size:50px;font-weight:500;color:#111;line-height:1;letter-spacing:-1px}
+.tm-unit{font-size:13px;color:#aaa;margin-bottom:14px}
+.ls-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
+.ls{background:#f7f9ff;border-radius:9px;padding:7px 5px;text-align:center}
+.ls-l{font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.4px}
+.ls-v{font-size:14px;font-weight:500;color:#1a73e8;margin-top:1px}
+.dpill{display:flex;align-items:center;gap:5px;background:#f0faf4;border-radius:9px;padding:7px 10px;margin-bottom:14px}
+.dpill i{font-size:13px;color:#34a853}.dpill span{font-size:11px;color:#444;flex:1}
+.stopbtn{width:84px;height:84px;border-radius:50%;background:#ea4335;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(234,67,53,.3);margin:0 auto;transition:transform .1s}
+.stopbtn:active{transform:scale(.96)}
+.stopbtn i{font-size:24px}.stopbtn span{font-size:9px;font-weight:600;margin-top:2px}
+/* overlays */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.sheet{background:#fff;border-radius:22px 22px 0 0;padding:12px 18px 32px;width:100%;max-width:390px;max-height:92vh;overflow-y:auto}
+.shandle{width:34px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 12px}
+.stitle{font-size:16px;font-weight:600;color:#111;margin-bottom:3px}
+.ssub{font-size:12px;color:#aaa;margin-bottom:12px}
+/* calc strip */
+.cstrip{display:flex;justify-content:space-between;background:#f7f9ff;border-radius:11px;padding:9px 12px;margin-bottom:12px}
+.ci{text-align:center}.cil{font-size:9px;color:#aaa}.civ{font-size:15px;font-weight:500;color:#1a73e8;margin-top:1px}
+/* dist override */
+.dist-row{display:flex;align-items:center;gap:5px;background:#fffbe6;border:0.5px solid #ffe082;border-radius:9px;padding:7px 10px;margin-bottom:10px}
+.dist-row i{font-size:13px;color:#f9a825}.dist-row span{font-size:11px;color:#795548;flex:1}
+.dist-row .edb{font-size:10px;color:#1a73e8;cursor:pointer;white-space:nowrap}
+.dist-edit{display:none;align-items:center;gap:6px;margin-bottom:10px}
+.dist-edit.open{display:flex}
+.dist-edit input{flex:1;border:0.5px solid #1a73e8;border-radius:8px;padding:8px 10px;font-size:13px;color:#333;outline:none}
+.dist-edit span{font-size:12px;color:#888}
+.dist-edit button{background:#1a73e8;color:#fff;border:none;border-radius:7px;padding:8px 11px;font-size:11px;cursor:pointer}
+/* sheet purpose */
+.spur-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px;position:relative}
+.sp{border:0.5px solid #ddd;border-radius:9px;padding:8px 0;text-align:center;font-size:11px;color:#777;background:#fafafa;cursor:pointer;position:relative}
+.sp.a{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:500}
+.sp.a-g{border-color:#34a853;background:#e6f4ea;color:#34a853;font-weight:500}
+.swdd{display:none;position:absolute;top:calc(100% + 4px);left:0;width:100%;background:#fff;border:0.5px solid #d0dcf0;border-radius:10px;z-index:60;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.swdd.open{display:block}
+.swdd-item{padding:8px 12px;font-size:12px;color:#444;cursor:pointer;border-bottom:0.5px solid #f0f0f0}
+.swdd-item:last-child{border-bottom:none}
+.swdd-item.sel,.swdd-item:hover{background:#e8f0fe;color:#1a73e8;font-weight:500}
+/* gas */
+.gas-box{background:#f7f9ff;border-radius:11px;padding:10px 12px;margin-bottom:11px}
+.gas-tog{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.gas-tog span{font-size:13px;color:#333;font-weight:500}
+.gas-tog i.arr{font-size:14px;color:#888;transition:transform .2s}
+.gas-tog.open i.arr{transform:rotate(180deg)}
+.gas-fields{display:none;margin-top:9px;border-top:0.5px solid #e0e8f8;padding-top:9px}
+.gas-fields.open{display:block}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.sfield{margin-bottom:9px}
+.sfield label{font-size:10px;color:#888;display:block;margin-bottom:3px;font-weight:500}
+.sfield input{width:100%;border:0.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:13px;color:#333;background:#fafafa;outline:none}
+.gas-note{font-size:10px;color:#1a73e8;margin-top:6px;text-align:center;min-height:14px}
+.savebtn{width:100%;background:#1a73e8;color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;margin-top:3px}
+/* saved */
+.saved-body{display:flex;flex-direction:column;align-items:center;padding:24px 16px;text-align:center;gap:9px}
+.sv-ic{width:60px;height:60px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:center}
+.sv-ic i{font-size:30px;color:#34a853}
+.sv-t{font-size:19px;font-weight:600;color:#111}
+.sv-s{font-size:12px;color:#888}
+.sum-card{width:100%;background:#f7f9ff;border-radius:13px;padding:12px 14px}
+.sr{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:0.5px solid #eef0f8}
+.sr:last-child{border-bottom:none}
+.sl{color:#888}.sv2{color:#333;font-weight:500}
+.newbtn{width:100%;background:#34a853;color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+/* trips */
+.filter-bar{display:flex;gap:6px;margin-bottom:10px}
+.fb{flex:1;padding:7px 0;text-align:center;font-size:11px;border:0.5px solid #ddd;border-radius:8px;color:#777;background:#fafafa;cursor:pointer}
+.fb.a{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:500}
+.empty{text-align:center;padding:40px 20px;color:#aaa;font-size:13px}
+.empty i{display:block;font-size:38px;margin-bottom:8px;color:#ddd}
+.titem{background:#fff;border-radius:12px;padding:11px 12px;margin-bottom:8px;border:0.5px solid #e8e8e8;display:flex;justify-content:space-between;align-items:flex-start}
+.ti-l{display:flex;align-items:flex-start;gap:8px}
+.tiic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.wic{background:#e8f0fe;color:#1a73e8}.pic{background:#e6f4ea;color:#34a853}
+.tiname{font-size:12px;font-weight:500;color:#222}
+.tisub{font-size:10px;color:#aaa;margin-top:1px}
+.ti-r{text-align:right}
+.tikm{font-size:13px;font-weight:500;color:#333}
+.tifc{font-size:10px;color:#aaa}
+.tiact{display:flex;gap:4px;margin-top:5px;justify-content:flex-end}
+.tabtn{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer}
+.taedit{background:#e8f0fe;color:#1a73e8;border:0.5px solid #b8d0f0}
+.tadelx{background:#fce8e6;color:#ea4335;border:0.5px solid #f0b8b4}
+/* stats */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.sc2{background:#fff;border-radius:12px;padding:12px 13px;border:0.5px solid #e8e8e8}
+.scl{font-size:10px;color:#aaa}
+.scv{font-size:20px;font-weight:500;color:#1a73e8;margin-top:2px}
+.scu{font-size:10px;color:#aaa}
+/* settings */
+.srow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid #f0f0f0}
+.srow:last-child{border-bottom:none}
+.srl{font-size:13px;color:#222}.srs{font-size:11px;color:#aaa;margin-top:1px}
+.seg{display:flex;background:#f0f0f5;border-radius:7px;overflow:hidden;border:0.5px solid #e0e0e0}
+.sego{flex:1;padding:5px 7px;text-align:center;font-size:11px;color:#777;cursor:pointer;white-space:nowrap}
+.sego.a{background:#1a73e8;color:#fff}
+.edit-list{background:#f7f9ff;border-radius:9px;padding:4px 0;margin-top:5px;border:0.5px solid #e8e8e8}
+.eli{display:flex;align-items:center;padding:7px 10px;font-size:12px;color:#333;border-bottom:0.5px solid #f0f0f0}
+.eli:last-child{border-bottom:none}
+.eli span{flex:1}
+.elix{font-size:13px;color:#ea4335;cursor:pointer;padding:2px 4px}
+.addrow{display:flex;gap:6px;margin-top:6px}
+.addrow input{flex:1;border:0.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:12px;outline:none;background:#fff}
+.addrow button{background:#1a73e8;color:#fff;border:none;border-radius:8px;padding:8px 13px;font-size:12px;cursor:pointer}
+/* modal */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:300;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:18px;padding:20px;width:88%;max-width:340px}
+.modal h2{font-size:15px;font-weight:600;margin-bottom:5px;color:#111}
+.modal p{font-size:12px;color:#888;margin-bottom:12px}
+.modal input{width:100%;border:0.5px solid #ddd;border-radius:9px;padding:9px 11px;font-size:13px;outline:none;margin-bottom:10px}
+.mbtns{display:flex;gap:7px}
+.mbtns button{flex:1;padding:9px;border-radius:9px;border:none;font-size:12px;font-weight:500;cursor:pointer}
+.mcancel{background:#f2f2f7;color:#555}.msave{background:#1a73e8;color:#fff}
+/* confirm modal */
+.confirm-msg{font-size:13px;color:#555;margin-bottom:14px}
+.mdel{background:#ea4335;color:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1 id="tt">My Mileage</h1>
+      <p id="ts">Ready to drive?</p>
+    </div>
+    <div class="gear-btn" onclick="openSettings()" id="gear-wrap"><i class="ti ti-settings"></i></div>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen active" id="sc-home">
+    <div class="welcome" id="welcome-card">
+      <div class="whi">Good morning,</div>
+      <div class="wname" id="w-name">Driver</div>
+      <div class="wsub" id="w-sub">Ready for today's trip?</div>
+    </div>
+    <div class="card">
+      <div class="clbl"><i class="ti ti-home" aria-hidden="true"></i>Home location</div>
+      <div class="home-loc-row">
+        <i class="ti ti-map-pin" aria-hidden="true"></i>
+        <span id="home-disp">Tap to set your home address</span>
+        <span class="edb" onclick="openHomeModal()">Edit</span>
+      </div>
+      <div class="auto-btn" onclick="autoDetectHome()">
+        <i class="ti ti-current-location" aria-hidden="true"></i>
+        <span id="auto-btn-lbl">Use my current location</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="clbl"><i class="ti ti-navigation" aria-hidden="true"></i>Destination</div>
+      <div class="dinput">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input id="dest-in" type="text" placeholder="Where are you heading?">
+      </div>
+      <div class="purp-wrap">
+        <div class="purp-lbl">Purpose</div>
+        <div class="purp-row">
+          <div class="pb a" id="pb-work" onclick="toggleWorkDD(event)">
+            <i class="ti ti-briefcase" style="font-size:11px;margin-right:3px" aria-hidden="true"></i>
+            <span id="pb-work-lbl">Work</span>
+            <i class="ti ti-chevron-down" style="font-size:10px;margin-left:2px" aria-hidden="true"></i>
+            <div class="wdd" id="home-wdd"></div>
+          </div>
+          <div class="pb" id="pb-pers" onclick="setPurpose('personal')">
+            <i class="ti ti-user" style="font-size:11px;margin-right:3px" aria-hidden="true"></i>
+            <span id="pb-pers-lbl">Personal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="drive-wrap">
+      <div class="dbtn" onclick="startTrip()">
+        <i class="ti ti-player-play" aria-hidden="true"></i>
+        <span>Drive</span>
+      </div>
+      <p class="dhint"><i class="ti ti-shield-check" style="font-size:12px;vertical-align:-1px" aria-hidden="true"></i> Auto-stops when you arrive home</p>
+    </div>
+  </div>
+
+  <!-- ACTIVE TRIP -->
+  <div class="screen" id="sc-trip">
+    <div class="trip-card">
+      <div id="trip-badge" class="badge-gps"><div class="gdot"></div>GPS Active</div>
+      <div class="tm-lbl">Trip Meter</div>
+      <div class="tm-val" id="tm-val">0.0</div>
+      <div class="tm-unit" id="tm-unit">km</div>
+      <div class="ls-row">
+        <div class="ls"><div class="ls-l">Speed</div><div class="ls-v" id="ls-spd">0</div></div>
+        <div class="ls"><div class="ls-l">Time</div><div class="ls-v" id="ls-time">00:00</div></div>
+        <div class="ls"><div class="ls-l" id="ls-fc-lbl">L/100km</div><div class="ls-v" id="ls-fc">—</div></div>
+      </div>
+      <div class="dpill"><i class="ti ti-map-pin" aria-hidden="true"></i><span id="trip-dest">—</span></div>
+      <div class="stopbtn" onclick="stopTrip()"><i class="ti ti-player-stop" aria-hidden="true"></i><span>Stop</span></div>
+      <p style="font-size:10px;color:#aaa;margin-top:8px;text-align:center"><i class="ti ti-home" style="font-size:11px;vertical-align:-1px;color:#34a853" aria-hidden="true"></i> Auto-stops at home</p>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:10px 12px;border:0.5px solid #f0f0f0;font-size:11px;color:#aaa;text-align:center">
+      <i class="ti ti-pause" style="font-size:12px;vertical-align:-1px;color:#f57c00" aria-hidden="true"></i> Auto-pauses when parked &nbsp;·&nbsp;
+      <i class="ti ti-player-play" style="font-size:12px;vertical-align:-1px;color:#34a853" aria-hidden="true"></i> Auto-resumes when driving
+    </div>
+  </div>
+
+  <!-- SAVED -->
+  <div class="screen" id="sc-saved">
+    <div class="saved-body">
+      <div class="sv-ic"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+      <div class="sv-t">Trip Saved!</div>
+      <div class="sv-s" id="sv-sub">—</div>
+      <div class="sum-card" id="sv-sum"></div>
+      <button class="newbtn" onclick="newTrip()"><i class="ti ti-plus" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>New Trip</button>
+    </div>
+  </div>
+
+  <!-- TRIPS -->
+  <div class="screen" id="sc-trips">
+    <div class="filter-bar">
+      <div class="fb a" data-f="all" onclick="setFilter('all')">All</div>
+      <div class="fb" data-f="work" onclick="setFilter('work')">Work</div>
+      <div class="fb" data-f="personal" onclick="setFilter('personal')" id="filter-pers-lbl">Personal</div>
+    </div>
+    <div id="trips-list"></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="screen" id="sc-stats">
+    <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">This month</div>
+    <div class="sg">
+      <div class="sc2"><div class="scl" id="stat-dist-lbl">Total km</div><div class="scv" id="stat-mo-dist">0</div><div class="scu" id="stat-dist-u">km</div></div>
+      <div class="sc2"><div class="scl" id="stat-fc-lbl">Avg fuel use</div><div class="scv" id="stat-mo-fc">—</div><div class="scu" id="stat-fc-u">L/100km</div></div>
+    </div>
+    <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">This week</div>
+    <div class="sg">
+      <div class="sc2"><div class="scl">Km driven</div><div class="scv" id="stat-wk-dist">0</div><div class="scu" id="stat-wk-u">km</div></div>
+      <div class="sc2"><div class="scl">Trips</div><div class="scv" id="stat-wk-trips">0</div><div class="scu">trips</div></div>
+    </div>
+    <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Fuel cost</div>
+    <div class="sg">
+      <div class="sc2"><div class="scl">Total spent</div><div class="scv" id="stat-fuel-tot">₱0</div><div class="scu">pesos</div></div>
+      <div class="sc2"><div class="scl">Cost per km</div><div class="scv" id="stat-cpkm">—</div><div class="scu">₱/km</div></div>
+    </div>
+    <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">All time</div>
+    <div class="sg">
+      <div class="sc2"><div class="scl">Total distance</div><div class="scv" id="stat-all-dist">0</div><div class="scu" id="stat-all-u">km</div></div>
+      <div class="sc2"><div class="scl">Total trips</div><div class="scv" id="stat-all-trips">0</div><div class="scu">trips</div></div>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <div class="ntab a" id="nav-home" onclick="showScreen('home')"><i class="ti ti-home" aria-hidden="true"></i>Home</div>
+    <div class="ntab" id="nav-trips" onclick="showScreen('trips')"><i class="ti ti-list" aria-hidden="true"></i>Trips</div>
+    <div class="ntab" id="nav-stats" onclick="showScreen('stats')"><i class="ti ti-chart-bar" aria-hidden="true"></i>Stats</div>
+  </div>
+</div>
+
+<!-- SAVE SHEET -->
+<div class="overlay" id="ov-save">
+  <div class="sheet">
+    <div class="shandle"></div>
+    <div class="stitle">Save this trip</div>
+    <div class="ssub" id="sheet-dest-lbl">—</div>
+    <div class="cstrip">
+      <div class="ci"><div class="cil">Distance</div><div class="civ" id="cs-dist">—</div></div>
+      <div class="ci"><div class="cil">Duration</div><div class="civ" id="cs-dur">—</div></div>
+      <div class="ci"><div class="cil" id="cs-fc-lbl">L/100km</div><div class="civ" id="cs-fc">—</div></div>
+    </div>
+    <div class="dist-row">
+      <i class="ti ti-pencil" aria-hidden="true"></i>
+      <span id="gps-dist-lbl">GPS: — km</span>
+      <span class="edb" onclick="toggleDistEdit()">Edit distance</span>
+    </div>
+    <div class="dist-edit" id="dist-edit-row">
+      <input id="dist-override" type="number" step="0.1" min="0" placeholder="Enter distance">
+      <span id="dist-edit-unit">km</span>
+      <button onclick="applyDist()">Apply</button>
+    </div>
+    <div class="spur-row">
+      <div class="sp a" id="sp-work" onclick="toggleSheetWorkDD(event)">
+        <i class="ti ti-briefcase" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
+        <span id="sp-work-lbl">Work</span>
+        <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
+        <div class="swdd" id="sheet-wdd"></div>
+      </div>
+      <div class="sp" id="sp-pers" onclick="setSheetPurpose('personal')">
+        <i class="ti ti-user" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
+        <span id="sp-pers-lbl">Personal</span>
+      </div>
+    </div>
+    <div class="gas-box">
+      <div class="gas-tog" id="gas-tog" onclick="toggleGas()">
+        <span><i class="ti ti-gas-station" style="font-size:13px;vertical-align:-2px;margin-right:5px;color:#1a73e8" aria-hidden="true"></i>Did you fill up gas?</span>
+        <i class="ti ti-chevron-down arr"></i>
+      </div>
+      <div class="gas-fields" id="gas-fields">
+        <div class="frow">
+          <div class="sfield"><label>Gas price (₱/L)</label><input id="gas-price" type="number" step="0.01" placeholder="e.g. 65.50" oninput="calcGas()"></div>
+          <div class="sfield"><label>Litres filled</label><input id="gas-litres" type="number" step="0.1" placeholder="e.g. 30.0" oninput="calcGas()"></div>
+        </div>
+        <div class="sfield"><label>Odometer at fill-up <span style="color:#bbb;font-size:10px">opt.</span></label><input id="gas-odo" type="number" placeholder="e.g. 45820"></div>
+        <div class="gas-note" id="gas-note"></div>
+      </div>
+    </div>
+    <button class="savebtn" onclick="saveTrip()">Save Trip</button>
+  </div>
+</div>
+
+<!-- EDIT TRIP SHEET -->
+<div class="overlay" id="ov-edit">
+  <div class="sheet">
+    <div class="shandle"></div>
+    <div class="stitle">Edit trip</div>
+    <div class="ssub" id="edit-date-lbl">—</div>
+    <input type="hidden" id="edit-trip-id">
+    <div class="sfield"><label>Destination</label><input id="edit-dest" type="text" placeholder="Destination"></div>
+    <div class="frow">
+      <div class="sfield"><label id="edit-dist-lbl">Distance (km)</label><input id="edit-dist" type="number" step="0.1" min="0"></div>
+      <div class="sfield"><label>Duration (mm:ss)</label><input id="edit-dur" type="text" placeholder="22:10"></div>
+    </div>
+    <div class="spur-row">
+      <div class="sp a" id="ep-work" onclick="toggleEditWorkDD(event)">
+        <i class="ti ti-briefcase" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
+        <span id="ep-work-lbl">Work</span>
+        <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
+        <div class="swdd" id="edit-wdd"></div>
+      </div>
+      <div class="sp" id="ep-pers" onclick="setEditPurpose('personal')">
+        <i class="ti ti-user" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
+        <span id="ep-pers-lbl">Personal</span>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="sfield"><label>Gas price (₱/L) <span style="color:#bbb;font-size:10px">opt.</span></label><input id="edit-gasprice" type="number" step="0.01" placeholder="e.g. 65.50"></div>
+      <div class="sfield"><label>Litres <span style="color:#bbb;font-size:10px">opt.</span></label><input id="edit-litres" type="number" step="0.1" placeholder="e.g. 30.0"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+      <button style="background:#f2f2f7;color:#555;border:none;border-radius:11px;padding:12px;font-size:13px;font-weight:500;cursor:pointer" onclick="closeOverlay('ov-edit')">Cancel</button>
+      <button class="savebtn" style="margin-top:0" onclick="saveEditTrip()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="overlay" id="ov-settings" style="align-items:flex-end">
+  <div class="sheet" style="max-height:90vh">
+    <div class="shandle"></div>
+    <div class="stitle">Settings</div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-user" aria-hidden="true"></i>Profile</div>
+      <div class="srow">
+        <div><div class="srl">Your name</div><div class="srs" id="set-name-disp">—</div></div>
+        <span class="edb" onclick="openNameModal()">Edit</span>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-ruler" aria-hidden="true"></i>Units</div>
+      <div class="srow">
+        <div><div class="srl">Distance</div></div>
+        <div class="seg">
+          <div class="sego a" id="seg-km" onclick="setUnit('dist','km')">km</div>
+          <div class="sego" id="seg-mi" onclick="setUnit('dist','mi')">miles</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div><div class="srl">Fuel consumption</div></div>
+        <div class="seg">
+          <div class="sego a" id="seg-l100" onclick="setUnit('fc','l100')">L/100km</div>
+          <div class="sego" id="seg-kml" onclick="setUnit('fc','kml')">km/L</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-briefcase" aria-hidden="true"></i>Work categories</div>
+      <div class="edit-list" id="work-cat-list"></div>
+      <div class="addrow">
+        <input id="new-cat-in" type="text" placeholder="Add category...">
+        <button onclick="addWorkCat()">Add</button>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-user" aria-hidden="true"></i>Personal label</div>
+      <div class="srow">
+        <div><div class="srl">Button label</div><div class="srs" id="pers-lbl-disp">Personal</div></div>
+        <span class="edb" onclick="openPersLblModal()">Edit</span>
+      </div>
+    </div>
+    <button class="savebtn" onclick="closeOverlay('ov-settings')">Done</button>
+  </div>
+</div>
+
+<!-- HOME MODAL -->
+<div class="modal-ov" id="modal-home">
+  <div class="modal">
+    <h2><i class="ti ti-home" style="font-size:15px;vertical-align:-2px;margin-right:5px;color:#34a853" aria-hidden="true"></i>Set Home Address</h2>
+    <p>The app auto-stops your trip when you arrive here.</p>
+    <input id="home-in" type="text" placeholder="e.g. Brgy. Real, Calamba, Laguna">
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-home')">Cancel</button>
+      <button class="msave" onclick="saveHome()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAME MODAL -->
+<div class="modal-ov" id="modal-name">
+  <div class="modal">
+    <h2>Your name</h2>
+    <p>This appears in your welcome message.</p>
+    <input id="name-in" type="text" placeholder="e.g. Juan dela Cruz">
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-name')">Cancel</button>
+      <button class="msave" onclick="saveName()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONAL LABEL MODAL -->
+<div class="modal-ov" id="modal-pers-lbl">
+  <div class="modal">
+    <h2>Personal button label</h2>
+    <p>Customize the label for personal trips.</p>
+    <input id="pers-lbl-in" type="text" placeholder="e.g. Personal">
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-pers-lbl')">Cancel</button>
+      <button class="msave" onclick="savePersLbl()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-ov" id="modal-del">
+  <div class="modal">
+    <h2>Delete trip?</h2>
+    <p class="confirm-msg">This trip will be permanently removed.</p>
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-del')">Cancel</button>
+      <button class="mdel" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const D = {
+  name: localStorage.getItem('name') || '',
+  homeAddr: localStorage.getItem('homeAddr') || '',
+  distUnit: localStorage.getItem('distUnit') || 'km',
+  fcUnit: localStorage.getItem('fcUnit') || 'l100',
+  workCats: JSON.parse(localStorage.getItem('workCats') || '["Meeting","Service","Collection","Others"]'),
+  persLbl: localStorage.getItem('persLbl') || 'Personal',
+  trips: JSON.parse(localStorage.getItem('trips') || '[]'),
+  purpose: localStorage.getItem('lastPurpose') || 'work',
+  workSub: localStorage.getItem('lastWorkSub') || 'Meeting',
+  sheetPurpose: 'work', sheetWorkSub: 'Meeting',
+  editPurpose: 'work', editWorkSub: 'Meeting',
+  tripDist: 0, startTime: null, active: false,
+  paused: false, simSpeed: 0,
+  timerInt: null, simInt: null,
+  destination: '', overrideDist: null,
+  filterMode: 'all', deleteId: null
+};
+
+function save(k,v){ try{ localStorage.setItem(k,typeof v==='object'?JSON.stringify(v):v); }catch(e){} }
+
+// INIT
+function init(){
+  updateWelcome();
+  if(D.homeAddr) document.getElementById('home-disp').textContent = D.homeAddr;
+  buildWorkDDs();
+  applyPurposeUI();
+  applyUnitsUI();
+  renderWorkCatList();
+  updatePersLabels();
+  renderTrips();
+  renderStats();
+  updateWelcomeGreeting();
+}
+
+function updateWelcomeGreeting(){
+  const h = new Date().getHours();
+  const g = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.querySelector('.whi').textContent = g + ',';
+}
+
+function updateWelcome(){
+  const nm = D.name || 'Driver';
+  document.getElementById('w-name').textContent = nm + ' 👋';
+  document.getElementById('set-name-disp').textContent = nm;
+  const trips = D.trips;
+  const wk = Date.now()-7*864e5;
+  const wkCount = trips.filter(t=>t.ts>=wk).length;
+  document.getElementById('w-sub').textContent = wkCount > 0 ? wkCount + ' trip' + (wkCount>1?'s':'') + ' logged this week' : 'Ready for today\'s trip?';
+}
+
+function updatePersLabels(){
+  const lbl = D.persLbl;
+  document.getElementById('pb-pers-lbl').textContent = lbl;
+  document.getElementById('sp-pers-lbl').textContent = lbl;
+  document.getElementById('ep-pers-lbl').textContent = lbl;
+  document.getElementById('pers-lbl-disp').textContent = lbl;
+  document.getElementById('filter-pers-lbl').textContent = lbl;
+}
+
+// SCREENS
+function showScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('a'));
+  document.getElementById('sc-'+n).classList.add('active');
+  const nv = document.getElementById('nav-'+(n==='saved'?'home':n));
+  if(nv) nv.classList.add('a');
+  const T={home:'My Mileage',trip:'Trip in Progress',saved:'Trip Saved!',trips:'Trip History',stats:'Statistics'};
+  const S={home:'Ready to drive?',trip:'GPS tracking active',saved:'Great drive!',trips:'All your trips',stats:'Your driving summary'};
+  document.getElementById('tt').textContent=T[n]||'My Mileage';
+  document.getElementById('ts').textContent=S[n]||'';
+  document.getElementById('gear-wrap').style.display = n==='trip' ? 'none' : 'flex';
+}
+
+// OVERLAYS
+function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
+function openOverlay(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+
+// SETTINGS
+function openSettings(){
+  document.getElementById('set-name-disp').textContent = D.name||'Not set';
+  document.getElementById('pers-lbl-disp').textContent = D.persLbl;
+  applyUnitsUI();
+  renderWorkCatList();
+  openOverlay('ov-settings');
+}
+function setUnit(type, val){
+  if(type==='dist'){ D.distUnit=val; save('distUnit',val); }
+  else { D.fcUnit=val; save('fcUnit',val); }
+  applyUnitsUI(); refreshAllUnits();
+}
+function applyUnitsUI(){
+  document.getElementById('seg-km').classList.toggle('a',D.distUnit==='km');
+  document.getElementById('seg-mi').classList.toggle('a',D.distUnit==='mi');
+  document.getElementById('seg-l100').classList.toggle('a',D.fcUnit==='l100');
+  document.getElementById('seg-kml').classList.toggle('a',D.fcUnit==='kml');
+}
+function distLabel(){ return D.distUnit==='km'?'km':'mi'; }
+function fcLabel(){ return D.fcUnit==='l100'?'L/100km':'km/L'; }
+function fmtDist(km){
+  const v = parseFloat(km);
+  if(isNaN(v)) return '0.0';
+  return D.distUnit==='km' ? v.toFixed(1) : (v*0.621371).toFixed(1);
+}
+function fmtFC(litres, km){
+  const l=parseFloat(litres), k=parseFloat(km);
+  if(!l||!k||isNaN(l)||isNaN(k)||k===0) return '—';
+  if(D.fcUnit==='l100') return (l/k*100).toFixed(2);
+  return (k/l).toFixed(2);
+}
+function refreshAllUnits(){
+  renderTrips(); renderStats();
+  const u = distLabel(), fcu = fcLabel();
+  document.getElementById('tm-unit').textContent = u;
+  document.getElementById('ls-fc-lbl').textContent = fcu;
+  document.getElementById('cs-fc-lbl').textContent = fcu;
+  document.getElementById('dist-edit-unit').textContent = u;
+  document.getElementById('stat-dist-lbl').textContent = 'Total '+u;
+  document.getElementById('stat-dist-u').textContent = u;
+  document.getElementById('stat-fc-lbl').textContent = 'Avg fuel use';
+  document.getElementById('stat-fc-u').textContent = fcu;
+  document.getElementById('stat-wk-u').textContent = u;
+  document.getElementById('stat-all-u').textContent = u;
+  document.getElementById('edit-dist-lbl').textContent = 'Distance ('+u+')';
+}
+
+// WORK CATEGORIES
+function buildWorkDDs(){
+  ['home-wdd','sheet-wdd','edit-wdd'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = D.workCats.map(c=>`<div class="wdd-item" onclick="selectWorkSub(event,'${id}','${c}')">${c}</div>`).join('');
+    el.querySelectorAll('.wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.workSub));
+  });
+}
+function renderWorkCatList(){
+  const el = document.getElementById('work-cat-list');
+  el.innerHTML = D.workCats.map((c,i)=>`
+    <div class="eli"><span>${c}</span><span class="elix" onclick="removeWorkCat(${i})"><i class="ti ti-x" aria-hidden="true"></i></span></div>
+  `).join('');
+}
+function addWorkCat(){
+  const v = document.getElementById('new-cat-in').value.trim();
+  if(!v||D.workCats.includes(v)) return;
+  D.workCats.push(v); save('workCats',D.workCats);
+  document.getElementById('new-cat-in').value='';
+  renderWorkCatList(); buildWorkDDs();
+}
+function removeWorkCat(i){
+  D.workCats.splice(i,1); save('workCats',D.workCats);
+  renderWorkCatList(); buildWorkDDs();
+}
+
+// PURPOSE
+function setPurpose(p){
+  D.purpose=p; save('lastPurpose',p);
+  if(p==='personal'){ D.workSub=''; }
+  applyPurposeUI();
+}
+function applyPurposeUI(){
+  const isW = D.purpose==='work';
+  document.getElementById('pb-work').classList.toggle('a',isW);
+  document.getElementById('pb-pers').classList.toggle('a',!isW);
+  document.getElementById('pb-work-lbl').textContent = isW && D.workSub ? D.workSub : 'Work';
+  document.querySelectorAll('#home-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.workSub));
+}
+function toggleWorkDD(e){
+  e.stopPropagation(); D.purpose='work'; save('lastPurpose','work');
+  document.getElementById('pb-work').classList.add('a');
+  document.getElementById('pb-pers').classList.remove('a');
+  document.getElementById('home-wdd').classList.toggle('open');
+}
+function selectWorkSub(e,ddId,sub){
+  e.stopPropagation();
+  D.workSub=sub; save('lastWorkSub',sub); D.purpose='work';
+  document.getElementById('home-wdd').classList.remove('open');
+  applyPurposeUI();
+  // mirror to sheet
+  D.sheetWorkSub=sub; D.sheetPurpose='work';
+  updateSheetPurposeUI();
+  D.editWorkSub=sub; D.editPurpose='work';
+  updateEditPurposeUI();
+}
+
+// SHEET PURPOSE
+function setSheetPurpose(p){
+  D.sheetPurpose=p; if(p==='personal') D.sheetWorkSub='';
+  updateSheetPurposeUI();
+}
+function updateSheetPurposeUI(){
+  const isW=D.sheetPurpose==='work';
+  document.getElementById('sp-work').classList.toggle('a',isW);
+  document.getElementById('sp-pers').classList.toggle('a',!isW);
+  document.getElementById('sp-work-lbl').textContent = isW && D.sheetWorkSub ? D.sheetWorkSub : 'Work';
+  document.querySelectorAll('#sheet-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.sheetWorkSub));
+}
+function toggleSheetWorkDD(e){
+  e.stopPropagation(); D.sheetPurpose='work';
+  document.getElementById('sp-work').classList.add('a');
+  document.getElementById('sp-pers').classList.remove('a');
+  document.getElementById('sheet-wdd').classList.toggle('open');
+}
+function selectSheetSub(sub){
+  D.sheetWorkSub=sub; D.sheetPurpose='work';
+  document.getElementById('sheet-wdd').classList.remove('open');
+  updateSheetPurposeUI();
+}
+
+// EDIT PURPOSE
+function setEditPurpose(p){
+  D.editPurpose=p; if(p==='personal') D.editWorkSub='';
+  updateEditPurposeUI();
+}
+function updateEditPurposeUI(){
+  const isW=D.editPurpose==='work';
+  document.getElementById('ep-work').classList.toggle('a',isW);
+  document.getElementById('ep-pers').classList.toggle('a',!isW);
+  document.getElementById('ep-work-lbl').textContent = isW && D.editWorkSub ? D.editWorkSub : 'Work';
+  document.querySelectorAll('#edit-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.editWorkSub));
+}
+function toggleEditWorkDD(e){
+  e.stopPropagation(); D.editPurpose='work';
+  document.getElementById('ep-work').classList.add('a');
+  document.getElementById('ep-pers').classList.remove('a');
+  document.getElementById('edit-wdd').classList.toggle('open');
+}
+
+// redirect sheet/edit wdd items through shared handler
+document.addEventListener('click',e=>{
+  const item = e.target.closest('.wdd-item,.swdd-item');
+  if(!item) {
+    document.querySelectorAll('.wdd,.swdd').forEach(d=>d.classList.remove('open'));
+    return;
+  }
+  const sub = item.textContent.trim();
+  const parent = item.closest('.swdd');
+  if(!parent) return;
+  if(parent.id==='sheet-wdd') selectSheetSub(sub);
+  else if(parent.id==='edit-wdd'){
+    D.editWorkSub=sub; D.editPurpose='work';
+    parent.classList.remove('open'); updateEditPurposeUI();
+  }
+});
+
+// HOME
+function openHomeModal(){ document.getElementById('home-in').value=D.homeAddr; openModal('modal-home'); }
+function saveHome(){
+  const v=document.getElementById('home-in').value.trim(); if(!v) return;
+  D.homeAddr=v; save('homeAddr',v);
+  document.getElementById('home-disp').textContent=v;
+  closeModal('modal-home');
+}
+function autoDetectHome(){
+  const btn = document.getElementById('auto-btn-lbl');
+  btn.textContent='Detecting...';
+  if(!navigator.geolocation){ btn.textContent='Use my current location'; alert('Geolocation not available'); return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude:lat,longitude:lng} = pos.coords;
+    const addr = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+    D.homeAddr=addr; save('homeAddr',addr);
+    document.getElementById('home-disp').textContent=addr;
+    btn.textContent='Use my current location';
+  }, err=>{
+    btn.textContent='Use my current location';
+    // fallback demo
+    const demo='Brgy. Real, Calamba, Laguna (Demo)';
+    D.homeAddr=demo; save('homeAddr',demo);
+    document.getElementById('home-disp').textContent=demo;
+  });
+}
+
+// NAME / PERS LABEL
+function openNameModal(){ document.getElementById('name-in').value=D.name; openModal('modal-name'); }
+function saveName(){
+  const v=document.getElementById('name-in').value.trim();
+  D.name=v; save('name',v); updateWelcome(); closeModal('modal-name');
+}
+function openPersLblModal(){ document.getElementById('pers-lbl-in').value=D.persLbl; openModal('modal-pers-lbl'); }
+function savePersLbl(){
+  const v=document.getElementById('pers-lbl-in').value.trim()||'Personal';
+  D.persLbl=v; save('persLbl',v); updatePersLabels(); closeModal('modal-pers-lbl');
+}
+
+// TRIP
+function startTrip(){
+  if(!D.homeAddr){ openHomeModal(); return; }
+  const dest=document.getElementById('dest-in').value.trim()||'Unknown destination';
+  D.destination=dest; D.active=true; D.startTime=Date.now();
+  D.tripDist=0; D.overrideDist=null; D.paused=false; D.simSpeed=50;
+  document.getElementById('trip-dest').textContent=dest;
+  document.getElementById('tm-val').textContent='0.0';
+  document.getElementById('ls-spd').textContent='0';
+  document.getElementById('ls-time').textContent='00:00';
+  document.getElementById('ls-fc').textContent='—';
+  document.getElementById('ls-fc-lbl').textContent=fcLabel();
+  document.getElementById('tm-unit').textContent=distLabel();
+  showScreen('trip');
+  startTimer(); startSim();
+}
+function startTimer(){
+  clearInterval(D.timerInt);
+  D.timerInt=setInterval(()=>{
+    if(D.paused) return;
+    const e=Math.floor((Date.now()-D.startTime)/1000);
+    document.getElementById('ls-time').textContent=pad(Math.floor(e/60))+':'+pad(e%60);
+  },1000);
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+function startSim(){
+  clearInterval(D.simInt);
+  let pauseCnt=0;
+  D.simInt=setInterval(()=>{
+    if(!D.active){ clearInterval(D.simInt); return; }
+    D.simSpeed+=(Math.random()-.5)*12;
+    D.simSpeed=Math.max(0,Math.min(110,D.simSpeed));
+    if(D.simSpeed<6){ pauseCnt++; if(pauseCnt>3&&!D.paused){ setPaused(true); } }
+    else { pauseCnt=0; if(D.paused) setPaused(false); }
+    if(!D.paused){
+      const d=(D.simSpeed/3600)*2;
+      D.tripDist+=d;
+      document.getElementById('tm-val').textContent=fmtDist(D.tripDist);
+      document.getElementById('ls-spd').textContent=Math.round(D.simSpeed)+(D.distUnit==='km'?' km/h':' mph');
+      const litPerTick=d*(D.simSpeed<40?0.095:0.078)+(Math.random()-.5)*0.005;
+      const litTotal=litPerTick*D.tripDist/d;
+      document.getElementById('ls-fc').textContent=fmtFC(litTotal,D.tripDist);
+    }
+    if((Date.now()-D.startTime)/1000>180) autoStop();
+  },2000);
+}
+function setPaused(p){
+  D.paused=p;
+  const b=document.getElementById('trip-badge');
+  if(p){ b.className='badge-pause'; b.innerHTML='<i class="ti ti-pause" style="font-size:11px" aria-hidden="true"></i> Trip Paused'; }
+  else { b.className='badge-gps'; b.innerHTML='<div class="gdot"></div>GPS Active'; }
+}
+function stopTrip(){ clearInterval(D.simInt); clearInterval(D.timerInt); D.active=false; openSaveSheet(); }
+function autoStop(){
+  clearInterval(D.simInt); clearInterval(D.timerInt); D.active=false;
+  const b=document.getElementById('trip-badge');
+  b.className='badge-home'; b.innerHTML='<i class="ti ti-home" style="font-size:11px" aria-hidden="true"></i> Arrived home!';
+  setTimeout(openSaveSheet,700);
+}
+
+// SAVE SHEET
+function openSaveSheet(){
+  D.overrideDist=null;
+  const elapsed=Math.floor((Date.now()-D.startTime)/1000);
+  document.getElementById('sheet-dest-lbl').textContent=D.destination;
+  document.getElementById('cs-dist').textContent=fmtDist(D.tripDist)+' '+distLabel();
+  document.getElementById('cs-dur').textContent=pad(Math.floor(elapsed/60))+':'+pad(elapsed%60);
+  document.getElementById('cs-fc').textContent='—';
+  document.getElementById('cs-fc-lbl').textContent=fcLabel();
+  document.getElementById('gps-dist-lbl').textContent='GPS: '+fmtDist(D.tripDist)+' '+distLabel();
+  document.getElementById('dist-edit-row').classList.remove('open');
+  document.getElementById('gas-price').value='';
+  document.getElementById('gas-litres').value='';
+  document.getElementById('gas-odo').value='';
+  document.getElementById('gas-note').textContent='';
+  document.getElementById('gas-fields').classList.remove('open');
+  document.getElementById('gas-tog').classList.remove('open');
+  D.sheetPurpose=D.purpose; D.sheetWorkSub=D.workSub;
+  updateSheetPurposeUI();
+  openOverlay('ov-save');
+}
+function toggleDistEdit(){
+  const row=document.getElementById('dist-edit-row');
+  row.classList.toggle('open');
+  if(row.classList.contains('open')){
+    document.getElementById('dist-override').value=D.overrideDist!==null?D.overrideDist:fmtDist(D.tripDist);
+  }
+}
+function applyDist(){
+  const v=parseFloat(document.getElementById('dist-override').value);
+  if(isNaN(v)||v<0) return;
+  D.overrideDist=v;
+  document.getElementById('dist-edit-row').classList.remove('open');
+  document.getElementById('cs-dist').textContent=v.toFixed(1)+' '+distLabel();
+  document.getElementById('gps-dist-lbl').textContent='GPS: '+fmtDist(D.tripDist)+' '+distLabel()+' → '+v.toFixed(1)+' (edited)';
+  calcGas();
+}
+function toggleGas(){
+  document.getElementById('gas-tog').classList.toggle('open');
+  document.getElementById('gas-fields').classList.toggle('open');
+}
+function calcGas(){
+  const price=parseFloat(document.getElementById('gas-price').value)||0;
+  const litres=parseFloat(document.getElementById('gas-litres').value)||0;
+  const dist=D.overrideDist!==null?D.overrideDist:parseFloat(fmtDist(D.tripDist));
+  const note=document.getElementById('gas-note');
+  const fcEl=document.getElementById('cs-fc');
+  if(litres>0&&dist>0){
+    const fcVal=fmtFC(litres,D.distUnit==='km'?dist/1:dist/0.621371);
+    fcEl.textContent=fcVal+' '+fcLabel();
+    let msg=fcLabel()+': '+fcVal;
+    if(price>0){
+      const total=(price*litres).toFixed(2);
+      const cpk=(price*litres/dist).toFixed(2);
+      msg+=` · ₱${total} total · ₱${cpk}/${distLabel()}`;
+    }
+    note.textContent=msg;
+  } else { note.textContent=''; fcEl.textContent='—'; }
+}
+function saveTrip(){
+  const elapsed=Math.floor((Date.now()-D.startTime)/1000);
+  const rawKm=D.tripDist;
+  const distDisplay=D.overrideDist!==null?D.overrideDist:parseFloat(fmtDist(rawKm));
+  const distKm=D.distUnit==='km'?distDisplay:distDisplay/0.621371;
+  const price=parseFloat(document.getElementById('gas-price').value)||0;
+  const litres=parseFloat(document.getElementById('gas-litres').value)||0;
+  const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
+  const fcVal=litres>0&&distKm>0?parseFloat(fmtFC(litres,distKm)):null;
+  const cpkm=fuelCost>0&&distDisplay>0?parseFloat((fuelCost/distDisplay).toFixed(2)):null;
+  const purposeLbl=D.sheetPurpose==='work'?('Work – '+(D.sheetWorkSub||'Others')):(D.persLbl||'Personal');
+  const trip={
+    id:Date.now(), destination:D.destination,
+    purpose:D.sheetPurpose, workSub:D.sheetWorkSub, purposeLbl,
+    distDisplay, distKm, distUnit:D.distUnit,
+    gasPrice:price, gasLitres:litres, fuelCost, fcVal, cpkm,
+    duration:pad(Math.floor(elapsed/60))+':'+pad(elapsed%60),
+    date:new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}),
+    time:new Date().toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'}),
+    ts:Date.now()
+  };
+  D.trips.unshift(trip); save('trips',D.trips);
+  closeOverlay('ov-save');
+  document.getElementById('sv-sub').textContent=trip.destination+' · '+purposeLbl;
+  document.getElementById('sv-sum').innerHTML=buildSummaryHTML(trip);
+  renderTrips(); renderStats(); updateWelcome();
+  showScreen('saved');
+}
+function safeFixed(v,n=1){ const f=parseFloat(v); return isNaN(f)?'—':f.toFixed(n); }
+function buildSummaryHTML(t){
+  let h=`<div class="sr"><span class="sl">Distance</span><span class="sv2">${safeFixed(t.distDisplay,1)} ${D.distUnit==='km'?'km':'mi'}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Duration</span><span class="sv2">${t.duration||'—'}</span></div>`;
+  if(t.fcVal!=null&&!isNaN(t.fcVal)) h+=`<div class="sr"><span class="sl">Fuel consumption</span><span class="sv2">${safeFixed(t.fcVal,2)} ${fcLabel()}</span></div>`;
+  if(t.fuelCost>0) h+=`<div class="sr"><span class="sl">Fuel cost</span><span class="sv2">₱${safeFixed(t.fuelCost,2)}</span></div>`;
+  if(t.cpkm&&!isNaN(t.cpkm)) h+=`<div class="sr"><span class="sl">Cost / ${distLabel()}</span><span class="sv2">₱${safeFixed(t.cpkm,2)}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Purpose</span><span class="sv2">${t.purposeLbl||'—'}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Date</span><span class="sv2">${t.date||''} ${t.time||''}</span></div>`;
+  return h;
+}
+function newTrip(){ document.getElementById('dest-in').value=''; showScreen('home'); }
+
+// TRIPS
+function setFilter(f){
+  D.filterMode=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('a',b.dataset.f===f));
+  renderTrips();
+}
+function renderTrips(){
+  const el=document.getElementById('trips-list');
+  let list=D.trips;
+  if(D.filterMode==='work') list=list.filter(t=>t.purpose==='work');
+  if(D.filterMode==='personal') list=list.filter(t=>t.purpose==='personal');
+  if(!list.length){
+    el.innerHTML='<div class="empty"><i class="ti ti-road" aria-hidden="true"></i>No trips yet.<br>Start driving to log your first trip!</div>';
+    return;
+  }
+  el.innerHTML=list.map(t=>`
+    <div class="titem">
+      <div class="ti-l">
+        <div class="tiic ${t.purpose==='work'?'wic':'pic'}"><i class="ti ti-${t.purpose==='work'?'briefcase':'user'}" aria-hidden="true"></i></div>
+        <div>
+          <div class="tiname">${t.destination||'—'}</div>
+          <div class="tisub">${t.purposeLbl||'—'} · ${t.date||'—'}</div>
+        </div>
+      </div>
+      <div class="ti-r">
+        <div class="tikm">${safeFixed(t.distDisplay,1)} ${D.distUnit==='km'?'km':'mi'}</div>
+        <div class="tifc">${t.fcVal!=null&&!isNaN(t.fcVal)?safeFixed(t.fcVal,2)+' '+fcLabel():(t.fuelCost>0?'₱'+safeFixed(t.fuelCost,2):'—')}</div>
+        <div class="tiact">
+          <div class="tabtn taedit" onclick="openEditTrip(${t.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+          <div class="tabtn tadelx" onclick="promptDelete(${t.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// EDIT TRIP
+function openEditTrip(id){
+  const t=D.trips.find(x=>x.id===id); if(!t) return;
+  document.getElementById('edit-trip-id').value=id;
+  document.getElementById('edit-dest').value=t.destination;
+  document.getElementById('edit-dist').value=t.distDisplay.toFixed(1);
+  document.getElementById('edit-dist-lbl').textContent='Distance ('+distLabel()+')';
+  document.getElementById('edit-dur').value=t.duration;
+  document.getElementById('edit-gasprice').value=t.gasPrice||'';
+  document.getElementById('edit-litres').value=t.gasLitres||'';
+  document.getElementById('edit-date-lbl').textContent=t.date+' · '+t.time;
+  D.editPurpose=t.purpose; D.editWorkSub=t.workSub||'';
+  updateEditPurposeUI();
+  openOverlay('ov-edit');
+}
+function saveEditTrip(){
+  const id=parseInt(document.getElementById('edit-trip-id').value);
+  const idx=D.trips.findIndex(x=>x.id===id); if(idx<0) return;
+  const t=D.trips[idx];
+  const dest=document.getElementById('edit-dest').value.trim()||t.destination;
+  const dist=parseFloat(document.getElementById('edit-dist').value)||t.distDisplay;
+  const dur=document.getElementById('edit-dur').value.trim()||t.duration;
+  const price=parseFloat(document.getElementById('edit-gasprice').value)||0;
+  const litres=parseFloat(document.getElementById('edit-litres').value)||0;
+  const distKm=D.distUnit==='km'?dist:dist/0.621371;
+  const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
+  const fcVal=litres>0&&distKm>0?parseFloat(fmtFC(litres,distKm)):null;
+  const cpkm=fuelCost>0&&dist>0?parseFloat((fuelCost/dist).toFixed(2)):null;
+  const purposeLbl=D.editPurpose==='work'?('Work – '+(D.editWorkSub||'Others')):(D.persLbl||'Personal');
+  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,purposeLbl,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur};
+  save('trips',D.trips);
+  closeOverlay('ov-edit');
+  renderTrips(); renderStats();
+}
+
+// DELETE
+function promptDelete(id){ D.deleteId=id; openModal('modal-del'); }
+function confirmDelete(){
+  D.trips=D.trips.filter(t=>t.id!==D.deleteId);
+  save('trips',D.trips); closeModal('modal-del');
+  renderTrips(); renderStats(); updateWelcome();
+}
+
+// STATS
+function renderStats(){
+  const now=Date.now(), wk=now-7*864e5, mo=new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime();
+  const wkT=D.trips.filter(t=>t.ts>=wk), moT=D.trips.filter(t=>t.ts>=mo);
+  const allKm=D.trips.reduce((a,t)=>a+t.distKm,0);
+  const moKm=moT.reduce((a,t)=>a+t.distKm,0);
+  const wkKm=wkT.reduce((a,t)=>a+t.distKm,0);
+  const fcs=D.trips.filter(t=>t.fcVal!==null).map(t=>t.fcVal);
+  const avgFc=fcs.length?(fcs.reduce((a,b)=>a+b,0)/fcs.length).toFixed(2):'—';
+  const totalFuel=D.trips.reduce((a,t)=>a+(t.fuelCost||0),0);
+  const kmWithFuel=D.trips.filter(t=>t.fuelCost>0).reduce((a,t)=>a+t.distDisplay,0);
+  const cpkm=totalFuel>0&&kmWithFuel>0?(totalFuel/kmWithFuel).toFixed(2):'—';
+  const toD=v=>{ const n=parseFloat(v); return isNaN(n)?'0.0':(D.distUnit==='km'?n.toFixed(1):(n*0.621371).toFixed(1)); };
+  document.getElementById('stat-mo-dist').textContent=toD(moKm);
+  document.getElementById('stat-mo-fc').textContent=avgFc==='—'?'—':safeFixed(avgFc,2);
+  document.getElementById('stat-fc-u').textContent=fcLabel();
+  document.getElementById('stat-wk-dist').textContent=toD(wkKm);
+  document.getElementById('stat-wk-trips').textContent=wkT.length;
+  document.getElementById('stat-fuel-tot').textContent='₱'+safeFixed(totalFuel,2);
+  document.getElementById('stat-cpkm').textContent=cpkm==='—'?'—':'₱'+safeFixed(cpkm,2);
+  document.getElementById('stat-all-dist').textContent=toD(allKm);
+  document.getElementById('stat-all-trips').textContent=D.trips.length;
+}
+
+init();
+</script>
+</body>
+</html>
