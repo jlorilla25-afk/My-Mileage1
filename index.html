@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
@@ -9,10 +10,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .app{width:100%;max-width:390px;min-height:100vh;background:#f2f2f7;display:flex;flex-direction:column}
 /* topbar */
 .topbar{background:#fff;padding:48px 16px 10px;border-bottom:0.5px solid #e0e0e0;display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.topbar-left{min-width:0;flex:1;padding-right:10px}
+.brand-row{display:none;align-items:center;gap:8px;margin-bottom:6px;min-height:26px}
+.brand-row.show{display:flex}
+.brand-logo{width:26px;height:26px;border-radius:7px;object-fit:cover;border:0.5px solid #e0e0e0;background:#f7f7f9;flex-shrink:0}
+.brand-logo.empty{display:none}
+.brand-name{font-size:12px;font-weight:600;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
 .topbar-left h1{font-size:20px;font-weight:600;color:#111;margin:0}
 .topbar-left p{font-size:12px;color:#aaa;margin:2px 0 0}
 .gear-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;flex-shrink:0}
 .gear-btn i{font-size:18px;color:#555}
+.top-actions{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.bell-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;position:relative}
+.bell-btn i{font-size:18px;color:#555}
+.bell-dot{display:none;position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border-radius:9px;background:#ea4335;color:#fff;font-size:9px;font-weight:700;align-items:center;justify-content:center;padding:0 4px}
+.bell-dot.show{display:flex}
 /* nav */
 .navbar{display:flex;background:#fff;border-top:0.5px solid #e0e0e0;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:390px;z-index:100}
 .ntab{flex:1;padding:8px 4px 10px;text-align:center;font-size:10px;color:#999;cursor:pointer}
@@ -156,6 +168,74 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .scl{font-size:10px;color:#aaa}
 .scv{font-size:20px;font-weight:500;color:#1a73e8;margin-top:2px}
 .scu{font-size:10px;color:#aaa}
+/* service */
+.service-form{background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:10px;border:0.5px solid #e8e8e8}
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.service-field{margin-bottom:9px}
+.service-field label{font-size:10px;color:#888;display:block;margin-bottom:3px;font-weight:500}
+.service-field input,.service-field select,.service-field textarea{width:100%;border:0.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:13px;color:#333;background:#fafafa;outline:none;font-family:inherit}
+.service-field textarea{resize:vertical;min-height:58px;line-height:1.3}
+.service-muted{font-size:10px;color:#aaa;margin-top:2px}
+.service-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.service-actions button{border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:600;cursor:pointer}
+.service-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;border:0.5px solid #e8e8e8}
+.service-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.service-title{font-size:13px;font-weight:600;color:#222}
+.service-meta{font-size:10px;color:#aaa;margin-top:2px}
+.service-cost{font-size:11px;color:#1a73e8;font-weight:600;white-space:nowrap}
+.progress-track{height:8px;border-radius:99px;background:#edf0f5;overflow:hidden;margin:10px 0 5px}
+.progress-fill{height:100%;border-radius:99px;background:#34a853;width:0%}
+.progress-fill.warn{background:#f9ab00}
+.progress-fill.due{background:#ea4335}
+.service-status{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:#888}
+.service-note{font-size:11px;color:#555;background:#f7f9ff;border-radius:8px;padding:7px 9px;margin-top:8px}
+.service-row-actions{display:flex;gap:5px;margin-top:9px;justify-content:flex-end}
+.service-row-actions .tabtn{width:24px;height:24px}
+/* route and places */
+.route-row{display:flex;align-items:center;gap:7px;margin-top:7px}
+.route-row .dinput{flex:1}
+.route-remove{width:30px;height:30px;border-radius:8px;background:#fce8e6;color:#ea4335;border:0.5px solid #f0b8b4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.route-spacer{visibility:hidden;pointer-events:none}
+.route-add{display:flex;align-items:center;justify-content:center;gap:5px;background:#e8f0fe;color:#1a73e8;border:0.5px solid #b8d0f0;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:500;cursor:pointer;margin-top:8px}
+.route-purpose{border:0.5px solid #ddd;border-radius:8px;background:#fafafa;color:#888;padding:7px 7px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;width:74px;text-align:center;overflow:hidden;text-overflow:ellipsis}
+.route-purpose.work{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8}
+.route-purpose.personal{border-color:#34a853;background:#e6f4ea;color:#1b7a42}
+.route-help{font-size:10px;color:#aaa;margin-top:6px;line-height:1.3}
+.route-stop-list{margin-top:6px;border-top:0.5px solid #eef0f8;padding-top:5px}
+.route-stop{font-size:10px;color:#777;margin-top:2px;line-height:1.25}
+.route-stop b{color:#333;font-weight:600}
+.route-dist{width:68px;border:0.5px solid #ddd;border-radius:8px;padding:7px 7px;font-size:10px;color:#333;background:#fff;outline:none;flex-shrink:0}
+.route-dist::placeholder{color:#bbb}
+#ov-edit .route-row{gap:5px}
+#ov-edit .route-purpose{width:64px;padding-left:5px;padding-right:5px}
+#ov-edit .route-dist{width:52px;padding-left:5px;padding-right:5px}
+#ov-edit .route-remove{width:26px}
+#ov-edit .dinput{padding-left:8px;padding-right:8px;min-width:0}
+#ov-edit .dinput input{min-width:0}
+.place-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;border:0.5px solid #e8e8e8}
+.place-title{font-size:13px;font-weight:600;color:#222}
+.place-meta{font-size:10px;color:#aaa;margin-top:2px}
+.place-note{font-size:11px;color:#555;background:#f7f9ff;border-radius:8px;padding:7px 9px;margin-top:8px}
+.place-actions{display:flex;gap:5px;justify-content:flex-end;margin-top:9px}
+.status-pill{font-size:10px;color:#1a73e8;background:#e8f0fe;border-radius:20px;padding:4px 8px;display:inline-flex;align-items:center;gap:4px;margin-top:5px}
+/* toggles */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:0.5px solid #f0f0f0}
+.toggle-row:last-child{border-bottom:none}
+.toggle-copy{min-width:0}
+.toggle-title{font-size:12px;color:#222;font-weight:500}
+.toggle-sub{font-size:10px;color:#aaa;margin-top:1px;line-height:1.25}
+.switch{position:relative;width:42px;height:24px;flex-shrink:0}
+.switch input{display:none}
+.slider{position:absolute;cursor:pointer;inset:0;background:#d8d8df;border-radius:20px;transition:.2s}
+.slider:before{content:"";position:absolute;width:20px;height:20px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.switch input:checked + .slider{background:#1a73e8}
+.switch input:checked + .slider:before{transform:translateX(18px)}
+.device-panel{background:#f7f9ff;border-radius:10px;padding:9px 10px;margin-top:8px;border:0.5px solid #e0e8f8}
+.device-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.device-btn{border:none;border-radius:8px;padding:9px 8px;font-size:11px;font-weight:600;cursor:pointer;background:#1a73e8;color:#fff;white-space:nowrap}
+.device-btn.gray{background:#f2f2f7;color:#555;border:0.5px solid #ddd}
+.device-status{font-size:10px;color:#555;margin-top:7px;line-height:1.35}
+.device-status strong{color:#1a73e8}
 /* settings */
 .srow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid #f0f0f0}
 .srow:last-child{border-bottom:none}
@@ -171,6 +251,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .addrow{display:flex;gap:6px;margin-top:6px}
 .addrow input{flex:1;border:0.5px solid #ddd;border-radius:8px;padding:8px 10px;font-size:12px;outline:none;background:#fff}
 .addrow button{background:#1a73e8;color:#fff;border:none;border-radius:8px;padding:8px 13px;font-size:12px;cursor:pointer}
+.logo-preview{display:flex;align-items:center;gap:9px}
+.logo-thumb{width:38px;height:38px;border-radius:9px;border:0.5px solid #e0e0e0;background:#f7f7f9;object-fit:cover;display:none;flex-shrink:0}
+.logo-thumb.show{display:block}
+.file-btn{display:inline-flex;align-items:center;justify-content:center;background:#e8f0fe;color:#1a73e8;border:0.5px solid #b8d0f0;border-radius:8px;padding:7px 10px;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap}
+.clear-logo{font-size:11px;color:#ea4335;cursor:pointer;white-space:nowrap;margin-left:8px;display:none}
+.clear-logo.show{display:inline}
+.hidden-file{display:none}
 /* modal */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:300;align-items:center;justify-content:center}
 .modal-ov.open{display:flex}
@@ -190,10 +277,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="app">
   <div class="topbar">
     <div class="topbar-left">
+      <div class="brand-row" id="brand-row">
+        <img class="brand-logo empty" id="brand-logo" alt="">
+        <div class="brand-name" id="brand-name"></div>
+      </div>
       <h1 id="tt">My Mileage</h1>
       <p id="ts">Ready to drive?</p>
     </div>
-    <div class="gear-btn" onclick="openSettings()" id="gear-wrap"><i class="ti ti-settings"></i></div>
+    <div class="top-actions" id="top-actions">
+      <div class="bell-btn" onclick="showScreen('service')" title="Service reminders">
+        <i class="ti ti-bell" aria-hidden="true"></i>
+        <span class="bell-dot" id="bell-dot">0</span>
+      </div>
+      <div class="gear-btn" onclick="openSettings()" id="gear-wrap"><i class="ti ti-settings"></i></div>
+    </div>
   </div>
 
   <!-- HOME -->
@@ -217,10 +314,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="card">
       <div class="clbl"><i class="ti ti-navigation" aria-hidden="true"></i>Destination</div>
-      <div class="dinput">
-        <i class="ti ti-search" aria-hidden="true"></i>
-        <input id="dest-in" type="text" placeholder="Where are you heading?">
+      <div class="route-row">
+        <div class="dinput">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <input id="dest-in" class="route-input-main" type="text" placeholder="Where are you heading?" list="place-suggestions" onfocus="setActiveRoutePurposeButton(document.getElementById('main-route-purpose'))">
+        </div>
+        <button class="route-purpose" id="main-route-purpose" onclick="assignDestinationPurpose(this)">Purpose</button>
+        <div class="route-remove route-spacer"><i class="ti ti-trash" aria-hidden="true"></i></div>
       </div>
+      <div id="route-extra"></div>
+      <button class="route-add" onclick="addDestinationField()"><i class="ti ti-plus" aria-hidden="true"></i>Add destination</button>
+      <div class="route-help">Select a Work or Personal purpose, then tap a destination's purpose chip to assign it.</div>
       <div class="purp-wrap">
         <div class="purp-lbl">Purpose</div>
         <div class="purp-row">
@@ -230,14 +334,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
             <i class="ti ti-chevron-down" style="font-size:10px;margin-left:2px" aria-hidden="true"></i>
             <div class="wdd" id="home-wdd"></div>
           </div>
-          <div class="pb" id="pb-pers" onclick="setPurpose('personal')">
+          <div class="pb" id="pb-pers" onclick="togglePersDD(event)">
             <i class="ti ti-user" style="font-size:11px;margin-right:3px" aria-hidden="true"></i>
             <span id="pb-pers-lbl">Personal</span>
+            <i class="ti ti-chevron-down" style="font-size:10px;margin-left:2px" aria-hidden="true"></i>
+            <div class="wdd" id="home-pwdd"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="drive-wrap">
+      <label class="route-add" id="ocr-scan-btn" for="odo-scan-in" style="display:none;margin-top:0"><i class="ti ti-camera" aria-hidden="true"></i>Scan odometer</label>
+      <input class="hidden-file" id="odo-scan-in" type="file" accept="image/*" capture="environment" onchange="handleOdoScan(event)">
       <div class="dbtn" onclick="startTrip()">
         <i class="ti ti-player-play" aria-hidden="true"></i>
         <span>Drive</span>
@@ -280,6 +388,100 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 
   <!-- TRIPS -->
+  <div class="screen" id="sc-service">
+    <div class="service-form">
+      <div class="clbl"><i class="ti ti-bell-ringing" aria-hidden="true"></i>Service reminder</div>
+      <div class="service-field">
+        <label>Reminder title</label>
+        <input id="svc-title" type="text" placeholder="e.g. Change oil">
+      </div>
+      <div class="service-grid">
+        <div class="service-field">
+          <label>Reminder type</label>
+          <select id="svc-mode" onchange="updateServiceModeUI()">
+            <option value="date">Date</option>
+            <option value="mileage">Mileage</option>
+          </select>
+        </div>
+        <div class="service-field">
+          <label>Cost</label>
+          <input id="svc-cost" type="number" step="0.01" min="0" placeholder="0.00">
+        </div>
+      </div>
+      <div id="svc-date-fields">
+        <div class="service-grid">
+          <div class="service-field">
+            <label>Date mode</label>
+            <select id="svc-date-mode">
+              <option value="countdown">Count down to date</option>
+              <option value="countup">Count up from date</option>
+            </select>
+          </div>
+          <div class="service-field">
+            <label>Service date</label>
+            <input id="svc-date" type="date">
+          </div>
+        </div>
+      </div>
+      <div id="svc-mileage-fields" style="display:none">
+        <div class="service-field">
+          <label id="svc-mileage-label">Target mileage (km)</label>
+          <input id="svc-mileage" type="number" step="0.1" min="0" placeholder="e.g. 10000">
+          <div class="service-muted" id="svc-mileage-hint">Current total: 0.0 km</div>
+        </div>
+      </div>
+      <div class="service-field">
+        <label>Additional information</label>
+        <textarea id="svc-note" placeholder="Customer, vehicle, parts, shop, or other notes"></textarea>
+      </div>
+      <div class="service-actions">
+        <button class="mcancel" onclick="resetServiceForm()">Clear</button>
+        <button class="savebtn" style="margin-top:0" onclick="saveServiceReminder()">Save Reminder</button>
+      </div>
+    </div>
+    <div id="service-list"></div>
+  </div>
+
+  <!-- PLACES -->
+  <div class="screen" id="sc-places">
+    <div class="service-form">
+      <div class="clbl"><i class="ti ti-map-pin-plus" aria-hidden="true"></i>Geofence destination</div>
+      <div class="service-field">
+        <label>Customer / destination name</label>
+        <input id="geo-name" type="text" placeholder="e.g. Acme Warehouse">
+      </div>
+      <div class="service-field">
+        <label>Area / address</label>
+        <input id="geo-area" type="text" placeholder="e.g. Calamba Industrial Park">
+      </div>
+      <div class="service-grid">
+        <div class="service-field">
+          <label>Latitude</label>
+          <input id="geo-lat" type="number" step="0.000001" placeholder="14.2110">
+        </div>
+        <div class="service-field">
+          <label>Longitude</label>
+          <input id="geo-lng" type="number" step="0.000001" placeholder="121.1650">
+        </div>
+      </div>
+      <div class="service-field">
+        <label>Radius (meters)</label>
+        <input id="geo-radius" type="number" step="10" min="10" placeholder="150">
+      </div>
+      <div class="service-field">
+        <label>Additional information</label>
+        <textarea id="geo-note" placeholder="Gate, contact person, delivery instructions, or customer notes"></textarea>
+      </div>
+      <div class="status-pill" id="geo-detect-note"><i class="ti ti-current-location" aria-hidden="true"></i>Use current location to tag this place</div>
+      <div class="service-actions" style="margin-top:10px">
+        <button class="mcancel" onclick="useCurrentGeofenceLocation()">Use Current Location</button>
+        <button class="savebtn" style="margin-top:0" onclick="saveGeofence()">Save Place</button>
+      </div>
+    </div>
+    <div id="place-list"></div>
+  </div>
+
+  <!-- TRIPS -->
   <div class="screen" id="sc-trips">
     <div class="filter-bar">
       <div class="fb a" data-f="all" onclick="setFilter('all')">All</div>
@@ -303,8 +505,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Fuel cost</div>
     <div class="sg">
-      <div class="sc2"><div class="scl">Total spent</div><div class="scv" id="stat-fuel-tot">₱0</div><div class="scu">pesos</div></div>
-      <div class="sc2"><div class="scl">Cost per km</div><div class="scv" id="stat-cpkm">—</div><div class="scu">₱/km</div></div>
+      <div class="sc2"><div class="scl">Total spent</div><div class="scv" id="stat-fuel-tot">₱0</div><div class="scu" id="stat-fuel-currency">Philippine peso</div></div>
+      <div class="sc2"><div class="scl">Cost per km</div><div class="scv" id="stat-cpkm">—</div><div class="scu" id="stat-cpkm-u">₱/km</div></div>
     </div>
     <div style="font-size:11px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">All time</div>
     <div class="sg">
@@ -315,10 +517,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <div class="navbar">
     <div class="ntab a" id="nav-home" onclick="showScreen('home')"><i class="ti ti-home" aria-hidden="true"></i>Home</div>
+    <div class="ntab" id="nav-service" onclick="showScreen('service')"><i class="ti ti-bell-ringing" aria-hidden="true"></i>Service</div>
+    <div class="ntab" id="nav-places" onclick="showScreen('places')"><i class="ti ti-map-pin" aria-hidden="true"></i>Places</div>
     <div class="ntab" id="nav-trips" onclick="showScreen('trips')"><i class="ti ti-list" aria-hidden="true"></i>Trips</div>
     <div class="ntab" id="nav-stats" onclick="showScreen('stats')"><i class="ti ti-chart-bar" aria-hidden="true"></i>Stats</div>
   </div>
 </div>
+<datalist id="place-suggestions"></datalist>
 
 <!-- SAVE SHEET -->
 <div class="overlay" id="ov-save">
@@ -348,9 +553,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
         <div class="swdd" id="sheet-wdd"></div>
       </div>
-      <div class="sp" id="sp-pers" onclick="setSheetPurpose('personal')">
+      <div class="sp" id="sp-pers" onclick="toggleSheetPersDD(event)">
         <i class="ti ti-user" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
         <span id="sp-pers-lbl">Personal</span>
+        <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
+        <div class="swdd" id="sheet-pwdd"></div>
       </div>
     </div>
     <div class="gas-box">
@@ -360,7 +567,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
       <div class="gas-fields" id="gas-fields">
         <div class="frow">
-          <div class="sfield"><label>Gas price (₱/L)</label><input id="gas-price" type="number" step="0.01" placeholder="e.g. 65.50" oninput="calcGas()"></div>
+          <div class="sfield"><label id="gas-price-lbl">Gas price (₱/L)</label><input id="gas-price" type="number" step="0.01" placeholder="e.g. 65.50" oninput="calcGas()"></div>
           <div class="sfield"><label>Litres filled</label><input id="gas-litres" type="number" step="0.1" placeholder="e.g. 30.0" oninput="calcGas()"></div>
         </div>
         <div class="sfield"><label>Odometer at fill-up <span style="color:#bbb;font-size:10px">opt.</span></label><input id="gas-odo" type="number" placeholder="e.g. 45820"></div>
@@ -378,9 +585,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="stitle">Edit trip</div>
     <div class="ssub" id="edit-date-lbl">—</div>
     <input type="hidden" id="edit-trip-id">
-    <div class="sfield"><label>Destination</label><input id="edit-dest" type="text" placeholder="Destination"></div>
+    <div class="sfield">
+      <label>Destinations</label>
+      <div class="route-row">
+        <div class="dinput"><i class="ti ti-search" aria-hidden="true"></i><input id="edit-dest" class="route-input-main" type="text" placeholder="Destination" list="place-suggestions" onfocus="setActiveEditRoutePurposeButton(document.getElementById('edit-main-route-purpose'))"></div>
+        <button class="route-purpose" id="edit-main-route-purpose" onclick="assignEditDestinationPurpose(this)">Purpose</button>
+        <input class="route-dist" id="edit-main-route-dist" type="number" step="0.1" min="0" placeholder="km" oninput="updateEditTotalFromSegments()">
+        <div class="route-remove route-spacer"><i class="ti ti-trash" aria-hidden="true"></i></div>
+      </div>
+      <div id="edit-route-extra"></div>
+      <button class="route-add" onclick="addEditDestinationField()"><i class="ti ti-plus" aria-hidden="true"></i>Add destination</button>
+      <div class="route-help">Select a Work or Personal purpose, then tap a destination's purpose chip to assign it.</div>
+    </div>
     <div class="frow">
-      <div class="sfield"><label id="edit-dist-lbl">Distance (km)</label><input id="edit-dist" type="number" step="0.1" min="0"></div>
+      <div class="sfield"><label id="edit-dist-lbl">Distance (km)</label><input id="edit-dist" type="number" step="0.1" min="0" oninput="redistributeEditRouteDistances()"></div>
       <div class="sfield"><label>Duration (mm:ss)</label><input id="edit-dur" type="text" placeholder="22:10"></div>
     </div>
     <div class="spur-row">
@@ -390,14 +608,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
         <div class="swdd" id="edit-wdd"></div>
       </div>
-      <div class="sp" id="ep-pers" onclick="setEditPurpose('personal')">
+      <div class="sp" id="ep-pers" onclick="toggleEditPersDD(event)">
         <i class="ti ti-user" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
         <span id="ep-pers-lbl">Personal</span>
+        <i class="ti ti-chevron-down" style="font-size:9px;margin-left:2px" aria-hidden="true"></i>
+        <div class="swdd" id="edit-pwdd"></div>
       </div>
-    </div>
-    <div class="frow">
-      <div class="sfield"><label>Gas price (₱/L) <span style="color:#bbb;font-size:10px">opt.</span></label><input id="edit-gasprice" type="number" step="0.01" placeholder="e.g. 65.50"></div>
-      <div class="sfield"><label>Litres <span style="color:#bbb;font-size:10px">opt.</span></label><input id="edit-litres" type="number" step="0.1" placeholder="e.g. 30.0"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
       <button style="background:#f2f2f7;color:#555;border:none;border-radius:11px;padding:12px;font-size:13px;font-weight:500;cursor:pointer" onclick="closeOverlay('ov-edit')">Cancel</button>
@@ -411,6 +627,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="sheet" style="max-height:90vh">
     <div class="shandle"></div>
     <div class="stitle">Settings</div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-building" aria-hidden="true"></i>Company branding</div>
+      <div class="srow">
+        <div><div class="srl">Company name</div><div class="srs" id="company-name-disp">Not set</div></div>
+        <span class="edb" onclick="openCompanyModal()">Edit</span>
+      </div>
+      <div class="srow">
+        <div class="logo-preview">
+          <img class="logo-thumb" id="logo-thumb" alt="">
+          <div><div class="srl">Company logo</div><div class="srs" id="company-logo-disp">No logo selected</div></div>
+        </div>
+        <div>
+          <label class="file-btn" for="company-logo-in">Choose image</label>
+          <span class="clear-logo" id="clear-logo-btn" onclick="clearCompanyLogo()">Remove</span>
+          <input class="hidden-file" id="company-logo-in" type="file" accept="image/*" onchange="handleCompanyLogo(event)">
+        </div>
+      </div>
+    </div>
     <div class="card" style="margin-bottom:10px">
       <div class="clbl"><i class="ti ti-user" aria-hidden="true"></i>Profile</div>
       <div class="srow">
@@ -434,6 +668,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="sego" id="seg-kml" onclick="setUnit('fc','kml')">km/L</div>
         </div>
       </div>
+      <div class="srow">
+        <div><div class="srl">Currency</div><div class="srs" id="currency-disp">Philippine peso</div></div>
+        <div class="seg">
+          <div class="sego a" id="cur-php" onclick="setCurrency('PHP')">₱</div>
+          <div class="sego" id="cur-usd" onclick="setCurrency('USD')">$</div>
+          <div class="sego" id="cur-eur" onclick="setCurrency('EUR')">€</div>
+          <div class="sego" id="cur-jpy" onclick="setCurrency('JPY')">¥</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="clbl"><i class="ti ti-adjustments" aria-hidden="true"></i>Automation logic</div>
+      <div class="toggle-row">
+        <div class="toggle-copy"><div class="toggle-title">Auto-stop at home</div><div class="toggle-sub">Stops the active trip when arrival-home logic is enabled.</div></div>
+        <label class="switch"><input id="set-auto-stop" type="checkbox" onchange="setFeature('autoStopHome',this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-copy"><div class="toggle-title">Bluetooth car presence</div><div class="toggle-sub">Uses Web Bluetooth when supported. iPhone PWA falls back to GPS and speed confirmation.</div></div>
+        <label class="switch"><input id="set-bluetooth" type="checkbox" onchange="setFeature('bluetooth',this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-copy"><div class="toggle-title">GPS movement activation</div><div class="toggle-sub">Keeps manual Drive, but allows movement logic to assist detection.</div></div>
+        <label class="switch"><input id="set-gps-move" type="checkbox" onchange="setFeature('gpsMovement',this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-copy"><div class="toggle-title">Speed confirmation</div><div class="toggle-sub">Confirms driving state when speed rises above parked movement.</div></div>
+        <label class="switch"><input id="set-speed-confirm" type="checkbox" onchange="setFeature('speedConfirm',this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-copy"><div class="toggle-title">OCR odometer scan</div><div class="toggle-sub">Opens the iPhone camera and reads the dashboard image with browser OCR.</div></div>
+        <label class="switch"><input id="set-ocr" type="checkbox" onchange="setFeature('ocr',this.checked)"><span class="slider"></span></label>
+      </div>
+      <div class="srow">
+        <div><div class="srl">Bluetooth car name</div><div class="srs">Optional matching text</div></div>
+        <input id="set-bt-name" type="text" placeholder="e.g. Toyota, Honda" oninput="setBluetoothName(this.value)" style="width:130px;border:0.5px solid #ddd;border-radius:8px;padding:7px 8px;font-size:11px;outline:none">
+      </div>
+      <div class="device-panel">
+        <div class="toggle-title">Device connection</div>
+        <div class="toggle-sub">GPS tracking works on iPhone PWA over HTTPS. Web Bluetooth depends on browser support.</div>
+        <div class="device-actions">
+          <button class="device-btn" onclick="connectBluetoothCar()"><i class="ti ti-bluetooth" aria-hidden="true"></i> Connect car</button>
+          <button class="device-btn gray" onclick="disconnectBluetoothCar()">Disconnect</button>
+        </div>
+        <div class="device-status" id="device-status">Device status idle.</div>
+      </div>
     </div>
     <div class="card" style="margin-bottom:10px">
       <div class="clbl"><i class="ti ti-briefcase" aria-hidden="true"></i>Work categories</div>
@@ -448,6 +727,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="srow">
         <div><div class="srl">Button label</div><div class="srs" id="pers-lbl-disp">Personal</div></div>
         <span class="edb" onclick="openPersLblModal()">Edit</span>
+      </div>
+      <div class="edit-list" id="pers-cat-list"></div>
+      <div class="addrow">
+        <input id="new-pers-cat-in" type="text" placeholder="Add personal category...">
+        <button onclick="addPersCat()">Add</button>
       </div>
     </div>
     <button class="savebtn" onclick="closeOverlay('ov-settings')">Done</button>
@@ -480,6 +764,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
+<!-- COMPANY NAME MODAL -->
+<div class="modal-ov" id="modal-company">
+  <div class="modal">
+    <h2>Company name</h2>
+    <p>This appears above the My Mileage title.</p>
+    <input id="company-name-in" type="text" placeholder="e.g. ABC Transport Services">
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-company')">Cancel</button>
+      <button class="msave" onclick="saveCompanyName()">Save</button>
+    </div>
+  </div>
+</div>
+
 <!-- PERSONAL LABEL MODAL -->
 <div class="modal-ov" id="modal-pers-lbl">
   <div class="modal">
@@ -505,39 +802,113 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
+function readJSON(key, fallback){
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch(e) {
+    return fallback;
+  }
+}
+
 const D = {
+  companyName: localStorage.getItem('companyName') || '',
+  companyLogo: localStorage.getItem('companyLogo') || '',
   name: localStorage.getItem('name') || '',
   homeAddr: localStorage.getItem('homeAddr') || '',
+  homeLat: localStorage.getItem('homeLat') || '',
+  homeLng: localStorage.getItem('homeLng') || '',
   distUnit: localStorage.getItem('distUnit') || 'km',
   fcUnit: localStorage.getItem('fcUnit') || 'l100',
-  workCats: JSON.parse(localStorage.getItem('workCats') || '["Meeting","Service","Collection","Others"]'),
+  currency: localStorage.getItem('currency') || 'PHP',
+  workCats: readJSON('workCats', ["Meeting","Service","Collection","Others"]),
   persLbl: localStorage.getItem('persLbl') || 'Personal',
-  trips: JSON.parse(localStorage.getItem('trips') || '[]'),
+  persCats: readJSON('persCats', []),
+  trips: readJSON('trips', []),
+  serviceReminders: readJSON('serviceReminders', []),
+  geofences: readJSON('geofences', []),
+  featureSettings: readJSON('featureSettings', {autoStopHome:true, bluetooth:false, gpsMovement:false, speedConfirm:false, ocr:false, bluetoothName:''}),
+  odoStart: parseFloat(localStorage.getItem('odoStart')) || null,
+  bluetoothDevice: null, bluetoothConnected: false, bluetoothDeviceName: '',
   purpose: localStorage.getItem('lastPurpose') || 'work',
   workSub: localStorage.getItem('lastWorkSub') || 'Meeting',
-  sheetPurpose: 'work', sheetWorkSub: 'Meeting',
-  editPurpose: 'work', editWorkSub: 'Meeting',
+  persSub: localStorage.getItem('lastPersSub') || '',
+  sheetPurpose: 'work', sheetWorkSub: 'Meeting', sheetPersSub: '',
+  editPurpose: 'work', editWorkSub: 'Meeting', editPersSub: '',
   tripDist: 0, startTime: null, active: false,
-  paused: false, simSpeed: 0,
-  timerInt: null, simInt: null,
+  paused: false, gpsWatchId: null, lastPos: null, lastGpsAt: null,
+  timerInt: null,
   destination: '', overrideDist: null,
-  filterMode: 'all', deleteId: null
+  filterMode: 'all', deleteId: null, serviceEditId: null, geofenceEditId: null
 };
 
 function save(k,v){ try{ localStorage.setItem(k,typeof v==='object'?JSON.stringify(v):v); }catch(e){} }
+function escapeHTML(v){
+  return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function escapeAttr(v){ return escapeHTML(v).replace(/`/g,'&#96;'); }
+function displayDistFromKm(km){
+  const v = parseFloat(km);
+  if(isNaN(v)) return 0;
+  return D.distUnit==='km' ? v : v*0.621371;
+}
+function tripDistKm(t){
+  if(t?.segmentOf && !isNaN(parseFloat(t.segmentDistKm))) return parseFloat(t.segmentDistKm);
+  const stored = parseFloat(t?.distKm);
+  if(!isNaN(stored)) return stored;
+  const shown = parseFloat(t?.distDisplay);
+  if(isNaN(shown)) return 0;
+  return t?.distUnit==='mi' ? shown/0.621371 : shown;
+}
+function tripDisplayDist(t){ return displayDistFromKm(tripDistKm(t)); }
+function totalTripKm(){ return D.trips.reduce((a,t)=>a+tripDistKm(t),0); }
+function fuelUseValue(litres, km){
+  const l=parseFloat(litres), k=parseFloat(km);
+  if(!l||!k||isNaN(l)||isNaN(k)||k<=0) return null;
+  return D.fcUnit==='l100' ? (l/k*100) : (k/l);
+}
+function formatFuelUse(litres, km){
+  const v = fuelUseValue(litres, km);
+  return v === null ? '—' : v.toFixed(2);
+}
+function positiveNumber(id){
+  const v = parseFloat(document.getElementById(id).value);
+  return isNaN(v) || v < 0 ? 0 : v;
+}
+const CURRENCIES = {
+  PHP: {symbol:'₱', name:'Philippine peso'},
+  USD: {symbol:'$', name:'US dollar'},
+  EUR: {symbol:'€', name:'Euro'},
+  JPY: {symbol:'¥', name:'Japanese yen'}
+};
+function currencySymbol(){ return (CURRENCIES[D.currency] || CURRENCIES.PHP).symbol; }
+function currencyName(){ return (CURRENCIES[D.currency] || CURRENCIES.PHP).name; }
+function money(v){ return currencySymbol()+safeFixed(v,2); }
+function personalCats(){ return D.persCats.length ? D.persCats : [D.persLbl || 'Personal']; }
+function personalLabel(sub){ return sub || D.persLbl || 'Personal'; }
 
 // INIT
 function init(){
+  updateBranding();
   updateWelcome();
-  if(D.homeAddr) document.getElementById('home-disp').textContent = D.homeAddr;
+  updateHomeDisplay();
   buildWorkDDs();
   applyPurposeUI();
   applyUnitsUI();
   renderWorkCatList();
+  renderPersCatList();
   updatePersLabels();
   renderTrips();
   renderStats();
+  updateServiceModeUI();
+  renderServiceReminders();
+  renderGeofences();
+  renderDestinationFields();
+  setActiveRoutePurposeButton(document.getElementById('main-route-purpose'));
+  applyFeatureSettingsUI();
+  updateDeviceStatus();
   updateWelcomeGreeting();
 }
 
@@ -559,9 +930,9 @@ function updateWelcome(){
 
 function updatePersLabels(){
   const lbl = D.persLbl;
-  document.getElementById('pb-pers-lbl').textContent = lbl;
-  document.getElementById('sp-pers-lbl').textContent = lbl;
-  document.getElementById('ep-pers-lbl').textContent = lbl;
+  document.getElementById('pb-pers-lbl').textContent = D.purpose==='personal' ? personalLabel(D.persSub) : lbl;
+  document.getElementById('sp-pers-lbl').textContent = D.sheetPurpose==='personal' ? personalLabel(D.sheetPersSub) : lbl;
+  document.getElementById('ep-pers-lbl').textContent = D.editPurpose==='personal' ? personalLabel(D.editPersSub) : lbl;
   document.getElementById('pers-lbl-disp').textContent = lbl;
   document.getElementById('filter-pers-lbl').textContent = lbl;
 }
@@ -573,11 +944,13 @@ function showScreen(n){
   document.getElementById('sc-'+n).classList.add('active');
   const nv = document.getElementById('nav-'+(n==='saved'?'home':n));
   if(nv) nv.classList.add('a');
-  const T={home:'My Mileage',trip:'Trip in Progress',saved:'Trip Saved!',trips:'Trip History',stats:'Statistics'};
-  const S={home:'Ready to drive?',trip:'GPS tracking active',saved:'Great drive!',trips:'All your trips',stats:'Your driving summary'};
+  const T={home:'My Mileage',trip:'Trip in Progress',saved:'Trip Saved!',service:'Service Reminders',places:'Geofence Places',trips:'Trip History',stats:'Statistics'};
+  const S={home:'Ready to drive?',trip:'GPS tracking active',saved:'Great drive!',service:'Maintenance countdowns',places:'Saved destinations',trips:'All your trips',stats:'Your driving summary'};
   document.getElementById('tt').textContent=T[n]||'My Mileage';
   document.getElementById('ts').textContent=S[n]||'';
-  document.getElementById('gear-wrap').style.display = n==='trip' ? 'none' : 'flex';
+  document.getElementById('top-actions').style.display = n==='trip' ? 'none' : 'flex';
+  if(n==='service') renderServiceReminders();
+  if(n==='places') renderGeofences();
 }
 
 // OVERLAYS
@@ -588,15 +961,168 @@ function openModal(id){ document.getElementById(id).classList.add('open'); }
 
 // SETTINGS
 function openSettings(){
+  updateBranding();
   document.getElementById('set-name-disp').textContent = D.name||'Not set';
   document.getElementById('pers-lbl-disp').textContent = D.persLbl;
   applyUnitsUI();
   renderWorkCatList();
+  renderPersCatList();
+  applyFeatureSettingsUI();
+  updateDeviceStatus();
   openOverlay('ov-settings');
+}
+function updateBranding(){
+  const hasName = !!D.companyName;
+  const hasLogo = !!D.companyLogo;
+  const row = document.getElementById('brand-row');
+  const logo = document.getElementById('brand-logo');
+  const name = document.getElementById('brand-name');
+  row.classList.toggle('show', hasName || hasLogo);
+  name.textContent = D.companyName;
+  logo.src = hasLogo ? D.companyLogo : '';
+  logo.classList.toggle('empty', !hasLogo);
+  document.getElementById('company-name-disp').textContent = D.companyName || 'Not set';
+  const thumb = document.getElementById('logo-thumb');
+  thumb.src = hasLogo ? D.companyLogo : '';
+  thumb.classList.toggle('show', hasLogo);
+  document.getElementById('company-logo-disp').textContent = hasLogo ? 'Logo saved locally' : 'No logo selected';
+  document.getElementById('clear-logo-btn').classList.toggle('show', hasLogo);
+}
+function openCompanyModal(){
+  document.getElementById('company-name-in').value = D.companyName;
+  openModal('modal-company');
+}
+function saveCompanyName(){
+  const v = document.getElementById('company-name-in').value.trim();
+  D.companyName = v;
+  save('companyName', v);
+  updateBranding();
+  closeModal('modal-company');
+}
+function handleCompanyLogo(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){
+    alert('Please choose an image file.');
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    D.companyLogo = reader.result;
+    save('companyLogo', D.companyLogo);
+    updateBranding();
+    e.target.value = '';
+  };
+  reader.onerror = () => alert('Logo could not be loaded.');
+  reader.readAsDataURL(file);
+}
+function clearCompanyLogo(){
+  D.companyLogo = '';
+  localStorage.removeItem('companyLogo');
+  updateBranding();
+}
+function setFeature(key,val){
+  D.featureSettings[key]=val;
+  save('featureSettings',D.featureSettings);
+  applyFeatureSettingsUI();
+}
+function setBluetoothName(v){
+  D.featureSettings.bluetoothName=v.trim();
+  save('featureSettings',D.featureSettings);
+}
+function applyFeatureSettingsUI(){
+  const f = D.featureSettings;
+  document.getElementById('set-auto-stop').checked = f.autoStopHome !== false;
+  document.getElementById('set-bluetooth').checked = !!f.bluetooth;
+  document.getElementById('set-gps-move').checked = !!f.gpsMovement;
+  document.getElementById('set-speed-confirm').checked = !!f.speedConfirm;
+  document.getElementById('set-ocr').checked = !!f.ocr;
+  document.getElementById('set-bt-name').value = f.bluetoothName || '';
+  document.getElementById('ocr-scan-btn').style.display = f.ocr ? 'flex' : 'none';
+}
+async function handleOdoScan(e){
+  const file=e.target.files&&e.target.files[0];
+  if(!file) return;
+  if(!D.featureSettings.ocr){ alert('Turn on OCR odometer scan in Settings first.'); e.target.value=''; return; }
+  if(!window.Tesseract){
+    alert('OCR could not load. Check internet connection, then try again.');
+    e.target.value='';
+    return;
+  }
+  try{
+    const btn=document.getElementById('ocr-scan-btn');
+    if(btn) btn.innerHTML='<i class="ti ti-camera" aria-hidden="true"></i>Reading...';
+    const result=await Tesseract.recognize(file,'eng');
+    const match=(result.data.text||'').replace(/,/g,'').match(/\d+(\.\d+)?/);
+    if(!match) return alert('No odometer number detected.');
+    D.odoStart=parseFloat(match[0]);
+    save('odoStart',D.odoStart);
+    alert('Start odometer saved: '+D.odoStart);
+  }catch(err){
+    alert('OCR scan failed.');
+  }finally{
+    const btn=document.getElementById('ocr-scan-btn');
+    if(btn) btn.innerHTML='<i class="ti ti-camera" aria-hidden="true"></i>Scan odometer';
+    e.target.value='';
+  }
+}
+function updateDeviceStatus(msg){
+  const el=document.getElementById('device-status');
+  if(!el) return;
+  if(msg){ el.innerHTML=msg; return; }
+  const bt = D.bluetoothConnected ? `<strong>Bluetooth:</strong> connected to ${escapeHTML(D.bluetoothDeviceName||'car device')}` : '<strong>Bluetooth:</strong> not connected';
+  const gps = navigator.geolocation ? '<strong>GPS:</strong> ready for real tracking' : '<strong>GPS:</strong> unavailable in this browser';
+  const ocr = D.odoStart ? `<strong>OCR:</strong> start odometer ${safeFixed(D.odoStart,1)}` : '<strong>OCR:</strong> camera scan ready when enabled';
+  el.innerHTML = bt+'<br>'+gps+'<br>'+ocr;
+}
+async function connectBluetoothCar(){
+  if(!D.featureSettings.bluetooth){
+    D.featureSettings.bluetooth=true;
+    save('featureSettings',D.featureSettings);
+    applyFeatureSettingsUI();
+  }
+  if(!navigator.bluetooth){
+    updateDeviceStatus('<strong>Bluetooth:</strong> this browser cannot read car Bluetooth devices. On iPhone Safari/PWA, keep the car paired in iOS Settings and use GPS + speed confirmation in the app.');
+    return;
+  }
+  try{
+    updateDeviceStatus('<strong>Bluetooth:</strong> requesting car device permission...');
+    const device=await navigator.bluetooth.requestDevice({acceptAllDevices:true});
+    const expected=(D.featureSettings.bluetoothName||'').toLowerCase();
+    const name=device.name||'Bluetooth device';
+    if(expected && !name.toLowerCase().includes(expected)){
+      updateDeviceStatus(`<strong>Bluetooth:</strong> connected to "${escapeHTML(name)}", but it does not match "${escapeHTML(D.featureSettings.bluetoothName)}".`);
+    }else{
+      updateDeviceStatus(`<strong>Bluetooth:</strong> connected to ${escapeHTML(name)}.`);
+    }
+    D.bluetoothDevice=device;
+    D.bluetoothConnected=true;
+    D.bluetoothDeviceName=name;
+    device.addEventListener('gattserverdisconnected', ()=>{
+      D.bluetoothConnected=false;
+      updateDeviceStatus();
+    });
+  }catch(err){
+    updateDeviceStatus('<strong>Bluetooth:</strong> connection cancelled or unavailable.');
+  }
+}
+function disconnectBluetoothCar(){
+  try{
+    if(D.bluetoothDevice && D.bluetoothDevice.gatt && D.bluetoothDevice.gatt.connected) D.bluetoothDevice.gatt.disconnect();
+  }catch(e){}
+  D.bluetoothConnected=false;
+  D.bluetoothDevice=null;
+  D.bluetoothDeviceName='';
+  updateDeviceStatus();
 }
 function setUnit(type, val){
   if(type==='dist'){ D.distUnit=val; save('distUnit',val); }
   else { D.fcUnit=val; save('fcUnit',val); }
+  applyUnitsUI(); refreshAllUnits();
+}
+function setCurrency(val){
+  D.currency=val; save('currency',val);
   applyUnitsUI(); refreshAllUnits();
 }
 function applyUnitsUI(){
@@ -604,6 +1130,8 @@ function applyUnitsUI(){
   document.getElementById('seg-mi').classList.toggle('a',D.distUnit==='mi');
   document.getElementById('seg-l100').classList.toggle('a',D.fcUnit==='l100');
   document.getElementById('seg-kml').classList.toggle('a',D.fcUnit==='kml');
+  ['php','usd','eur','jpy'].forEach(c=>document.getElementById('cur-'+c).classList.toggle('a',D.currency===c.toUpperCase()));
+  document.getElementById('currency-disp').textContent = currencyName();
 }
 function distLabel(){ return D.distUnit==='km'?'km':'mi'; }
 function fcLabel(){ return D.fcUnit==='l100'?'L/100km':'km/L'; }
@@ -613,10 +1141,7 @@ function fmtDist(km){
   return D.distUnit==='km' ? v.toFixed(1) : (v*0.621371).toFixed(1);
 }
 function fmtFC(litres, km){
-  const l=parseFloat(litres), k=parseFloat(km);
-  if(!l||!k||isNaN(l)||isNaN(k)||k===0) return '—';
-  if(D.fcUnit==='l100') return (l/k*100).toFixed(2);
-  return (k/l).toFixed(2);
+  return formatFuelUse(litres, km);
 }
 function refreshAllUnits(){
   renderTrips(); renderStats();
@@ -631,7 +1156,11 @@ function refreshAllUnits(){
   document.getElementById('stat-fc-u').textContent = fcu;
   document.getElementById('stat-wk-u').textContent = u;
   document.getElementById('stat-all-u').textContent = u;
+  document.getElementById('stat-fuel-currency').textContent = currencyName();
+  document.getElementById('stat-cpkm-u').textContent = currencySymbol()+'/'+u;
   document.getElementById('edit-dist-lbl').textContent = 'Distance ('+u+')';
+  document.getElementById('gas-price-lbl').textContent = 'Gas price ('+currencySymbol()+'/L)';
+  renderServiceReminders();
 }
 
 // WORK CATEGORIES
@@ -639,14 +1168,24 @@ function buildWorkDDs(){
   ['home-wdd','sheet-wdd','edit-wdd'].forEach(id=>{
     const el = document.getElementById(id);
     if(!el) return;
-    el.innerHTML = D.workCats.map(c=>`<div class="wdd-item" onclick="selectWorkSub(event,'${id}','${c}')">${c}</div>`).join('');
+    el.innerHTML = D.workCats.map(c=>`<div class="wdd-item" onclick="selectWorkSub(event,'${id}',${escapeAttr(JSON.stringify(c))})">${escapeHTML(c)}</div>`).join('');
     el.querySelectorAll('.wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.workSub));
+  });
+  [
+    ['home-pwdd',D.persSub],
+    ['sheet-pwdd',D.sheetPersSub],
+    ['edit-pwdd',D.editPersSub]
+  ].forEach(([id,sel])=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = personalCats().map(c=>`<div class="wdd-item" onclick="selectPersSub(event,'${id}',${escapeAttr(JSON.stringify(c))})">${escapeHTML(c)}</div>`).join('');
+    el.querySelectorAll('.wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===personalLabel(sel)));
   });
 }
 function renderWorkCatList(){
   const el = document.getElementById('work-cat-list');
   el.innerHTML = D.workCats.map((c,i)=>`
-    <div class="eli"><span>${c}</span><span class="elix" onclick="removeWorkCat(${i})"><i class="ti ti-x" aria-hidden="true"></i></span></div>
+    <div class="eli"><span>${escapeHTML(c)}</span><span class="elix" onclick="removeWorkCat(${i})"><i class="ti ti-x" aria-hidden="true"></i></span></div>
   `).join('');
 }
 function addWorkCat(){
@@ -660,11 +1199,33 @@ function removeWorkCat(i){
   D.workCats.splice(i,1); save('workCats',D.workCats);
   renderWorkCatList(); buildWorkDDs();
 }
+function renderPersCatList(){
+  const el = document.getElementById('pers-cat-list');
+  el.innerHTML = personalCats().map((c,i)=>`
+    <div class="eli"><span>${escapeHTML(c)}</span><span class="elix" onclick="removePersCat(${i})"><i class="ti ti-x" aria-hidden="true"></i></span></div>
+  `).join('');
+}
+function addPersCat(){
+  const v = document.getElementById('new-pers-cat-in').value.trim();
+  if(!v||personalCats().includes(v)) return;
+  if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
+  D.persCats.push(v); save('persCats',D.persCats);
+  document.getElementById('new-pers-cat-in').value='';
+  renderPersCatList(); buildWorkDDs();
+}
+function removePersCat(i){
+  if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
+  D.persCats.splice(i,1);
+  if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
+  if(!D.persCats.includes(D.persSub)) D.persSub = D.persCats[0] || '';
+  save('persCats',D.persCats); save('lastPersSub',D.persSub);
+  renderPersCatList(); buildWorkDDs(); applyPurposeUI();
+}
 
 // PURPOSE
 function setPurpose(p){
   D.purpose=p; save('lastPurpose',p);
-  if(p==='personal'){ D.workSub=''; }
+  if(p==='personal'){ D.workSub=''; if(!D.persSub) D.persSub=personalCats()[0]||D.persLbl; save('lastPersSub',D.persSub); }
   applyPurposeUI();
 }
 function applyPurposeUI(){
@@ -672,12 +1233,15 @@ function applyPurposeUI(){
   document.getElementById('pb-work').classList.toggle('a',isW);
   document.getElementById('pb-pers').classList.toggle('a',!isW);
   document.getElementById('pb-work-lbl').textContent = isW && D.workSub ? D.workSub : 'Work';
+  document.getElementById('pb-pers-lbl').textContent = !isW ? personalLabel(D.persSub) : D.persLbl;
   document.querySelectorAll('#home-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.workSub));
+  document.querySelectorAll('#home-pwdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===personalLabel(D.persSub)));
 }
 function toggleWorkDD(e){
   e.stopPropagation(); D.purpose='work'; save('lastPurpose','work');
   document.getElementById('pb-work').classList.add('a');
   document.getElementById('pb-pers').classList.remove('a');
+  autoAssignActiveRoutePurpose();
   document.getElementById('home-wdd').classList.toggle('open');
 }
 function selectWorkSub(e,ddId,sub){
@@ -690,11 +1254,41 @@ function selectWorkSub(e,ddId,sub){
   updateSheetPurposeUI();
   D.editWorkSub=sub; D.editPurpose='work';
   updateEditPurposeUI();
+  autoAssignActiveRoutePurpose();
+}
+function togglePersDD(e){
+  e.stopPropagation(); D.purpose='personal'; save('lastPurpose','personal');
+  if(!D.persSub) D.persSub=personalCats()[0]||D.persLbl;
+  document.getElementById('pb-work').classList.remove('a');
+  document.getElementById('pb-pers').classList.add('a');
+  autoAssignActiveRoutePurpose();
+  document.getElementById('home-pwdd').classList.toggle('open');
+  applyPurposeUI();
+}
+function selectPersSub(e,ddId,sub){
+  e.stopPropagation();
+  if(ddId==='home-pwdd'){
+    D.persSub=sub; save('lastPersSub',sub); D.purpose='personal'; save('lastPurpose','personal');
+    document.getElementById('home-pwdd').classList.remove('open');
+    applyPurposeUI();
+    D.sheetPersSub=sub; D.sheetPurpose='personal'; updateSheetPurposeUI();
+    D.editPersSub=sub; D.editPurpose='personal'; updateEditPurposeUI();
+    autoAssignActiveRoutePurpose();
+  } else if(ddId==='sheet-pwdd'){
+    D.sheetPersSub=sub; D.sheetPurpose='personal';
+    document.getElementById('sheet-pwdd').classList.remove('open');
+    updateSheetPurposeUI();
+  } else if(ddId==='edit-pwdd'){
+    D.editPersSub=sub; D.editPurpose='personal';
+    document.getElementById('edit-pwdd').classList.remove('open');
+    updateEditPurposeUI();
+    autoAssignActiveEditRoutePurpose();
+  }
 }
 
 // SHEET PURPOSE
 function setSheetPurpose(p){
-  D.sheetPurpose=p; if(p==='personal') D.sheetWorkSub='';
+  D.sheetPurpose=p; if(p==='personal'){ D.sheetWorkSub=''; if(!D.sheetPersSub) D.sheetPersSub=personalCats()[0]||D.persLbl; }
   updateSheetPurposeUI();
 }
 function updateSheetPurposeUI(){
@@ -702,13 +1296,23 @@ function updateSheetPurposeUI(){
   document.getElementById('sp-work').classList.toggle('a',isW);
   document.getElementById('sp-pers').classList.toggle('a',!isW);
   document.getElementById('sp-work-lbl').textContent = isW && D.sheetWorkSub ? D.sheetWorkSub : 'Work';
+  document.getElementById('sp-pers-lbl').textContent = !isW ? personalLabel(D.sheetPersSub) : D.persLbl;
   document.querySelectorAll('#sheet-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.sheetWorkSub));
+  document.querySelectorAll('#sheet-pwdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===personalLabel(D.sheetPersSub)));
 }
 function toggleSheetWorkDD(e){
   e.stopPropagation(); D.sheetPurpose='work';
   document.getElementById('sp-work').classList.add('a');
   document.getElementById('sp-pers').classList.remove('a');
   document.getElementById('sheet-wdd').classList.toggle('open');
+}
+function toggleSheetPersDD(e){
+  e.stopPropagation(); D.sheetPurpose='personal';
+  if(!D.sheetPersSub) D.sheetPersSub=personalCats()[0]||D.persLbl;
+  document.getElementById('sp-work').classList.remove('a');
+  document.getElementById('sp-pers').classList.add('a');
+  document.getElementById('sheet-pwdd').classList.toggle('open');
+  updateSheetPurposeUI();
 }
 function selectSheetSub(sub){
   D.sheetWorkSub=sub; D.sheetPurpose='work';
@@ -718,7 +1322,7 @@ function selectSheetSub(sub){
 
 // EDIT PURPOSE
 function setEditPurpose(p){
-  D.editPurpose=p; if(p==='personal') D.editWorkSub='';
+  D.editPurpose=p; if(p==='personal'){ D.editWorkSub=''; if(!D.editPersSub) D.editPersSub=personalCats()[0]||D.persLbl; }
   updateEditPurposeUI();
 }
 function updateEditPurposeUI(){
@@ -726,13 +1330,25 @@ function updateEditPurposeUI(){
   document.getElementById('ep-work').classList.toggle('a',isW);
   document.getElementById('ep-pers').classList.toggle('a',!isW);
   document.getElementById('ep-work-lbl').textContent = isW && D.editWorkSub ? D.editWorkSub : 'Work';
+  document.getElementById('ep-pers-lbl').textContent = !isW ? personalLabel(D.editPersSub) : D.persLbl;
   document.querySelectorAll('#edit-wdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===D.editWorkSub));
+  document.querySelectorAll('#edit-pwdd .wdd-item').forEach(x=>x.classList.toggle('sel',x.textContent===personalLabel(D.editPersSub)));
 }
 function toggleEditWorkDD(e){
   e.stopPropagation(); D.editPurpose='work';
   document.getElementById('ep-work').classList.add('a');
   document.getElementById('ep-pers').classList.remove('a');
+  autoAssignActiveEditRoutePurpose();
   document.getElementById('edit-wdd').classList.toggle('open');
+}
+function toggleEditPersDD(e){
+  e.stopPropagation(); D.editPurpose='personal';
+  if(!D.editPersSub) D.editPersSub=personalCats()[0]||D.persLbl;
+  document.getElementById('ep-work').classList.remove('a');
+  document.getElementById('ep-pers').classList.add('a');
+  autoAssignActiveEditRoutePurpose();
+  document.getElementById('edit-pwdd').classList.toggle('open');
+  updateEditPurposeUI();
 }
 
 // redirect sheet/edit wdd items through shared handler
@@ -749,16 +1365,23 @@ document.addEventListener('click',e=>{
   else if(parent.id==='edit-wdd'){
     D.editWorkSub=sub; D.editPurpose='work';
     parent.classList.remove('open'); updateEditPurposeUI();
+    autoAssignActiveEditRoutePurpose();
   }
 });
 
 // HOME
 function openHomeModal(){ document.getElementById('home-in').value=D.homeAddr; openModal('modal-home'); }
 function saveHome(){
-  const v=document.getElementById('home-in').value.trim(); if(!v) return;
+  const v=document.getElementById('home-in').value.trim();
   D.homeAddr=v; save('homeAddr',v);
-  document.getElementById('home-disp').textContent=v;
+  updateHomeDisplay();
   closeModal('modal-home');
+}
+function hasHomeLocation(){ return !!(D.homeAddr || (D.homeLat && D.homeLng)); }
+function updateHomeDisplay(){
+  const el=document.getElementById('home-disp');
+  if(D.homeAddr){ el.textContent=D.homeAddr; return; }
+  el.innerHTML='<i class="ti ti-home" aria-hidden="true" style="font-size:16px;color:#34a853"></i>';
 }
 function autoDetectHome(){
   const btn = document.getElementById('auto-btn-lbl');
@@ -766,16 +1389,13 @@ function autoDetectHome(){
   if(!navigator.geolocation){ btn.textContent='Use my current location'; alert('Geolocation not available'); return; }
   navigator.geolocation.getCurrentPosition(pos=>{
     const {latitude:lat,longitude:lng} = pos.coords;
-    const addr = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-    D.homeAddr=addr; save('homeAddr',addr);
-    document.getElementById('home-disp').textContent=addr;
+    D.homeLat=lat.toFixed(6); D.homeLng=lng.toFixed(6);
+    save('homeLat',D.homeLat); save('homeLng',D.homeLng);
+    updateHomeDisplay();
     btn.textContent='Use my current location';
   }, err=>{
     btn.textContent='Use my current location';
-    // fallback demo
-    const demo='Brgy. Real, Calamba, Laguna (Demo)';
-    D.homeAddr=demo; save('homeAddr',demo);
-    document.getElementById('home-disp').textContent=demo;
+    updateHomeDisplay();
   });
 }
 
@@ -788,15 +1408,19 @@ function saveName(){
 function openPersLblModal(){ document.getElementById('pers-lbl-in').value=D.persLbl; openModal('modal-pers-lbl'); }
 function savePersLbl(){
   const v=document.getElementById('pers-lbl-in').value.trim()||'Personal';
-  D.persLbl=v; save('persLbl',v); updatePersLabels(); closeModal('modal-pers-lbl');
+  const old = D.persLbl;
+  D.persLbl=v;
+  if(!D.persCats.length || D.persCats[0]===old) D.persCats[0]=v;
+  save('persLbl',v); save('persCats',D.persCats);
+  renderPersCatList(); buildWorkDDs(); updatePersLabels(); applyPurposeUI(); closeModal('modal-pers-lbl');
 }
 
 // TRIP
 function startTrip(){
-  if(!D.homeAddr){ openHomeModal(); return; }
-  const dest=document.getElementById('dest-in').value.trim()||'Unknown destination';
+  if(!hasHomeLocation()){ openHomeModal(); return; }
+  const dest=getRouteDestination()||'Unknown destination';
   D.destination=dest; D.active=true; D.startTime=Date.now();
-  D.tripDist=0; D.overrideDist=null; D.paused=false; D.simSpeed=50;
+  D.tripDist=0; D.overrideDist=null; D.paused=false; D.lastPos=null; D.lastGpsAt=null;
   document.getElementById('trip-dest').textContent=dest;
   document.getElementById('tm-val').textContent='0.0';
   document.getElementById('ls-spd').textContent='0';
@@ -805,7 +1429,7 @@ function startTrip(){
   document.getElementById('ls-fc-lbl').textContent=fcLabel();
   document.getElementById('tm-unit').textContent=distLabel();
   showScreen('trip');
-  startTimer(); startSim();
+  startTimer(); startGpsTracking();
 }
 function startTimer(){
   clearInterval(D.timerInt);
@@ -816,26 +1440,71 @@ function startTimer(){
   },1000);
 }
 function pad(n){ return String(n).padStart(2,'0'); }
-function startSim(){
-  clearInterval(D.simInt);
-  let pauseCnt=0;
-  D.simInt=setInterval(()=>{
-    if(!D.active){ clearInterval(D.simInt); return; }
-    D.simSpeed+=(Math.random()-.5)*12;
-    D.simSpeed=Math.max(0,Math.min(110,D.simSpeed));
-    if(D.simSpeed<6){ pauseCnt++; if(pauseCnt>3&&!D.paused){ setPaused(true); } }
-    else { pauseCnt=0; if(D.paused) setPaused(false); }
-    if(!D.paused){
-      const d=(D.simSpeed/3600)*2;
-      D.tripDist+=d;
-      document.getElementById('tm-val').textContent=fmtDist(D.tripDist);
-      document.getElementById('ls-spd').textContent=Math.round(D.simSpeed)+(D.distUnit==='km'?' km/h':' mph');
-      const litPerTick=d*(D.simSpeed<40?0.095:0.078)+(Math.random()-.5)*0.005;
-      const litTotal=litPerTick*D.tripDist/d;
-      document.getElementById('ls-fc').textContent=fmtFC(litTotal,D.tripDist);
-    }
-    if((Date.now()-D.startTime)/1000>180) autoStop();
-  },2000);
+function startGpsTracking(){
+  clearGpsTracking();
+  if(!navigator.geolocation){
+    setGpsBadge('Location unavailable', 'pause');
+    alert('GPS is not available in this browser.');
+    return;
+  }
+  setGpsBadge('Waiting for GPS', 'pause');
+  D.gpsWatchId=navigator.geolocation.watchPosition(handleGpsPosition, handleGpsError, {
+    enableHighAccuracy:true,
+    maximumAge:1000,
+    timeout:15000
+  });
+}
+function handleGpsPosition(pos){
+  if(!D.active) return;
+  const c=pos.coords;
+  const lat=c.latitude, lng=c.longitude;
+  const acc=c.accuracy || 999;
+  const now=pos.timestamp || Date.now();
+  const speedKmh = typeof c.speed==='number' && c.speed>=0 ? c.speed*3.6 : null;
+  setGpsBadge('GPS Active', 'gps');
+  if(D.featureSettings.speedConfirm && speedKmh!==null) setPaused(speedKmh<3);
+  if(D.lastPos && acc<=80){
+    const meters=distanceMeters(D.lastPos.lat,D.lastPos.lng,lat,lng);
+    const seconds=Math.max(1,(now-D.lastGpsAt)/1000);
+    const impliedKmh=(meters/1000)/(seconds/3600);
+    if(meters>=3 && meters<=1000 && impliedKmh<=180) D.tripDist+=meters/1000;
+  }
+  D.lastPos={lat,lng,accuracy:acc};
+  D.lastGpsAt=now;
+  autoAppendDetectedDestination(lat,lng);
+  updateLiveTripUI(speedKmh);
+  if(D.featureSettings.autoStopHome!==false && isAtHome(lat,lng) && (Date.now()-D.startTime)/1000>60) autoStop();
+}
+function handleGpsError(err){
+  if(!D.active) return;
+  setGpsBadge('GPS permission needed', 'pause');
+  document.getElementById('ls-spd').textContent='0';
+}
+function updateLiveTripUI(speedKmh){
+  document.getElementById('tm-val').textContent=fmtDist(D.tripDist);
+  if(speedKmh===null){
+    document.getElementById('ls-spd').textContent='--';
+  }else{
+    const showSpeed = D.distUnit==='km' ? speedKmh : speedKmh*0.621371;
+    document.getElementById('ls-spd').textContent=Math.round(showSpeed)+(D.distUnit==='km'?' km/h':' mph');
+  }
+  document.getElementById('ls-fc').textContent='--';
+}
+function setGpsBadge(text,type){
+  const b=document.getElementById('trip-badge');
+  if(type==='gps'){ b.className='badge-gps'; b.innerHTML='<div class="gdot"></div>'+escapeHTML(text); }
+  else { b.className='badge-pause'; b.innerHTML='<i class="ti ti-satellite" style="font-size:11px" aria-hidden="true"></i> '+escapeHTML(text); }
+}
+function clearGpsTracking(){
+  if(D.gpsWatchId!==null && navigator.geolocation){
+    navigator.geolocation.clearWatch(D.gpsWatchId);
+  }
+  D.gpsWatchId=null;
+}
+function isAtHome(lat,lng){
+  const hlat=parseFloat(D.homeLat), hlng=parseFloat(D.homeLng);
+  if(isNaN(hlat)||isNaN(hlng)) return false;
+  return distanceMeters(lat,lng,hlat,hlng) <= 120;
 }
 function setPaused(p){
   D.paused=p;
@@ -843,9 +1512,9 @@ function setPaused(p){
   if(p){ b.className='badge-pause'; b.innerHTML='<i class="ti ti-pause" style="font-size:11px" aria-hidden="true"></i> Trip Paused'; }
   else { b.className='badge-gps'; b.innerHTML='<div class="gdot"></div>GPS Active'; }
 }
-function stopTrip(){ clearInterval(D.simInt); clearInterval(D.timerInt); D.active=false; openSaveSheet(); }
+function stopTrip(){ clearGpsTracking(); clearInterval(D.timerInt); D.active=false; openSaveSheet(); }
 function autoStop(){
-  clearInterval(D.simInt); clearInterval(D.timerInt); D.active=false;
+  clearGpsTracking(); clearInterval(D.timerInt); D.active=false;
   const b=document.getElementById('trip-badge');
   b.className='badge-home'; b.innerHTML='<i class="ti ti-home" style="font-size:11px" aria-hidden="true"></i> Arrived home!';
   setTimeout(openSaveSheet,700);
@@ -868,7 +1537,7 @@ function openSaveSheet(){
   document.getElementById('gas-note').textContent='';
   document.getElementById('gas-fields').classList.remove('open');
   document.getElementById('gas-tog').classList.remove('open');
-  D.sheetPurpose=D.purpose; D.sheetWorkSub=D.workSub;
+  D.sheetPurpose=D.purpose; D.sheetWorkSub=D.workSub; D.sheetPersSub=D.persSub;
   updateSheetPurposeUI();
   openOverlay('ov-save');
 }
@@ -893,8 +1562,8 @@ function toggleGas(){
   document.getElementById('gas-fields').classList.toggle('open');
 }
 function calcGas(){
-  const price=parseFloat(document.getElementById('gas-price').value)||0;
-  const litres=parseFloat(document.getElementById('gas-litres').value)||0;
+  const price=positiveNumber('gas-price');
+  const litres=positiveNumber('gas-litres');
   const dist=D.overrideDist!==null?D.overrideDist:parseFloat(fmtDist(D.tripDist));
   const note=document.getElementById('gas-note');
   const fcEl=document.getElementById('cs-fc');
@@ -905,7 +1574,7 @@ function calcGas(){
     if(price>0){
       const total=(price*litres).toFixed(2);
       const cpk=(price*litres/dist).toFixed(2);
-      msg+=` · ₱${total} total · ₱${cpk}/${distLabel()}`;
+      msg+=` · ${currencySymbol()}${total} total · ${currencySymbol()}${cpk}/${distLabel()}`;
     }
     note.textContent=msg;
   } else { note.textContent=''; fcEl.textContent='—'; }
@@ -915,15 +1584,16 @@ function saveTrip(){
   const rawKm=D.tripDist;
   const distDisplay=D.overrideDist!==null?D.overrideDist:parseFloat(fmtDist(rawKm));
   const distKm=D.distUnit==='km'?distDisplay:distDisplay/0.621371;
-  const price=parseFloat(document.getElementById('gas-price').value)||0;
-  const litres=parseFloat(document.getElementById('gas-litres').value)||0;
+  const price=positiveNumber('gas-price');
+  const litres=positiveNumber('gas-litres');
   const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
-  const fcVal=litres>0&&distKm>0?parseFloat(fmtFC(litres,distKm)):null;
+  const fcVal=fuelUseValue(litres,distKm);
   const cpkm=fuelCost>0&&distDisplay>0?parseFloat((fuelCost/distDisplay).toFixed(2)):null;
-  const purposeLbl=D.sheetPurpose==='work'?('Work – '+(D.sheetWorkSub||'Others')):(D.persLbl||'Personal');
+  const purposeLbl=D.sheetPurpose==='work'?('Work – '+(D.sheetWorkSub||'Others')):personalLabel(D.sheetPersSub);
+  const routeStops=allocateRouteDistances(getRouteStops(),distKm);
   const trip={
     id:Date.now(), destination:D.destination,
-    purpose:D.sheetPurpose, workSub:D.sheetWorkSub, purposeLbl,
+    purpose:D.sheetPurpose, workSub:D.sheetWorkSub, persSub:D.sheetPersSub, purposeLbl, routeStops,
     distDisplay, distKm, distUnit:D.distUnit,
     gasPrice:price, gasLitres:litres, fuelCost, fcVal, cpkm,
     duration:pad(Math.floor(elapsed/60))+':'+pad(elapsed%60),
@@ -936,20 +1606,451 @@ function saveTrip(){
   document.getElementById('sv-sub').textContent=trip.destination+' · '+purposeLbl;
   document.getElementById('sv-sum').innerHTML=buildSummaryHTML(trip);
   renderTrips(); renderStats(); updateWelcome();
+  renderServiceReminders();
   showScreen('saved');
 }
 function safeFixed(v,n=1){ const f=parseFloat(v); return isNaN(f)?'—':f.toFixed(n); }
 function buildSummaryHTML(t){
-  let h=`<div class="sr"><span class="sl">Distance</span><span class="sv2">${safeFixed(t.distDisplay,1)} ${D.distUnit==='km'?'km':'mi'}</span></div>`;
-  h+=`<div class="sr"><span class="sl">Duration</span><span class="sv2">${t.duration||'—'}</span></div>`;
-  if(t.fcVal!=null&&!isNaN(t.fcVal)) h+=`<div class="sr"><span class="sl">Fuel consumption</span><span class="sv2">${safeFixed(t.fcVal,2)} ${fcLabel()}</span></div>`;
-  if(t.fuelCost>0) h+=`<div class="sr"><span class="sl">Fuel cost</span><span class="sv2">₱${safeFixed(t.fuelCost,2)}</span></div>`;
-  if(t.cpkm&&!isNaN(t.cpkm)) h+=`<div class="sr"><span class="sl">Cost / ${distLabel()}</span><span class="sv2">₱${safeFixed(t.cpkm,2)}</span></div>`;
-  h+=`<div class="sr"><span class="sl">Purpose</span><span class="sv2">${t.purposeLbl||'—'}</span></div>`;
-  h+=`<div class="sr"><span class="sl">Date</span><span class="sv2">${t.date||''} ${t.time||''}</span></div>`;
+  const dist = tripDisplayDist(t);
+  const fc = fuelUseValue(t.gasLitres, tripDistKm(t));
+  const costPerUnit = t.fuelCost>0&&dist>0 ? t.fuelCost/dist : null;
+  let h=`<div class="sr"><span class="sl">Distance</span><span class="sv2">${safeFixed(dist,1)} ${distLabel()}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Duration</span><span class="sv2">${escapeHTML(t.duration||'—')}</span></div>`;
+  if(routeStopsHTML(t)) h+=`<div class="sr" style="display:block"><span class="sl">Destinations</span>${routeStopsHTML(t)}</div>`;
+  if(fc!==null) h+=`<div class="sr"><span class="sl">Fuel consumption</span><span class="sv2">${safeFixed(fc,2)} ${fcLabel()}</span></div>`;
+  if(t.fuelCost>0) h+=`<div class="sr"><span class="sl">Fuel cost</span><span class="sv2">${money(t.fuelCost)}</span></div>`;
+  if(costPerUnit!==null) h+=`<div class="sr"><span class="sl">Cost / ${distLabel()}</span><span class="sv2">${money(costPerUnit)}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Purpose</span><span class="sv2">${escapeHTML(t.purposeLbl||'—')}</span></div>`;
+  h+=`<div class="sr"><span class="sl">Date</span><span class="sv2">${escapeHTML((t.date||'')+' '+(t.time||''))}</span></div>`;
   return h;
 }
-function newTrip(){ document.getElementById('dest-in').value=''; showScreen('home'); }
+function routeStopsHTML(t){
+  const stops = Array.isArray(t.routeStops) && t.routeStops.length ? t.routeStops : (t.destination ? [{destination:t.destination,purposeLabel:t.purposeLbl}] : []);
+  if(!stops.length) return '';
+  return `<div class="route-stop-list">${stops.map((s,i)=>`<div class="route-stop"><b>${i+1}. ${escapeHTML(s.destination||'—')}</b>${s.purposeLabel?' · '+escapeHTML(compactPurposeLabel(s.purposeLabel)):''} · ${safeFixed(displayDistFromKm(routeStopDistanceKm(s,t)),1)} ${distLabel()}</div>`).join('')}</div>`;
+}
+function routeStopsText(t){
+  const stops = Array.isArray(t.routeStops) && t.routeStops.length ? t.routeStops : [];
+  if(!stops.length) return t.purposeLbl || '—';
+  return stops.map((s,i)=>`${i+1}. ${s.destination}${s.purposeLabel?' ('+compactPurposeLabel(s.purposeLabel)+')':''}`).join(' · ');
+}
+function compactPurposeLabel(label){
+  return String(label||'').replace(/^Work\s+[–-]\s+/,'').replace(/^Personal\s+[–-]\s+/,'');
+}
+function allocateRouteDistances(stops,totalKm){
+  const cleanStops = (stops||[]).map(s=>({...s}));
+  if(!cleanStops.length) return cleanStops;
+  const known = cleanStops.reduce((a,s)=>a+(parseFloat(s.distKm)||0),0);
+  const missing = cleanStops.filter(s=>!(parseFloat(s.distKm)>0));
+  const remaining = Math.max(0,(parseFloat(totalKm)||0)-known);
+  const share = missing.length ? remaining/missing.length : 0;
+  cleanStops.forEach(s=>{
+    if(!(parseFloat(s.distKm)>0)) s.distKm=share;
+    s.distDisplay=displayDistFromKm(s.distKm);
+  });
+  return cleanStops;
+}
+function routeStopDistanceKm(stop,t){
+  const d=parseFloat(stop?.distKm);
+  if(!isNaN(d) && d>=0) return d;
+  const stops=Array.isArray(t.routeStops)&&t.routeStops.length?t.routeStops:[];
+  return stops.length ? tripDistKm(t)/stops.length : tripDistKm(t);
+}
+function newTrip(){
+  document.getElementById('dest-in').value='';
+  document.getElementById('route-extra').innerHTML='';
+  resetRoutePurposeButton(document.getElementById('main-route-purpose'));
+  showScreen('home');
+}
+
+// ROUTE DESTINATIONS AND GEOFENCES
+function placeNames(){ return D.geofences.map(g=>g.name).filter(Boolean); }
+function renderPlaceSuggestions(){
+  document.getElementById('place-suggestions').innerHTML = placeNames().map(n=>`<option value="${escapeAttr(n)}"></option>`).join('');
+}
+function renderDestinationFields(){
+  renderPlaceSuggestions();
+  const box = document.getElementById('route-extra');
+  const existing = Array.from(box.querySelectorAll('.route-row')).map(row=>({
+    value: row.querySelector('.route-input')?.value || '',
+    purposeType: row.querySelector('.route-purpose')?.dataset.purposeType || '',
+    purposeLabel: row.querySelector('.route-purpose')?.dataset.purposeLabel || ''
+  }));
+  box.innerHTML = existing.map(v=>routeFieldHTML(v.value,v)).join('');
+}
+function routeFieldHTML(value='',purpose={}){
+  const type = purpose.purposeType || '';
+  const label = purpose.purposeLabel || '';
+  const chipText = label || 'Purpose';
+  return `<div class="route-row">
+    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="route-input" type="text" list="place-suggestions" placeholder="Next destination" value="${escapeAttr(value)}" onfocus="setActiveRoutePurposeButton(this.closest('.route-row').querySelector('.route-purpose'))"></div>
+    <button class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onclick="assignDestinationPurpose(this)">${escapeHTML(chipText)}</button>
+    <div class="route-remove" onclick="this.closest('.route-row').remove()"><i class="ti ti-trash" aria-hidden="true"></i></div>
+  </div>`;
+}
+function addDestinationField(value=''){
+  document.getElementById('route-extra').insertAdjacentHTML('beforeend', routeFieldHTML(value));
+}
+function currentPurposeSnapshot(){
+  if(D.purpose==='work') return {type:'work', label:D.workSub||'Others'};
+  return {type:'personal', label:personalLabel(D.persSub)};
+}
+function assignDestinationPurpose(btn){
+  const p=currentPurposeSnapshot();
+  setActiveRoutePurposeButton(btn);
+  btn.dataset.purposeType=p.type;
+  btn.dataset.purposeLabel=p.label;
+  btn.textContent=p.label;
+  btn.classList.remove('work','personal');
+  btn.classList.add(p.type);
+}
+function resetRoutePurposeButton(btn){
+  if(!btn) return;
+  btn.dataset.purposeType='';
+  btn.dataset.purposeLabel='';
+  btn.textContent='Purpose';
+  btn.classList.remove('work','personal');
+}
+function setActiveRoutePurposeButton(btn){
+  D.activeRoutePurposeButton = btn;
+}
+function autoAssignActiveRoutePurpose(){
+  if(D.activeRoutePurposeButton) assignDestinationPurpose(D.activeRoutePurposeButton);
+}
+function routePurposeFromButton(btn){
+  return {
+    purposeType: btn?.dataset.purposeType || '',
+    purposeLabel: btn?.dataset.purposeLabel || ''
+  };
+}
+function getRouteStops(){
+  const main = document.getElementById('dest-in').value.trim();
+  const stops = [];
+  if(main) stops.push({destination:main, ...routePurposeFromButton(document.getElementById('main-route-purpose'))});
+  document.querySelectorAll('#route-extra .route-row').forEach(row=>{
+    const destination = row.querySelector('.route-input')?.value.trim();
+    if(destination) stops.push({destination, ...routePurposeFromButton(row.querySelector('.route-purpose'))});
+  });
+  return stops;
+}
+function getRouteDestination(){
+  return getRouteStops().map(s=>s.destination).join(' → ');
+}
+function editRouteFieldHTML(stop={}){
+  const value = stop.destination || '';
+  const type = stop.purposeType || '';
+  const label = stop.purposeLabel ? compactPurposeLabel(stop.purposeLabel) : '';
+  const dist = parseFloat(stop.distKm);
+  const distVal = !isNaN(dist) && dist>0 ? displayDistFromKm(dist).toFixed(1) : '';
+  return `<div class="route-row">
+    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="edit-route-input" type="text" list="place-suggestions" placeholder="Next destination" value="${escapeAttr(value)}" onfocus="setActiveEditRoutePurposeButton(this.closest('.route-row').querySelector('.route-purpose'))"></div>
+    <button class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onclick="assignEditDestinationPurpose(this)">${escapeHTML(label||'Purpose')}</button>
+    <input class="route-dist" type="number" step="0.1" min="0" placeholder="${distLabel()}" value="${escapeAttr(distVal)}" oninput="updateEditTotalFromSegments()">
+    <div class="route-remove" onclick="this.closest('.route-row').remove()"><i class="ti ti-trash" aria-hidden="true"></i></div>
+  </div>`;
+}
+function addEditDestinationField(stop={}){
+  document.getElementById('edit-route-extra').insertAdjacentHTML('beforeend', editRouteFieldHTML(stop));
+}
+function editPurposeSnapshot(){
+  if(D.editPurpose==='work') return {type:'work', label:D.editWorkSub||'Others'};
+  return {type:'personal', label:personalLabel(D.editPersSub)};
+}
+function assignEditDestinationPurpose(btn){
+  const p=editPurposeSnapshot();
+  setActiveEditRoutePurposeButton(btn);
+  btn.dataset.purposeType=p.type;
+  btn.dataset.purposeLabel=p.label;
+  btn.textContent=p.label;
+  btn.classList.remove('work','personal');
+  btn.classList.add(p.type);
+}
+function setActiveEditRoutePurposeButton(btn){ D.activeEditRoutePurposeButton=btn; }
+function autoAssignActiveEditRoutePurpose(){ if(D.activeEditRoutePurposeButton) assignEditDestinationPurpose(D.activeEditRoutePurposeButton); }
+function resetEditRoutePurposeButton(btn){
+  if(!btn) return;
+  btn.dataset.purposeType='';
+  btn.dataset.purposeLabel='';
+  btn.textContent='Purpose';
+  btn.classList.remove('work','personal');
+}
+function editRoutePurposeFromButton(btn){
+  return {purposeType:btn?.dataset.purposeType||'', purposeLabel:btn?.dataset.purposeLabel||''};
+}
+function loadEditRouteStops(t){
+  const stops = Array.isArray(t.routeStops) && t.routeStops.length ? t.routeStops : [{destination:t.destination||'',purposeType:t.purpose||'',purposeLabel:compactPurposeLabel(t.purposeLbl||'')}];
+  const main = stops[0] || {};
+  document.getElementById('edit-dest').value = main.destination || '';
+  const mainDist=parseFloat(main.distKm);
+  document.getElementById('edit-main-route-dist').value = !isNaN(mainDist)&&mainDist>0 ? displayDistFromKm(mainDist).toFixed(1) : '';
+  document.getElementById('edit-main-route-dist').placeholder = distLabel();
+  const mainBtn = document.getElementById('edit-main-route-purpose');
+  resetEditRoutePurposeButton(mainBtn);
+  if(main.purposeLabel){
+    mainBtn.dataset.purposeType=main.purposeType||'';
+    mainBtn.dataset.purposeLabel=compactPurposeLabel(main.purposeLabel);
+    mainBtn.textContent=compactPurposeLabel(main.purposeLabel);
+    if(main.purposeType) mainBtn.classList.add(main.purposeType);
+  }
+  document.getElementById('edit-route-extra').innerHTML = '';
+  stops.slice(1).forEach(s=>addEditDestinationField(s));
+  setActiveEditRoutePurposeButton(mainBtn);
+}
+function getEditRouteStops(){
+  const stops=[];
+  const main=document.getElementById('edit-dest').value.trim();
+  const mainDist=parseFloat(document.getElementById('edit-main-route-dist').value);
+  if(main) stops.push({destination:main,...editRoutePurposeFromButton(document.getElementById('edit-main-route-purpose')),distKm:(!isNaN(mainDist)&&mainDist>0?(D.distUnit==='km'?mainDist:mainDist/0.621371):null)});
+  document.querySelectorAll('#edit-route-extra .route-row').forEach(row=>{
+    const destination=row.querySelector('.edit-route-input')?.value.trim();
+    const d=parseFloat(row.querySelector('.route-dist')?.value);
+    if(destination) stops.push({destination,...editRoutePurposeFromButton(row.querySelector('.route-purpose')),distKm:(!isNaN(d)&&d>0?(D.distUnit==='km'?d:d/0.621371):null)});
+  });
+  return stops;
+}
+function getEditRouteDestination(){
+  return getEditRouteStops().map(s=>s.destination).join(' → ');
+}
+function editRouteDistanceInputs(){
+  return [document.getElementById('edit-main-route-dist'), ...Array.from(document.querySelectorAll('#edit-route-extra .route-dist'))].filter(Boolean);
+}
+function updateEditTotalFromSegments(){
+  const vals=editRouteDistanceInputs().map(i=>parseFloat(i.value)).filter(v=>!isNaN(v)&&v>=0);
+  if(!vals.length) return;
+  const total=vals.reduce((a,b)=>a+b,0);
+  document.getElementById('edit-dist').value=total.toFixed(1);
+}
+function redistributeEditRouteDistances(){
+  const total=parseFloat(document.getElementById('edit-dist').value);
+  const inputs=editRouteDistanceInputs();
+  if(isNaN(total)||total<0||!inputs.length) return;
+  const share=total/inputs.length;
+  inputs.forEach(i=>i.value=share.toFixed(1));
+}
+function distanceMeters(aLat,aLng,bLat,bLng){
+  const R=6371000, toRad=n=>n*Math.PI/180;
+  const dLat=toRad(bLat-aLat), dLng=toRad(bLng-aLng);
+  const s1=Math.sin(dLat/2), s2=Math.sin(dLng/2);
+  const a=s1*s1+Math.cos(toRad(aLat))*Math.cos(toRad(bLat))*s2*s2;
+  return 2*R*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function matchGeofence(lat,lng){
+  return D.geofences.find(g=>{
+    const glat=parseFloat(g.lat), glng=parseFloat(g.lng), r=parseFloat(g.radius)||100;
+    if(isNaN(glat)||isNaN(glng)) return false;
+    return distanceMeters(lat,lng,glat,glng) <= r;
+  });
+}
+function autoAppendDetectedDestination(lat,lng){
+  const g = matchGeofence(lat,lng);
+  if(!g) return;
+  const current = [document.getElementById('dest-in').value.trim(), ...Array.from(document.querySelectorAll('.route-input')).map(x=>x.value.trim())];
+  if(current.includes(g.name)) return;
+  if(!current[0]) document.getElementById('dest-in').value = g.name;
+  else addDestinationField(g.name);
+}
+function resetGeofenceForm(){
+  D.geofenceEditId=null;
+  ['geo-name','geo-area','geo-lat','geo-lng','geo-radius','geo-note'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('geo-detect-note').innerHTML='<i class="ti ti-current-location" aria-hidden="true"></i>Use current location to tag this place';
+}
+function useCurrentGeofenceLocation(){
+  const note=document.getElementById('geo-detect-note');
+  note.textContent='Detecting current location...';
+  if(!navigator.geolocation){ note.textContent='Geolocation not available in this browser'; return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    document.getElementById('geo-lat').value=pos.coords.latitude.toFixed(6);
+    document.getElementById('geo-lng').value=pos.coords.longitude.toFixed(6);
+    note.textContent='Current location tagged';
+  },()=>{
+    note.textContent='Location permission denied or unavailable';
+  },{enableHighAccuracy:true,timeout:10000});
+}
+function saveGeofence(){
+  const name=document.getElementById('geo-name').value.trim();
+  if(!name) return alert('Please enter a customer or destination name.');
+  const lat=parseFloat(document.getElementById('geo-lat').value);
+  const lng=parseFloat(document.getElementById('geo-lng').value);
+  if(isNaN(lat)||isNaN(lng)) return alert('Please enter latitude and longitude, or use current location.');
+  const radius=parseFloat(document.getElementById('geo-radius').value)||150;
+  const item={id:D.geofenceEditId||Date.now(),name,area:document.getElementById('geo-area').value.trim(),lat,lng,radius,note:document.getElementById('geo-note').value.trim()};
+  const idx=D.geofences.findIndex(g=>g.id===item.id);
+  if(idx>=0) D.geofences[idx]=item; else D.geofences.unshift(item);
+  save('geofences',D.geofences);
+  resetGeofenceForm(); renderGeofences(); renderDestinationFields();
+}
+function renderGeofences(){
+  renderPlaceSuggestions();
+  const el=document.getElementById('place-list');
+  if(!D.geofences.length){
+    el.innerHTML='<div class="empty"><i class="ti ti-map-pin" aria-hidden="true"></i>No geofence places yet.<br>Add customer destinations above.</div>';
+    return;
+  }
+  el.innerHTML=D.geofences.map(g=>`<div class="place-card">
+    <div class="place-title">${escapeHTML(g.name)}</div>
+    <div class="place-meta">${escapeHTML(g.area||'No area set')} · ${safeFixed(g.radius,0)} m radius</div>
+    <div class="place-meta">${safeFixed(g.lat,6)}, ${safeFixed(g.lng,6)}</div>
+    ${g.note?`<div class="place-note">${escapeHTML(g.note)}</div>`:''}
+    <div class="place-actions">
+      <div class="tabtn taedit" onclick="editGeofence(${g.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+      <div class="tabtn tadelx" onclick="deleteGeofence(${g.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
+    </div>
+  </div>`).join('');
+}
+function editGeofence(id){
+  const g=D.geofences.find(x=>x.id===id); if(!g) return;
+  D.geofenceEditId=id;
+  document.getElementById('geo-name').value=g.name||'';
+  document.getElementById('geo-area').value=g.area||'';
+  document.getElementById('geo-lat').value=g.lat||'';
+  document.getElementById('geo-lng').value=g.lng||'';
+  document.getElementById('geo-radius').value=g.radius||'';
+  document.getElementById('geo-note').value=g.note||'';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function deleteGeofence(id){
+  D.geofences=D.geofences.filter(g=>g.id!==id);
+  save('geofences',D.geofences);
+  if(D.geofenceEditId===id) resetGeofenceForm();
+  renderGeofences(); renderDestinationFields();
+}
+
+// SERVICE REMINDERS
+function updateServiceModeUI(){
+  const mode = document.getElementById('svc-mode').value;
+  const isMileage = mode === 'mileage';
+  document.getElementById('svc-date-fields').style.display = isMileage ? 'none' : 'block';
+  document.getElementById('svc-mileage-fields').style.display = isMileage ? 'block' : 'none';
+  document.getElementById('svc-mileage-label').textContent = 'Target mileage ('+distLabel()+')';
+  document.getElementById('svc-mileage-hint').textContent = 'Current total: '+displayDistFromKm(totalTripKm()).toFixed(1)+' '+distLabel();
+}
+function resetServiceForm(){
+  D.serviceEditId = null;
+  document.getElementById('svc-title').value = '';
+  document.getElementById('svc-mode').value = 'date';
+  document.getElementById('svc-date-mode').value = 'countdown';
+  document.getElementById('svc-date').value = '';
+  document.getElementById('svc-mileage').value = '';
+  document.getElementById('svc-cost').value = '';
+  document.getElementById('svc-note').value = '';
+  updateServiceModeUI();
+}
+function saveServiceReminder(){
+  const title = document.getElementById('svc-title').value.trim() || 'Service reminder';
+  const mode = document.getElementById('svc-mode').value;
+  const cost = positiveNumber('svc-cost');
+  const note = document.getElementById('svc-note').value.trim();
+  const reminder = {
+    id: D.serviceEditId || Date.now(),
+    title, mode, cost, note,
+    createdAt: D.serviceEditId ? (D.serviceReminders.find(x=>x.id===D.serviceEditId)?.createdAt || Date.now()) : Date.now()
+  };
+  if(mode === 'mileage'){
+    const targetDisplay = parseFloat(document.getElementById('svc-mileage').value);
+    if(isNaN(targetDisplay) || targetDisplay <= 0) return alert('Please enter a target mileage.');
+    reminder.targetKm = D.distUnit==='km' ? targetDisplay : targetDisplay/0.621371;
+  } else {
+    const date = document.getElementById('svc-date').value;
+    if(!date) return alert('Please choose a service date.');
+    reminder.dateMode = document.getElementById('svc-date-mode').value;
+    reminder.targetDate = date;
+  }
+  const idx = D.serviceReminders.findIndex(x=>x.id===reminder.id);
+  if(idx >= 0) D.serviceReminders[idx] = reminder;
+  else D.serviceReminders.unshift(reminder);
+  save('serviceReminders', D.serviceReminders);
+  resetServiceForm();
+  renderServiceReminders();
+}
+function serviceProgress(r){
+  const now = Date.now();
+  if(r.mode === 'mileage'){
+    const total = totalTripKm();
+    const target = parseFloat(r.targetKm) || 0;
+    const pct = target > 0 ? Math.min(100, Math.max(0, total/target*100)) : 0;
+    const remaining = Math.max(0, target-total);
+    return {
+      pct, due: target > 0 && total >= target,
+      left: remaining <= 0 ? 'Mileage reached' : displayDistFromKm(remaining).toFixed(1)+' '+distLabel()+' remaining',
+      detail: displayDistFromKm(total).toFixed(1)+' / '+displayDistFromKm(target).toFixed(1)+' '+distLabel()
+    };
+  }
+  const day = 864e5;
+  const target = new Date(r.targetDate+'T23:59:59').getTime();
+  if(r.dateMode === 'countup'){
+    const start = new Date(r.targetDate+'T00:00:00').getTime();
+    const days = Math.max(0, Math.floor((now-start)/day));
+    return {
+      pct: Math.min(100, days/365*100), due: false,
+      left: days+' day'+(days===1?'':'s')+' since',
+      detail: 'Started '+(r.targetDate||'—')
+    };
+  }
+  const start = parseFloat(r.createdAt) || now;
+  const totalRange = Math.max(day, target-start);
+  const pct = Math.min(100, Math.max(0, (now-start)/totalRange*100));
+  const daysLeft = Math.ceil((target-now)/day);
+  return {
+    pct, due: daysLeft <= 0,
+    left: daysLeft <= 0 ? 'Due now' : daysLeft+' day'+(daysLeft===1?'':'s')+' left',
+    detail: 'Target '+(r.targetDate||'—')
+  };
+}
+function renderServiceReminders(){
+  updateServiceModeUI();
+  const el = document.getElementById('service-list');
+  if(!D.serviceReminders.length){
+    el.innerHTML = '<div class="empty"><i class="ti ti-bell-ringing" aria-hidden="true"></i>No service reminders yet.<br>Add one above to monitor maintenance.</div>';
+    updateBell();
+    return;
+  }
+  el.innerHTML = D.serviceReminders.map(r=>{
+    const p = serviceProgress(r);
+    const fillClass = p.due ? 'due' : p.pct >= 80 ? 'warn' : '';
+    return `<div class="service-card">
+      <div class="service-head">
+        <div>
+          <div class="service-title">${escapeHTML(r.title)}</div>
+          <div class="service-meta">${r.mode==='mileage'?'Mileage reminder':(r.dateMode==='countup'?'Date count up':'Date count down')}</div>
+        </div>
+        <div class="service-cost">${r.cost>0?money(r.cost):''}</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${p.pct.toFixed(0)}%"></div></div>
+      <div class="service-status"><span>${escapeHTML(p.left)}</span><span>${escapeHTML(p.detail)}</span></div>
+      ${r.note?`<div class="service-note">${escapeHTML(r.note)}</div>`:''}
+      <div class="service-row-actions">
+        <div class="tabtn taedit" onclick="editServiceReminder(${r.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+        <div class="tabtn tadelx" onclick="deleteServiceReminder(${r.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
+      </div>
+    </div>`;
+  }).join('');
+  updateBell();
+}
+function updateBell(){
+  const due = D.serviceReminders.filter(r=>serviceProgress(r).due).length;
+  const dot = document.getElementById('bell-dot');
+  dot.textContent = due;
+  dot.classList.toggle('show', due > 0);
+}
+function editServiceReminder(id){
+  const r = D.serviceReminders.find(x=>x.id===id); if(!r) return;
+  D.serviceEditId = id;
+  document.getElementById('svc-title').value = r.title || '';
+  document.getElementById('svc-mode').value = r.mode || 'date';
+  document.getElementById('svc-date-mode').value = r.dateMode || 'countdown';
+  document.getElementById('svc-date').value = r.targetDate || '';
+  document.getElementById('svc-mileage').value = r.targetKm ? displayDistFromKm(r.targetKm).toFixed(1) : '';
+  document.getElementById('svc-cost').value = r.cost || '';
+  document.getElementById('svc-note').value = r.note || '';
+  updateServiceModeUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function deleteServiceReminder(id){
+  D.serviceReminders = D.serviceReminders.filter(r=>r.id!==id);
+  save('serviceReminders', D.serviceReminders);
+  if(D.serviceEditId===id) resetServiceForm();
+  renderServiceReminders();
+}
 
 // TRIPS
 function setFilter(f){
@@ -957,11 +2058,22 @@ function setFilter(f){
   document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('a',b.dataset.f===f));
   renderTrips();
 }
+function tripHistoryRows(){
+  if(D.filterMode==='all') return D.trips;
+  const rows=[];
+  D.trips.forEach(t=>{
+    const stops=Array.isArray(t.routeStops)&&t.routeStops.length?t.routeStops:[];
+    stops.filter(s=>s.purposeType===D.filterMode).forEach((s,i)=>{
+      const distKm=routeStopDistanceKm(s,t);
+      rows.push({...t,segmentOf:t.id,id:(t.id*1000)+i,destination:s.destination,purpose:s.purposeType,purposeLbl:compactPurposeLabel(s.purposeLabel),segmentDistKm:distKm,distKm,distDisplay:displayDistFromKm(distKm),routeStops:[s]});
+    });
+    if(!stops.length && t.purpose===D.filterMode) rows.push(t);
+  });
+  return rows;
+}
 function renderTrips(){
   const el=document.getElementById('trips-list');
-  let list=D.trips;
-  if(D.filterMode==='work') list=list.filter(t=>t.purpose==='work');
-  if(D.filterMode==='personal') list=list.filter(t=>t.purpose==='personal');
+  let list=tripHistoryRows();
   if(!list.length){
     el.innerHTML='<div class="empty"><i class="ti ti-road" aria-hidden="true"></i>No trips yet.<br>Start driving to log your first trip!</div>';
     return;
@@ -971,13 +2083,13 @@ function renderTrips(){
       <div class="ti-l">
         <div class="tiic ${t.purpose==='work'?'wic':'pic'}"><i class="ti ti-${t.purpose==='work'?'briefcase':'user'}" aria-hidden="true"></i></div>
         <div>
-          <div class="tiname">${t.destination||'—'}</div>
-          <div class="tisub">${t.purposeLbl||'—'} · ${t.date||'—'}</div>
+          <div class="tiname">${escapeHTML(t.destination||'—')}</div>
+          <div class="tisub">${escapeHTML(routeStopsText(t))} · ${escapeHTML(t.date||'—')}</div>
         </div>
       </div>
       <div class="ti-r">
-        <div class="tikm">${safeFixed(t.distDisplay,1)} ${D.distUnit==='km'?'km':'mi'}</div>
-        <div class="tifc">${t.fcVal!=null&&!isNaN(t.fcVal)?safeFixed(t.fcVal,2)+' '+fcLabel():(t.fuelCost>0?'₱'+safeFixed(t.fuelCost,2):'—')}</div>
+        <div class="tikm">${safeFixed(tripDisplayDist(t),1)} ${distLabel()}</div>
+        <div class="tifc">${fuelUseValue(t.gasLitres,tripDistKm(t))!==null?safeFixed(fuelUseValue(t.gasLitres,tripDistKm(t)),2)+' '+fcLabel():(t.fuelCost>0?money(t.fuelCost):'—')}</div>
         <div class="tiact">
           <div class="tabtn taedit" onclick="openEditTrip(${t.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
           <div class="tabtn tadelx" onclick="promptDelete(${t.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
@@ -990,32 +2102,38 @@ function renderTrips(){
 function openEditTrip(id){
   const t=D.trips.find(x=>x.id===id); if(!t) return;
   document.getElementById('edit-trip-id').value=id;
-  document.getElementById('edit-dest').value=t.destination;
-  document.getElementById('edit-dist').value=t.distDisplay.toFixed(1);
+  document.getElementById('edit-dist').value=tripDisplayDist(t).toFixed(1);
   document.getElementById('edit-dist-lbl').textContent='Distance ('+distLabel()+')';
   document.getElementById('edit-dur').value=t.duration;
-  document.getElementById('edit-gasprice').value=t.gasPrice||'';
-  document.getElementById('edit-litres').value=t.gasLitres||'';
   document.getElementById('edit-date-lbl').textContent=t.date+' · '+t.time;
-  D.editPurpose=t.purpose; D.editWorkSub=t.workSub||'';
+  D.editPurpose=t.purpose; D.editWorkSub=t.workSub||''; D.editPersSub=t.persSub||t.purposeLbl||D.persLbl;
   updateEditPurposeUI();
+  loadEditRouteStops(t);
   openOverlay('ov-edit');
 }
 function saveEditTrip(){
   const id=parseInt(document.getElementById('edit-trip-id').value);
   const idx=D.trips.findIndex(x=>x.id===id); if(idx<0) return;
   const t=D.trips[idx];
-  const dest=document.getElementById('edit-dest').value.trim()||t.destination;
-  const dist=parseFloat(document.getElementById('edit-dist').value)||t.distDisplay;
+  let routeStops=getEditRouteStops();
+  const hasSegmentDistances=routeStops.some(s=>parseFloat(s.distKm)>0);
+  let dist=parseFloat(document.getElementById('edit-dist').value)||tripDisplayDist(t);
+  let distKm=D.distUnit==='km'?dist:dist/0.621371;
+  if(hasSegmentDistances){
+    distKm=routeStops.reduce((a,s)=>a+(parseFloat(s.distKm)||0),0);
+    dist=displayDistFromKm(distKm);
+  } else {
+    routeStops=allocateRouteDistances(routeStops,distKm);
+  }
+  const dest=getEditRouteDestination()||t.destination;
   const dur=document.getElementById('edit-dur').value.trim()||t.duration;
-  const price=parseFloat(document.getElementById('edit-gasprice').value)||0;
-  const litres=parseFloat(document.getElementById('edit-litres').value)||0;
-  const distKm=D.distUnit==='km'?dist:dist/0.621371;
+  const price=parseFloat(t.gasPrice)||0;
+  const litres=parseFloat(t.gasLitres)||0;
   const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
-  const fcVal=litres>0&&distKm>0?parseFloat(fmtFC(litres,distKm)):null;
+  const fcVal=fuelUseValue(litres,distKm);
   const cpkm=fuelCost>0&&dist>0?parseFloat((fuelCost/dist).toFixed(2)):null;
-  const purposeLbl=D.editPurpose==='work'?('Work – '+(D.editWorkSub||'Others')):(D.persLbl||'Personal');
-  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,purposeLbl,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur};
+  const purposeLbl=D.editPurpose==='work'?('Work – '+(D.editWorkSub||'Others')):personalLabel(D.editPersSub);
+  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,persSub:D.editPersSub,purposeLbl,routeStops,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur};
   save('trips',D.trips);
   closeOverlay('ov-edit');
   renderTrips(); renderStats();
@@ -1033,22 +2151,23 @@ function confirmDelete(){
 function renderStats(){
   const now=Date.now(), wk=now-7*864e5, mo=new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime();
   const wkT=D.trips.filter(t=>t.ts>=wk), moT=D.trips.filter(t=>t.ts>=mo);
-  const allKm=D.trips.reduce((a,t)=>a+t.distKm,0);
-  const moKm=moT.reduce((a,t)=>a+t.distKm,0);
-  const wkKm=wkT.reduce((a,t)=>a+t.distKm,0);
-  const fcs=D.trips.filter(t=>t.fcVal!==null).map(t=>t.fcVal);
+  const allKm=totalTripKm();
+  const moKm=moT.reduce((a,t)=>a+tripDistKm(t),0);
+  const wkKm=wkT.reduce((a,t)=>a+tripDistKm(t),0);
+  const fcs=D.trips.map(t=>fuelUseValue(t.gasLitres,tripDistKm(t))).filter(v=>v!==null);
   const avgFc=fcs.length?(fcs.reduce((a,b)=>a+b,0)/fcs.length).toFixed(2):'—';
   const totalFuel=D.trips.reduce((a,t)=>a+(t.fuelCost||0),0);
-  const kmWithFuel=D.trips.filter(t=>t.fuelCost>0).reduce((a,t)=>a+t.distDisplay,0);
-  const cpkm=totalFuel>0&&kmWithFuel>0?(totalFuel/kmWithFuel).toFixed(2):'—';
+  const distWithFuel=D.trips.filter(t=>t.fuelCost>0).reduce((a,t)=>a+tripDisplayDist(t),0);
+  const cpkm=totalFuel>0&&distWithFuel>0?(totalFuel/distWithFuel).toFixed(2):'—';
   const toD=v=>{ const n=parseFloat(v); return isNaN(n)?'0.0':(D.distUnit==='km'?n.toFixed(1):(n*0.621371).toFixed(1)); };
   document.getElementById('stat-mo-dist').textContent=toD(moKm);
   document.getElementById('stat-mo-fc').textContent=avgFc==='—'?'—':safeFixed(avgFc,2);
   document.getElementById('stat-fc-u').textContent=fcLabel();
   document.getElementById('stat-wk-dist').textContent=toD(wkKm);
   document.getElementById('stat-wk-trips').textContent=wkT.length;
-  document.getElementById('stat-fuel-tot').textContent='₱'+safeFixed(totalFuel,2);
-  document.getElementById('stat-cpkm').textContent=cpkm==='—'?'—':'₱'+safeFixed(cpkm,2);
+  document.getElementById('stat-fuel-tot').textContent=money(totalFuel);
+  document.getElementById('stat-cpkm').textContent=cpkm==='—'?'—':money(cpkm);
+  document.getElementById('stat-cpkm-u').textContent=currencySymbol()+'/'+distLabel();
   document.getElementById('stat-all-dist').textContent=toD(allKm);
   document.getElementById('stat-all-trips').textContent=D.trips.length;
 }
