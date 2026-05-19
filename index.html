@@ -172,6 +172,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tiic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .wic{background:#e8f0fe;color:#1a73e8}.pic{background:#e6f4ea;color:#34a853}
 .tiname{font-size:12px;font-weight:500;color:#222}
+.manual-trip-badge{display:inline-flex;align-items:center;gap:3px;border-radius:999px;padding:2px 6px;margin-left:5px;font-size:9px;font-weight:700;vertical-align:1px}
+.manual-trip-badge.done{background:#e6f4ea;color:#137333}
+.manual-trip-badge.pending{background:#f2f2f7;color:#65676b}
+.manual-trip-badge i{font-size:10px}
 .tisub{font-size:10px;color:#aaa;margin-top:1px}
 .ti-r{text-align:right}
 .tikm{font-size:13px;font-weight:500;color:#333}
@@ -338,6 +342,8 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
 .route-purpose.personal{color:#137333;background:#e6f4ea;border-color:#34a853}
 .route-help,.dhint,.toggle-sub,.srs,.service-muted,.place-meta,.service-meta,.tisub,.tifc,.scu,.sv-s,.empty,.tm-unit,.ssub,.modal p{font-size:12px!important;color:#65676b!important;line-height:1.35!important}
 .tiname,.service-title,.place-title,.srl,.gas-tog span,.toggle-title{font-size:15px;color:#050505;font-weight:700}
+.manual-trip-badge{font-size:10px}
+.manual-trip-badge i{font-size:12px}
 .tikm,.ls-v,.civ,.sv2{color:#050505;font-weight:700}
 .scv{font-size:24px;color:#1877f2;font-weight:700}
 .tm-val{font-size:56px;color:#050505;font-weight:700;letter-spacing:0}
@@ -427,7 +433,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
       <div class="manual-odo-panel" id="manual-odo-panel">
         <div class="purp-lbl" id="odo-start-lbl">Start odometer</div>
         <input id="odo-start-in" type="number" step="0.1" min="0" placeholder="Enter current odometer">
-        <button onclick="startManualOdoTrip()"><i class="ti ti-dashboard" aria-hidden="true"></i> Start Odometer Trip</button>
+        <button onclick="startManualOdoTrip()"><i class="ti ti-dashboard" aria-hidden="true"></i> Save Odometer Trip</button>
       </div>
       <div class="dbtn" id="drive-btn" onclick="startTrip()">
         <i class="ti ti-player-play" aria-hidden="true"></i>
@@ -712,6 +718,10 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
     <div class="frow">
       <div class="sfield"><label id="edit-dist-lbl">Distance (km)</label><input id="edit-dist" type="number" step="0.1" min="0" oninput="redistributeEditRouteDistances()"></div>
       <div class="sfield"><label>Duration (mm:ss)</label><input id="edit-dur" type="text" placeholder="22:10"></div>
+    </div>
+    <div class="frow" id="edit-manual-odo-row" style="display:none">
+      <div class="sfield"><label id="edit-odo-start-lbl">Start odometer</label><input id="edit-odo-start" type="number" step="0.1" min="0" oninput="updateEditManualOdoDistance()"></div>
+      <div class="sfield"><label id="edit-odo-end-lbl">End odometer</label><input id="edit-odo-end" type="number" step="0.1" min="0" oninput="updateEditManualOdoDistance()"></div>
     </div>
     <div class="spur-row">
       <div class="sp a" id="ep-work" onclick="toggleEditWorkDD(event)">
@@ -1644,7 +1654,29 @@ function startManualOdoTrip(){
   if(isNaN(v)||v<0) return alert('Please enter a valid start odometer value.');
   D.odoStart=v;
   save('odoStart',v);
-  startTrip({manualOdometer:true});
+  saveManualOdoTripStart(v);
+}
+function saveManualOdoTripStart(startOdo){
+  const dest=getRouteDestination()||'Pending destination';
+  const purpose=D.purpose;
+  const purposeLbl=purpose==='work'?('Work â€“ '+(D.workSub||'Others')):personalLabel(D.persSub);
+  const trip={
+    id:Date.now(), destination:dest,
+    purpose, workSub:D.workSub, persSub:D.persSub, purposeLbl,
+    routeStops:allocateRouteDistances(getRouteStops(),0),
+    distDisplay:0, distKm:0, distUnit:D.distUnit,
+    gasPrice:0, gasLitres:0, fuelCost:0, fcVal:null, cpkm:null,
+    manualOdometer:true, odoStart:startOdo, odoEnd:null,
+    duration:'Pending',
+    date:new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}),
+    time:new Date().toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'}),
+    ts:Date.now()
+  };
+  D.trips.unshift(trip); save('trips',D.trips);
+  document.getElementById('sv-sub').textContent=trip.destination+' Â· '+purposeLbl;
+  document.getElementById('sv-sum').innerHTML=buildSummaryHTML(trip);
+  renderTrips(); renderStats(); updateWelcome(); renderServiceReminders();
+  showScreen('saved');
 }
 function startTrip(opts={}){
   const manual = !!opts.manualOdometer || !!D.featureSettings.manualOdometer;
@@ -1904,6 +1936,7 @@ function saveTrip(){
   showScreen('saved');
 }
 function safeFixed(v,n=1){ const f=parseFloat(v); return isNaN(f)?'—':f.toFixed(n); }
+function odoEndText(v){ return v==null || isNaN(parseFloat(v)) ? 'Pending' : safeFixed(v,1); }
 function buildSummaryHTML(t){
   const dist = tripDisplayDist(t);
   const fc = fuelUseValue(t.gasLitres, tripDistKm(t));
@@ -1911,7 +1944,7 @@ function buildSummaryHTML(t){
   let h=`<div class="sr"><span class="sl">Distance</span><span class="sv2">${safeFixed(dist,1)} ${distLabel()}</span></div>`;
   h+=`<div class="sr"><span class="sl">Duration</span><span class="sv2">${escapeHTML(t.duration||'—')}</span></div>`;
   if(routeStopsHTML(t)) h+=`<div class="sr" style="display:block"><span class="sl">Destinations</span>${routeStopsHTML(t)}</div>`;
-  if(t.manualOdometer) h+=`<div class="sr"><span class="sl">Odometer</span><span class="sv2">${safeFixed(t.odoStart,1)} → ${safeFixed(t.odoEnd,1)}</span></div>`;
+  if(t.manualOdometer) h+=`<div class="sr"><span class="sl">Odometer</span><span class="sv2">${safeFixed(t.odoStart,1)} → ${odoEndText(t.odoEnd)}</span></div>`;
   if(fc!==null) h+=`<div class="sr"><span class="sl">Fuel consumption</span><span class="sv2">${safeFixed(fc,2)} ${fcLabel()}</span></div>`;
   if(t.fuelCost>0) h+=`<div class="sr"><span class="sl">Fuel cost</span><span class="sv2">${money(t.fuelCost)}</span></div>`;
   if(costPerUnit!==null) h+=`<div class="sr"><span class="sl">Cost / ${distLabel()}</span><span class="sv2">${money(costPerUnit)}</span></div>`;
@@ -2478,12 +2511,12 @@ function renderTrips(){
       <div class="ti-l">
         <div class="tiic ${t.purpose==='work'?'wic':'pic'}"><i class="ti ti-${t.purpose==='work'?'briefcase':'user'}" aria-hidden="true"></i></div>
         <div>
-          <div class="tiname">${escapeHTML(t.destination||'—')}</div>
+          <div class="tiname">${escapeHTML(t.destination||'—')}${manualTripStatusBadge(t)}</div>
           <div class="tisub">${escapeHTML(routeStopsText(t))} · ${escapeHTML(t.date||'—')}</div>
         </div>
       </div>
       <div class="ti-r">
-        <div class="tikm">${safeFixed(tripDisplayDist(t),1)} ${distLabel()}</div>
+        <div class="tikm">${t.manualOdometer&&t.odoEnd==null?'Pending':safeFixed(tripDisplayDist(t),1)+' '+distLabel()}</div>
         <div class="tifc">${fuelUseValue(t.gasLitres,tripDistKm(t))!==null?safeFixed(fuelUseValue(t.gasLitres,tripDistKm(t)),2)+' '+fcLabel():(t.fuelCost>0?money(t.fuelCost):'—')}</div>
         <div class="tiact">
           <div class="tabtn taedit" onclick="openEditTrip(${t.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
@@ -2491,6 +2524,11 @@ function renderTrips(){
         </div>
       </div>
     </div>`).join('');
+}
+function manualTripStatusBadge(t){
+  if(!t.manualOdometer) return '';
+  const done=t.odoEnd!=null && !isNaN(parseFloat(t.odoEnd));
+  return `<span class="manual-trip-badge ${done?'done':'pending'}"><i class="ti ti-${done?'check':'clock'}" aria-hidden="true"></i>${done?'Done':'Pending'}</span>`;
 }
 
 function exportTitle(){
@@ -2505,7 +2543,7 @@ function exportRows(){
     Destination:t.destination||'',
     Purpose:t.purposeLbl||'',
     Details:routeStopsText(t),
-    Distance:safeFixed(tripDisplayDist(t),1),
+    Distance:t.manualOdometer&&t.odoEnd==null?'Pending':safeFixed(tripDisplayDist(t),1),
     Unit:distLabel(),
     Duration:t.duration||'',
     FuelUse:fuelUseValue(t.gasLitres,tripDistKm(t))!==null?safeFixed(fuelUseValue(t.gasLitres,tripDistKm(t)),2):'',
@@ -2513,7 +2551,7 @@ function exportRows(){
     FuelCost:t.fuelCost>0?safeFixed(t.fuelCost,2):'',
     Currency:D.currency,
     OdometerStart:t.odoStart!=null?safeFixed(t.odoStart,1):'',
-    OdometerEnd:t.odoEnd!=null?safeFixed(t.odoEnd,1):''
+    OdometerEnd:t.odoEnd!=null?safeFixed(t.odoEnd,1):(t.manualOdometer?'Pending':'')
   }));
 }
 function csvEscape(v){ return `"${String(v??'').replace(/"/g,'""')}"`; }
@@ -2575,11 +2613,23 @@ function openEditTrip(id){
   document.getElementById('edit-dist').value=tripDisplayDist(t).toFixed(1);
   document.getElementById('edit-dist-lbl').textContent='Distance ('+distLabel()+')';
   document.getElementById('edit-dur').value=t.duration;
+  document.getElementById('edit-manual-odo-row').style.display=t.manualOdometer?'grid':'none';
+  document.getElementById('edit-odo-start-lbl').textContent='Start odometer ('+distLabel()+')';
+  document.getElementById('edit-odo-end-lbl').textContent='End odometer ('+distLabel()+')';
+  document.getElementById('edit-odo-start').value=t.manualOdometer&&t.odoStart!=null?safeFixed(t.odoStart,1):'';
+  document.getElementById('edit-odo-end').value=t.manualOdometer&&t.odoEnd!=null?safeFixed(t.odoEnd,1):'';
   document.getElementById('edit-date-lbl').textContent=t.date+' · '+t.time;
   D.editPurpose=t.purpose; D.editWorkSub=t.workSub||''; D.editPersSub=t.persSub||t.purposeLbl||D.persLbl;
   updateEditPurposeUI();
   loadEditRouteStops(t);
   openOverlay('ov-edit');
+}
+function updateEditManualOdoDistance(){
+  const start=parseFloat(document.getElementById('edit-odo-start').value);
+  const end=parseFloat(document.getElementById('edit-odo-end').value);
+  if(isNaN(start)||isNaN(end)||end<start) return;
+  const dist=end-start;
+  document.getElementById('edit-dist').value=dist.toFixed(1);
 }
 function saveEditTrip(){
   const id=parseInt(document.getElementById('edit-trip-id').value);
@@ -2589,10 +2639,29 @@ function saveEditTrip(){
   const hasSegmentDistances=routeStops.some(s=>parseFloat(s.distKm)>0);
   let dist=parseFloat(document.getElementById('edit-dist').value)||tripDisplayDist(t);
   let distKm=D.distUnit==='km'?dist:dist/0.621371;
-  if(hasSegmentDistances){
+  let odoStart=t.odoStart, odoEnd=t.odoEnd;
+  const manualEdit=!!t.manualOdometer;
+  if(manualEdit){
+    const start=parseFloat(document.getElementById('edit-odo-start').value);
+    const endVal=document.getElementById('edit-odo-end').value.trim();
+    const end=endVal===''?null:parseFloat(endVal);
+    if(isNaN(start)||start<0) return alert('Please enter a valid start odometer.');
+    if(end!==null && (isNaN(end)||end<start)) return alert('End odometer must be higher than start odometer.');
+    odoStart=start; odoEnd=end;
+    if(end!==null){
+      dist=end-start;
+      distKm=D.distUnit==='km'?dist:dist/0.621371;
+      document.getElementById('edit-dist').value=dist.toFixed(1);
+      routeStops=allocateRouteDistances(routeStops.map(s=>({...s,distKm:null,distSource:null})),distKm);
+    }else{
+      dist=0; distKm=0;
+      routeStops=allocateRouteDistances(routeStops.map(s=>({...s,distKm:null,distSource:null})),0);
+    }
+  }
+  if(!manualEdit && hasSegmentDistances){
     distKm=routeStops.reduce((a,s)=>a+(parseFloat(s.distKm)||0),0);
     dist=displayDistFromKm(distKm);
-  } else {
+  } else if(!manualEdit) {
     routeStops=allocateRouteDistances(routeStops,distKm);
   }
   const dest=getEditRouteDestination()||t.destination;
@@ -2603,7 +2672,12 @@ function saveEditTrip(){
   const fcVal=fuelUseValue(litres,distKm);
   const cpkm=fuelCost>0&&dist>0?parseFloat((fuelCost/dist).toFixed(2)):null;
   const purposeLbl=D.editPurpose==='work'?('Work – '+(D.editWorkSub||'Others')):personalLabel(D.editPersSub);
-  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,persSub:D.editPersSub,purposeLbl,routeStops,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur};
+  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,persSub:D.editPersSub,purposeLbl,routeStops,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur,odoStart,odoEnd};
+  if(manualEdit && odoEnd!==null){
+    D.odoStart=odoEnd;
+    save('odoStart',D.odoStart);
+    document.getElementById('odo-start-in').value=D.odoStart.toFixed(1);
+  }
   save('trips',D.trips);
   closeOverlay('ov-edit');
   renderTrips(); renderStats();
