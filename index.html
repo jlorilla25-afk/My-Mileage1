@@ -18,8 +18,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .brand-name{font-size:12px;font-weight:600;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
 .topbar-left h1{font-size:20px;font-weight:600;color:#111;margin:0}
 .topbar-left p{font-size:12px;color:#aaa;margin:2px 0 0}
-.gear-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;flex-shrink:0}
-.gear-btn i{font-size:18px;color:#555}
+.gear-btn,.about-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;flex-shrink:0}
+.gear-btn i,.about-btn i{font-size:18px;color:#555}
 .top-actions{display:flex;gap:7px;align-items:center;flex-shrink:0}
 .bell-btn{width:34px;height:34px;border-radius:10px;background:#f2f2f7;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid #e0e0e0;position:relative}
 .bell-btn i{font-size:18px;color:#555}
@@ -44,7 +44,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .home-loc-row{display:flex;align-items:center;gap:7px;background:#f0faf4;border:0.5px solid #c5e8cc;border-radius:9px;padding:8px 10px}
 .home-loc-row i{font-size:15px;color:#34a853}
 .home-loc-row span{font-size:12px;color:#333;flex:1}
+#home-disp{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .home-loc-row .edb{font-size:11px;color:#1a73e8;cursor:pointer;white-space:nowrap}
+.loc-icon-btn{width:32px;height:32px;border:none;border-radius:50%;background:#e8f0fe;color:#1a73e8;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+.loc-icon-btn i{font-size:17px;color:#1a73e8}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .auto-btn{display:flex;align-items:center;gap:5px;background:#e8f0fe;border-radius:8px;padding:7px 10px;margin-top:6px;cursor:pointer}
 .auto-btn i{font-size:13px;color:#1a73e8}.auto-btn span{font-size:11px;color:#1a73e8}
 /* dest input */
@@ -72,6 +76,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .manual-odo-panel{display:none;width:100%;background:#fff;border:0.5px solid #d0dcf0;border-radius:12px;padding:12px;margin-top:2px}
 .manual-odo-panel.show{display:block}
 .manual-odo-panel input{width:100%;border:0.5px solid #ddd;border-radius:8px;padding:9px 10px;font-size:13px;outline:none;background:#fafafa;margin:5px 0 8px}
+#odo-start-lbl{font-size:18px!important;font-weight:800!important;color:#1c1e21;margin-bottom:7px}
+#odo-start-in{font-size:30px!important;font-weight:800;line-height:1.15;padding:13px 14px!important;letter-spacing:0}
+.odo-hidden{position:absolute;opacity:0;pointer-events:none;height:1px!important;padding:0!important;margin:0!important}
+.odo-roller{display:flex;align-items:stretch;justify-content:center;gap:6px;background:#111827;border-radius:16px;padding:12px;margin:8px 0 12px;border:1px solid #243041;box-shadow:0 8px 20px rgba(17,24,39,.18),inset 0 1px 0 rgba(255,255,255,.06);touch-action:none}
+.odo-digit{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;flex:1}
+.odo-step{width:100%;height:21px;border:none;border-radius:8px;background:#1f2937;color:#cbd5e1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.odo-step i{font-size:13px}
+.odo-num{width:100%;height:52px;border-radius:10px;background:#f8fafc;color:#0f172a;font-size:34px;font-weight:850;line-height:52px;text-align:center;font-variant-numeric:tabular-nums;box-shadow:inset 0 -2px 0 rgba(15,23,42,.10),0 1px 2px rgba(0,0,0,.18)}
+.odo-digit.hot .odo-num{background:#e7f3ff;color:#1877f2;box-shadow:inset 0 -2px 0 rgba(24,119,242,.16),0 1px 2px rgba(0,0,0,.12)}
+.odo-digit.hot .odo-step{background:#223b5f;color:#dbeafe}
+.odo-digit.swiping .odo-num{transform:translateY(-1px) scale(1.03);transition:transform .08s ease}
 .manual-odo-panel button{width:100%;background:#34a853;color:#fff;border:none;border-radius:11px;padding:12px;font-size:13px;font-weight:600;cursor:pointer}
 .dhint{font-size:11px;color:#bbb;text-align:center}
 /* active trip */
@@ -184,6 +199,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tabtn{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer}
 .taedit{background:#e8f0fe;color:#1a73e8;border:0.5px solid #b8d0f0}
 .tadelx{background:#fce8e6;color:#ea4335;border:0.5px solid #f0b8b4}
+.tadone{background:#e6f4ea;color:#188038;border:0.5px solid #b7dfc0}
 /* stats */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .sc2{background:#fff;border-radius:12px;padding:12px 13px;border:0.5px solid #e8e8e8}
@@ -213,15 +229,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .service-note{font-size:11px;color:#555;background:#f7f9ff;border-radius:8px;padding:7px 9px;margin-top:8px}
 .service-row-actions{display:flex;gap:5px;margin-top:9px;justify-content:flex-end}
 .service-row-actions .tabtn{width:24px;height:24px}
+.service-toolbar{display:flex;justify-content:flex-end;margin:0 0 8px}
+.service-archive-btn{width:38px;height:38px;border-radius:50%;border:none;background:#e4e6eb;color:#050505;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.service-archive-btn i{font-size:20px}
+.service-archive-count{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border-radius:9px;background:#1877f2;color:#fff;font-size:10px;font-weight:800;display:none;align-items:center;justify-content:center;padding:0 4px}
+.service-archive-count.show{display:flex}
+.service-archive-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.service-clear-btn{width:34px;height:34px;border:none;border-radius:50%;background:#fce8e6;color:#b42318;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto}
+.service-clear-btn i{font-size:18px}
+.service-archive-list{max-height:58vh;overflow-y:auto}
+.service-card.archived{background:#f8f9fa;border-style:dashed}
+.service-card.archived .service-title{color:#65676b}
 /* route and places */
-.route-row{display:flex;align-items:center;gap:7px;margin-top:7px}
-.route-row .dinput{flex:1}
+.route-row{display:flex;align-items:center;gap:7px;margin-top:7px;flex-wrap:wrap}
+.route-row .dinput{flex:1 1 calc(50% - 4px);min-width:0;padding:0;background:transparent;border:none}
+.route-row .dinput i{display:none}
+.route-row .dinput input{width:100%;border:0.5px solid #d0dcf0;border-radius:9px;padding:8px 11px;font-size:12px;color:#333;background:#fff;outline:none}
+.route-row .dinput input::placeholder{color:#9aa0a6}
 .route-remove{width:30px;height:30px;border-radius:8px;background:#fce8e6;color:#ea4335;border:0.5px solid #f0b8b4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .route-spacer{visibility:hidden;pointer-events:none}
 .route-add{display:flex;align-items:center;justify-content:center;gap:5px;background:#e8f0fe;color:#1a73e8;border:0.5px solid #b8d0f0;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:500;cursor:pointer;margin-top:8px}
-.route-purpose{border:0.5px solid #ddd;border-radius:8px;background:#fafafa;color:#888;padding:7px 7px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;width:74px;text-align:center;overflow:hidden;text-overflow:ellipsis}
+.route-purpose{border:0.5px solid #ddd;border-radius:8px;background:#fafafa;color:#888;padding:7px 7px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;width:104px;text-align:center;overflow:hidden;text-overflow:ellipsis}
 .route-purpose.work{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8}
 .route-purpose.personal{border-color:#34a853;background:#e6f4ea;color:#1b7a42}
+.route-customer{flex:1 1 calc(50% - 4px);min-width:0;border:0.5px solid #d0dcf0;border-radius:9px;padding:8px 11px;font-size:12px;color:#333;background:#fff;outline:none}
+.route-customer::placeholder{color:#9aa0a6}
 .route-help{font-size:10px;color:#aaa;margin-top:6px;line-height:1.3}
 .route-stop-list{margin-top:6px;border-top:0.5px solid #eef0f8;padding-top:5px}
 .route-stop{font-size:10px;color:#777;margin-top:2px;line-height:1.25}
@@ -229,7 +261,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .route-dist{width:68px;border:0.5px solid #ddd;border-radius:8px;padding:7px 7px;font-size:10px;color:#333;background:#fff;outline:none;flex-shrink:0}
 .route-dist::placeholder{color:#bbb}
 #ov-edit .route-row{gap:5px}
-#ov-edit .route-purpose{width:64px;padding-left:5px;padding-right:5px}
+#ov-edit .route-purpose{width:82px;padding-left:5px;padding-right:5px}
 #ov-edit .route-dist{width:52px;padding-left:5px;padding-right:5px}
 #ov-edit .route-remove{width:26px}
 #ov-edit .dinput{padding-left:8px;padding-right:8px;min-width:0}
@@ -291,6 +323,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .modal h2{font-size:15px;font-weight:600;margin-bottom:5px;color:#111}
 .modal p{font-size:12px;color:#888;margin-bottom:12px}
 .modal input{width:100%;border:0.5px solid #ddd;border-radius:9px;padding:9px 11px;font-size:13px;outline:none;margin-bottom:10px}
+.modal select,.modal textarea{width:100%;border:0.5px solid #ddd;border-radius:9px;padding:9px 11px;font-size:13px;outline:none;margin-bottom:10px;background:#fff}
+.modal textarea{min-height:66px;resize:vertical}
+.recurring-fields{display:block;background:#f7f9ff;border:0.5px solid #d0dcf0;border-radius:12px;padding:10px;margin-bottom:12px}
+.recurring-fields.off{display:none}
 .mbtns{display:flex;gap:7px}
 .mbtns button{flex:1;padding:9px;border-radius:9px;border:none;font-size:12px;font-weight:500;cursor:pointer}
 .mcancel{background:#f2f2f7;color:#555}.msave{background:#1a73e8;color:#fff}
@@ -306,8 +342,8 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
 .topbar-left h1{font-size:23px;font-weight:700;color:#050505;letter-spacing:0}
 .topbar-left p{font-size:13px;color:#65676b;font-weight:500}
 .brand-name{font-size:13px;color:#1c1e21;font-weight:700}
-.gear-btn,.bell-btn{width:42px;height:42px;border-radius:50%;background:#e4e6eb;border:none}
-.gear-btn i,.bell-btn i{font-size:22px;color:#050505}
+.gear-btn,.bell-btn,.about-btn{width:42px;height:42px;border-radius:50%;background:#e4e6eb;border:none}
+.gear-btn i,.bell-btn i,.about-btn i{font-size:22px;color:#050505}
 .bell-dot{font-size:10px;min-width:18px;height:18px;border-radius:9px}
 .navbar{border-top:1px solid #dddfe2}
 .ntab{font-size:11px;color:#65676b;font-weight:600;padding:7px 4px 9px}
@@ -337,7 +373,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
 .pb.a,.sp.a,.fb.a,.sego.a,.wdd-item.sel,.swdd-item.sel{color:#1877f2;background:#e7f3ff;border-color:#1877f2}
 .route-add,.savebtn,.newbtn,.manual-odo-panel button,.device-btn,.addrow button,.trip-dest-edit button,.dist-edit button,.mbtns button{font-size:14px;font-weight:700}
 .route-add{color:#1877f2;background:#e7f3ff;border-color:#c7ddff}
-.route-purpose{font-size:12px;color:#65676b;font-weight:700;width:88px;flex-shrink:0}
+.route-purpose{font-size:12px;color:#65676b;font-weight:700;width:110px;flex-shrink:0}
 .route-purpose.work{color:#1877f2;background:#e7f3ff;border-color:#1877f2}
 .route-purpose.personal{color:#137333;background:#e6f4ea;border-color:#34a853}
 .route-help,.dhint,.toggle-sub,.srs,.service-muted,.place-meta,.service-meta,.tisub,.tifc,.scu,.sv-s,.empty,.tm-unit,.ssub,.modal p{font-size:12px!important;color:#65676b!important;line-height:1.35!important}
@@ -371,10 +407,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
       <p id="ts">Ready to drive?</p>
     </div>
     <div class="top-actions" id="top-actions">
-      <div class="bell-btn" onclick="showScreen('service')" title="Service reminders">
-        <i class="ti ti-bell" aria-hidden="true"></i>
-        <span class="bell-dot" id="bell-dot">0</span>
-      </div>
+      <div class="about-btn" onclick="openModal('modal-about')" id="about-wrap" title="About My Mileage" aria-label="About My Mileage"><i class="ti ti-info-circle" aria-hidden="true"></i></div>
       <div class="gear-btn" onclick="openSettings()" id="gear-wrap"><i class="ti ti-settings"></i></div>
     </div>
   </div>
@@ -387,31 +420,31 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
       <div class="wsub" id="w-sub">Ready for today's trip?</div>
     </div>
     <div class="card">
-      <div class="clbl"><i class="ti ti-home" aria-hidden="true"></i>Home location</div>
+      <div class="clbl"><i class="ti ti-home" aria-hidden="true"></i>Starting location</div>
       <div class="home-loc-row">
         <i class="ti ti-map-pin" aria-hidden="true"></i>
         <span id="home-disp">Tap to set your home address</span>
+        <button id="auto-home-btn" class="loc-icon-btn" onclick="autoDetectHome()" title="Use my current location" aria-label="Use my current location">
+          <i class="ti ti-current-location" aria-hidden="true"></i>
+        </button>
         <span class="edb" onclick="openHomeModal()">Edit</span>
-      </div>
-      <div class="auto-btn" onclick="autoDetectHome()">
-        <i class="ti ti-current-location" aria-hidden="true"></i>
-        <span id="auto-btn-lbl">Use my current location</span>
       </div>
     </div>
     <div class="card">
       <div class="clbl"><i class="ti ti-navigation" aria-hidden="true"></i>Destination</div>
       <div class="route-row">
+        <input id="customer-in" class="route-customer" type="text" placeholder="Customer" list="customer-suggestions" oninput="autoFillAreaFromCustomer(this)">
         <div class="dinput">
           <i class="ti ti-search" aria-hidden="true"></i>
-          <input id="dest-in" class="route-input-main" type="text" placeholder="Where are you heading?" list="place-suggestions" onfocus="setActiveRoutePurposeButton(document.getElementById('main-route-purpose'))">
+          <input id="dest-in" class="route-input-main" type="text" placeholder="Area / address" list="place-suggestions">
         </div>
-        <button class="route-purpose" id="main-route-purpose" onclick="assignDestinationPurpose(this)">Purpose</button>
+        <select class="route-purpose" id="main-route-purpose" onchange="applyRoutePurposeSelect(this)"></select>
         <div class="route-remove route-spacer"><i class="ti ti-trash" aria-hidden="true"></i></div>
       </div>
       <div id="route-extra"></div>
       <button class="route-add" onclick="addDestinationField()"><i class="ti ti-plus" aria-hidden="true"></i>Add destination</button>
-      <div class="route-help">Select a Work or Personal purpose, then tap a destination's purpose chip to assign it.</div>
-      <div class="purp-wrap">
+      <div class="route-help">Choose a category beside each destination. Add the customer name when needed.</div>
+      <div class="purp-wrap" style="display:none">
         <div class="purp-lbl">Purpose</div>
         <div class="purp-row">
           <div class="pb a" id="pb-work" onclick="toggleWorkDD(event)">
@@ -432,7 +465,8 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
     <div class="drive-wrap">
       <div class="manual-odo-panel" id="manual-odo-panel">
         <div class="purp-lbl" id="odo-start-lbl">Start odometer</div>
-        <input id="odo-start-in" type="number" step="0.1" min="0" placeholder="Enter current odometer">
+        <input id="odo-start-in" class="odo-hidden" type="number" step="0.1" min="0" placeholder="Enter current odometer">
+        <div class="odo-roller" id="odo-start-roller" aria-label="Start odometer roller"></div>
         <button onclick="startManualOdoTrip()"><i class="ti ti-dashboard" aria-hidden="true"></i> Save Odometer Trip</button>
       </div>
       <div class="dbtn" id="drive-btn" onclick="startTrip()">
@@ -533,6 +567,12 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
         <button class="mcancel" onclick="resetServiceForm()">Clear</button>
         <button class="savebtn" style="margin-top:0" onclick="saveServiceReminder()">Save Reminder</button>
       </div>
+    </div>
+    <div class="service-toolbar">
+      <button class="service-archive-btn" onclick="openServiceArchive()" title="Archived reminders" aria-label="Archived service reminders">
+        <i class="ti ti-archive" aria-hidden="true"></i>
+        <span class="service-archive-count" id="service-archive-count">0</span>
+      </button>
     </div>
     <div id="service-list"></div>
   </div>
@@ -638,6 +678,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
   </div>
 </div>
 <datalist id="place-suggestions"></datalist>
+<datalist id="customer-suggestions"></datalist>
 
 <!-- SAVE SHEET -->
 <div class="overlay" id="ov-save">
@@ -664,7 +705,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
       <label id="odo-end-lbl">End odometer</label>
       <input id="odo-end-in" type="number" step="0.1" min="0" placeholder="Enter ending odometer" oninput="updateManualOdoDistance()">
     </div>
-    <div class="spur-row">
+    <div class="spur-row" style="display:none">
       <div class="sp a" id="sp-work" onclick="toggleSheetWorkDD(event)">
         <i class="ti ti-briefcase" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
         <span id="sp-work-lbl">Work</span>
@@ -706,14 +747,15 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
     <div class="sfield">
       <label>Destinations</label>
       <div class="route-row">
-        <div class="dinput"><i class="ti ti-search" aria-hidden="true"></i><input id="edit-dest" class="route-input-main" type="text" placeholder="Destination" list="place-suggestions" onfocus="setActiveEditRoutePurposeButton(document.getElementById('edit-main-route-purpose'))"></div>
-        <button class="route-purpose" id="edit-main-route-purpose" onclick="assignEditDestinationPurpose(this)">Purpose</button>
+        <input id="edit-main-customer" class="route-customer" type="text" placeholder="Customer" list="customer-suggestions" oninput="autoFillAreaFromCustomer(this)">
+        <div class="dinput"><i class="ti ti-search" aria-hidden="true"></i><input id="edit-dest" class="route-input-main" type="text" placeholder="Area / address" list="place-suggestions"></div>
+        <select class="route-purpose" id="edit-main-route-purpose" onchange="applyRoutePurposeSelect(this)"></select>
         <input class="route-dist" id="edit-main-route-dist" type="number" step="0.1" min="0" placeholder="km" oninput="updateEditTotalFromSegments()">
         <div class="route-remove route-spacer"><i class="ti ti-trash" aria-hidden="true"></i></div>
       </div>
       <div id="edit-route-extra"></div>
       <button class="route-add" onclick="addEditDestinationField()"><i class="ti ti-plus" aria-hidden="true"></i>Add destination</button>
-      <div class="route-help">Select a Work or Personal purpose, then tap a destination's purpose chip to assign it.</div>
+      <div class="route-help">Choose the category beside each destination and adjust customer/distance details as needed.</div>
     </div>
     <div class="frow">
       <div class="sfield"><label id="edit-dist-lbl">Distance (km)</label><input id="edit-dist" type="number" step="0.1" min="0" oninput="redistributeEditRouteDistances()"></div>
@@ -723,7 +765,7 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
       <div class="sfield"><label id="edit-odo-start-lbl">Start odometer</label><input id="edit-odo-start" type="number" step="0.1" min="0" oninput="updateEditManualOdoDistance()"></div>
       <div class="sfield"><label id="edit-odo-end-lbl">End odometer</label><input id="edit-odo-end" type="number" step="0.1" min="0" oninput="updateEditManualOdoDistance()"></div>
     </div>
-    <div class="spur-row">
+    <div class="spur-row" style="display:none">
       <div class="sp a" id="ep-work" onclick="toggleEditWorkDD(event)">
         <i class="ti ti-briefcase" style="font-size:11px;margin-right:2px" aria-hidden="true"></i>
         <span id="ep-work-lbl">Work</span>
@@ -924,6 +966,66 @@ body{color:#050505;font-size:15px;-webkit-font-smoothing:antialiased;text-render
   </div>
 </div>
 
+<!-- SERVICE ARCHIVE MODAL -->
+<div class="modal-ov" id="modal-service-archive">
+  <div class="modal">
+    <div class="service-archive-head">
+      <h2><i class="ti ti-archive" style="font-size:15px;vertical-align:-2px;margin-right:5px;color:#1877f2" aria-hidden="true"></i>Service Archive</h2>
+      <button class="service-clear-btn" onclick="clearServiceArchive()" title="Clear service archive" aria-label="Clear service archive"><i class="ti ti-trash" aria-hidden="true"></i></button>
+    </div>
+    <p>Completed service reminders are stored here.</p>
+    <div class="service-archive-list" id="service-archive-list"></div>
+    <div class="mbtns">
+      <button class="msave" onclick="closeModal('modal-service-archive')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLETE SERVICE MODAL -->
+<div class="modal-ov" id="modal-service-complete">
+  <div class="modal">
+    <h2><i class="ti ti-circle-check" style="font-size:15px;vertical-align:-2px;margin-right:5px;color:#188038" aria-hidden="true"></i>Complete service?</h2>
+    <p id="service-complete-msg">Archive this reminder, or create the next reminder before confirming.</p>
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#1c1e21;margin-bottom:10px">
+      <input id="svc-recurring-check" type="checkbox" onchange="toggleServiceRecurringFields()" style="width:auto;margin:0">
+      Create next recurring reminder
+    </label>
+    <div class="recurring-fields off" id="svc-recurring-fields">
+      <input id="svc-rec-title" type="text" placeholder="Reminder title">
+      <select id="svc-rec-mode" onchange="updateServiceRecurringModeUI()">
+        <option value="date">Date</option>
+        <option value="mileage">Mileage</option>
+      </select>
+      <select id="svc-rec-date-mode">
+        <option value="countdown">Count down to date</option>
+        <option value="countup">Count up from date</option>
+      </select>
+      <div class="service-muted" id="svc-rec-suggestion"></div>
+      <input id="svc-rec-date" type="date" onchange="updateServiceRecurringSuggestion()">
+      <input id="svc-rec-mileage" type="number" step="0.1" min="0" placeholder="Target mileage" oninput="updateServiceRecurringSuggestion()">
+      <input id="svc-rec-cost" type="number" step="0.01" min="0" placeholder="Cost">
+      <textarea id="svc-rec-note" placeholder="Additional information"></textarea>
+    </div>
+    <div class="mbtns">
+      <button class="mcancel" onclick="closeModal('modal-service-complete')">Cancel</button>
+      <button class="msave" onclick="confirmCompleteServiceReminder()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-ov" id="modal-about">
+  <div class="modal">
+    <h2><i class="ti ti-info-circle" style="font-size:15px;vertical-align:-2px;margin-right:5px;color:#1877f2" aria-hidden="true"></i>About My Mileage</h2>
+    <p><strong style="color:#111">Beta version 0.1</strong></p>
+    <p>Mileage tracking and trip history tool.</p>
+    <p><strong style="color:#111">Developed by Jephte</strong></p>
+    <div class="mbtns">
+      <button class="msave" onclick="closeModal('modal-about')">Done</button>
+    </div>
+  </div>
+</div>
+
 <!-- CONFIRM DELETE -->
 <div class="modal-ov" id="modal-del">
   <div class="modal">
@@ -961,10 +1063,12 @@ const D = {
   persCats: readJSON('persCats', []),
   trips: readJSON('trips', []),
   serviceReminders: readJSON('serviceReminders', []),
+  serviceArchive: readJSON('serviceArchive', []),
   geofences: readJSON('geofences', []),
   featureSettings: readJSON('featureSettings', {autoStopHome:true, autoStartHome:false, keepAwake:true, bluetooth:false, gpsMovement:false, geofencing:true, speedConfirm:false, manualOdometer:false, bluetoothName:''}),
   odoStart: parseFloat(localStorage.getItem('odoStart')) || null,
   bluetoothDevice: null, bluetoothConnected: false, bluetoothDeviceName: '',
+  serviceCompleteId: null,
   purpose: localStorage.getItem('lastPurpose') || 'work',
   workSub: localStorage.getItem('lastWorkSub') || 'Meeting',
   persSub: localStorage.getItem('lastPersSub') || '',
@@ -1213,11 +1317,59 @@ function applyFeatureSettingsUI(){
   document.getElementById('odo-start-lbl').textContent='Start odometer ('+unit+')';
   document.getElementById('odo-end-lbl').textContent='End odometer ('+unit+')';
   prefillManualOdoStart();
+  renderOdoRoller();
 }
 function prefillManualOdoStart(){
   const input=document.getElementById('odo-start-in');
   if(!input || input.value || D.odoStart===null || isNaN(D.odoStart)) return;
-  input.value=parseFloat(D.odoStart).toFixed(1);
+  input.value=Math.round(parseFloat(D.odoStart)).toString();
+}
+function odoRollerDigits(value){
+  const n=Math.max(0,parseFloat(value)||0);
+  const whole=Math.round(n).toString().padStart(6,'0');
+  return whole.slice(-6).split('').map(d=>parseInt(d,10)||0);
+}
+function odoValueFromDigits(digits){
+  return parseFloat(digits.join(''));
+}
+function renderOdoRoller(){
+  const roller=document.getElementById('odo-start-roller');
+  const input=document.getElementById('odo-start-in');
+  if(!roller||!input) return;
+  const digits=odoRollerDigits(input.value || D.odoStart || 0);
+  roller.innerHTML=digits.map((d,i)=>`<div class="odo-digit ${i>=3?'hot':''}" data-index="${i}" onpointerdown="startOdoSwipe(event,${i})" onpointerup="endOdoSwipe(event,${i})" onpointercancel="cancelOdoSwipe(${i})">
+    <button class="odo-step" type="button" onclick="stepOdoDigit(${i},1)" aria-label="Increase digit"><i class="ti ti-chevron-up" aria-hidden="true"></i></button>
+    <div class="odo-num">${d}</div>
+    <button class="odo-step" type="button" onclick="stepOdoDigit(${i},-1)" aria-label="Decrease digit"><i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+  </div>`).join('');
+}
+function stepOdoDigit(index,delta){
+  const input=document.getElementById('odo-start-in');
+  if(!input) return;
+  const digits=odoRollerDigits(input.value || D.odoStart || 0);
+  digits[index]=(digits[index]+delta+10)%10;
+  input.value=odoValueFromDigits(digits).toFixed(0);
+  renderOdoRoller();
+}
+function startOdoSwipe(event,index){
+  const digit=event.currentTarget;
+  if(event.target.closest('button')) return;
+  D.odoSwipe={index,startY:event.clientY};
+  digit.classList.add('swiping');
+  try{ digit.setPointerCapture(event.pointerId); }catch(e){}
+}
+function endOdoSwipe(event,index){
+  const digit=event.currentTarget;
+  digit.classList.remove('swiping');
+  if(!D.odoSwipe || D.odoSwipe.index!==index) return;
+  const deltaY=event.clientY-D.odoSwipe.startY;
+  D.odoSwipe=null;
+  if(Math.abs(deltaY)<16) return;
+  stepOdoDigit(index, deltaY<0 ? 1 : -1);
+}
+function cancelOdoSwipe(index){
+  document.querySelector(`.odo-digit[data-index="${index}"]`)?.classList.remove('swiping');
+  D.odoSwipe=null;
 }
 function updateDeviceStatus(msg){
   const el=document.getElementById('device-status');
@@ -1424,11 +1576,11 @@ function addWorkCat(){
   if(!v||D.workCats.includes(v)) return;
   D.workCats.push(v); save('workCats',D.workCats);
   document.getElementById('new-cat-in').value='';
-  renderWorkCatList(); buildWorkDDs();
+  renderWorkCatList(); buildWorkDDs(); renderDestinationFields();
 }
 function removeWorkCat(i){
   D.workCats.splice(i,1); save('workCats',D.workCats);
-  renderWorkCatList(); buildWorkDDs();
+  renderWorkCatList(); buildWorkDDs(); renderDestinationFields();
 }
 function renderPersCatList(){
   const el = document.getElementById('pers-cat-list');
@@ -1442,7 +1594,7 @@ function addPersCat(){
   if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
   D.persCats.push(v); save('persCats',D.persCats);
   document.getElementById('new-pers-cat-in').value='';
-  renderPersCatList(); buildWorkDDs();
+  renderPersCatList(); buildWorkDDs(); renderDestinationFields();
 }
 function removePersCat(i){
   if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
@@ -1450,7 +1602,7 @@ function removePersCat(i){
   if(!D.persCats.length) D.persCats = [D.persLbl || 'Personal'];
   if(!D.persCats.includes(D.persSub)) D.persSub = D.persCats[0] || '';
   save('persCats',D.persCats); save('lastPersSub',D.persSub);
-  renderPersCatList(); buildWorkDDs(); applyPurposeUI();
+  renderPersCatList(); buildWorkDDs(); applyPurposeUI(); renderDestinationFields();
 }
 
 // PURPOSE
@@ -1616,18 +1768,23 @@ function updateHomeDisplay(){
   el.innerHTML='<i class="ti ti-home" aria-hidden="true" style="font-size:16px;color:#34a853"></i>';
 }
 function autoDetectHome(){
-  const btn = document.getElementById('auto-btn-lbl');
-  btn.textContent='Detecting...';
-  if(!navigator.geolocation){ btn.textContent='Use my current location'; alert('Geolocation not available'); return; }
+  const btn = document.getElementById('auto-home-btn');
+  const setBtnLabel = text => {
+    if(!btn) return;
+    btn.title=text;
+    btn.setAttribute('aria-label', text);
+  };
+  setBtnLabel('Detecting current location');
+  if(!navigator.geolocation){ setBtnLabel('Use my current location'); alert('Geolocation not available'); return; }
   navigator.geolocation.getCurrentPosition(pos=>{
     const {latitude:lat,longitude:lng} = pos.coords;
     D.homeLat=lat.toFixed(6); D.homeLng=lng.toFixed(6);
     save('homeLat',D.homeLat); save('homeLng',D.homeLng);
     updateHomeDisplay();
     updateHomeDepartureWatch();
-    btn.textContent='Use my current location';
+    setBtnLabel('Use my current location');
   }, err=>{
-    btn.textContent='Use my current location';
+    setBtnLabel('Use my current location');
     updateHomeDisplay();
   });
 }
@@ -1656,14 +1813,25 @@ function startManualOdoTrip(){
   save('odoStart',v);
   saveManualOdoTripStart(v);
 }
+function primaryPurposeFromStops(stops,fallbackType='work',fallbackLabel='Others'){
+  const first = (stops||[]).find(s=>s.purposeType);
+  const type = first?.purposeType || fallbackType || 'work';
+  const label = first?.purposeLabel || fallbackLabel || (type==='work'?'Others':D.persLbl);
+  return {
+    purpose:type,
+    workSub:type==='work'?label:'',
+    persSub:type==='personal'?label:'',
+    purposeLbl:type==='work' ? 'Work – '+label : personalLabel(label)
+  };
+}
 function saveManualOdoTripStart(startOdo){
   const dest=getRouteDestination()||'Pending destination';
-  const purpose=D.purpose;
-  const purposeLbl=purpose==='work'?('Work â€“ '+(D.workSub||'Others')):personalLabel(D.persSub);
+  const routeStops=allocateRouteDistances(getRouteStops(),0);
+  const p=primaryPurposeFromStops(routeStops,D.purpose,D.workSub||D.persSub||'Others');
   const trip={
     id:Date.now(), destination:dest,
-    purpose, workSub:D.workSub, persSub:D.persSub, purposeLbl,
-    routeStops:allocateRouteDistances(getRouteStops(),0),
+    purpose:p.purpose, workSub:p.workSub, persSub:p.persSub, purposeLbl:p.purposeLbl,
+    routeStops,
     distDisplay:0, distKm:0, distUnit:D.distUnit,
     gasPrice:0, gasLitres:0, fuelCost:0, fcVal:null, cpkm:null,
     manualOdometer:true, odoStart:startOdo, odoEnd:null,
@@ -1673,7 +1841,7 @@ function saveManualOdoTripStart(startOdo){
     ts:Date.now()
   };
   D.trips.unshift(trip); save('trips',D.trips);
-  document.getElementById('sv-sub').textContent=trip.destination+' Â· '+purposeLbl;
+  document.getElementById('sv-sub').textContent=trip.destination+' · '+p.purposeLbl;
   document.getElementById('sv-sum').innerHTML=buildSummaryHTML(trip);
   renderTrips(); renderStats(); updateWelcome(); renderServiceReminders();
   showScreen('saved');
@@ -1908,11 +2076,11 @@ function saveTrip(){
   const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
   const fcVal=fuelUseValue(litres,distKm);
   const cpkm=fuelCost>0&&distDisplay>0?parseFloat((fuelCost/distDisplay).toFixed(2)):null;
-  const purposeLbl=D.sheetPurpose==='work'?('Work – '+(D.sheetWorkSub||'Others')):personalLabel(D.sheetPersSub);
   const routeStops=allocateRouteDistances(getRouteStops(),distKm);
+  const p=primaryPurposeFromStops(routeStops,D.sheetPurpose,D.sheetWorkSub||D.sheetPersSub||'Others');
   const trip={
     id:Date.now(), destination:D.destination,
-    purpose:D.sheetPurpose, workSub:D.sheetWorkSub, persSub:D.sheetPersSub, purposeLbl, routeStops,
+    purpose:p.purpose, workSub:p.workSub, persSub:p.persSub, purposeLbl:p.purposeLbl, routeStops,
     distDisplay, distKm, distUnit:D.distUnit,
     gasPrice:price, gasLitres:litres, fuelCost, fcVal, cpkm,
     manualOdometer:!!D.manualTrip, odoStart:D.manualTrip?D.odoStart:null, odoEnd:D.manualTrip?D.odoEnd:null,
@@ -1925,10 +2093,11 @@ function saveTrip(){
   if(D.manualTrip && D.odoEnd!==null){
     D.odoStart=D.odoEnd;
     save('odoStart',D.odoStart);
-    document.getElementById('odo-start-in').value=D.odoStart.toFixed(1);
+    document.getElementById('odo-start-in').value=Math.round(D.odoStart).toString();
+    renderOdoRoller();
   }
   closeOverlay('ov-save');
-  document.getElementById('sv-sub').textContent=trip.destination+' · '+purposeLbl;
+  document.getElementById('sv-sub').textContent=trip.destination+' · '+p.purposeLbl;
   document.getElementById('sv-sum').innerHTML=buildSummaryHTML(trip);
   renderTrips(); renderStats(); updateWelcome();
   renderServiceReminders();
@@ -1955,12 +2124,12 @@ function buildSummaryHTML(t){
 function routeStopsHTML(t){
   const stops = Array.isArray(t.routeStops) && t.routeStops.length ? t.routeStops : (t.destination ? [{destination:t.destination,purposeLabel:t.purposeLbl}] : []);
   if(!stops.length) return '';
-  return `<div class="route-stop-list">${stops.map((s,i)=>`<div class="route-stop"><b>${i+1}. ${escapeHTML(s.destination||'—')}</b>${s.purposeLabel?' · '+escapeHTML(compactPurposeLabel(s.purposeLabel)):''} · ${safeFixed(displayDistFromKm(routeStopDistanceKm(s,t)),1)} ${distLabel()}</div>`).join('')}</div>`;
+  return `<div class="route-stop-list">${stops.map((s,i)=>`<div class="route-stop"><b>${i+1}. ${escapeHTML(s.destination||'—')}</b>${s.customer?' · '+escapeHTML(s.customer):''}${s.purposeLabel?' · '+escapeHTML(compactPurposeLabel(s.purposeLabel)):''} · ${safeFixed(displayDistFromKm(routeStopDistanceKm(s,t)),1)} ${distLabel()}</div>`).join('')}</div>`;
 }
 function routeStopsText(t){
   const stops = Array.isArray(t.routeStops) && t.routeStops.length ? t.routeStops : [];
   if(!stops.length) return t.purposeLbl || '—';
-  return stops.map((s,i)=>`${i+1}. ${s.destination}${s.purposeLabel?' ('+compactPurposeLabel(s.purposeLabel)+')':''}`).join(' · ');
+  return stops.map((s,i)=>`${i+1}. ${s.destination}${s.customer?' - '+s.customer:''}${s.purposeLabel?' ('+compactPurposeLabel(s.purposeLabel)+')':''}`).join(' · ');
 }
 function compactPurposeLabel(label){
   return String(label||'').replace(/^Work\s+[–-]\s+/,'').replace(/^Personal\s+[–-]\s+/,'');
@@ -2013,6 +2182,24 @@ function geofenceForDestination(destination){
 }
 function pointForGeofence(g){ return g ? {lat:parseFloat(g.lat),lng:parseFloat(g.lng)} : null; }
 function pointForDestination(destination){ return pointForGeofence(geofenceForDestination(destination)); }
+function geofenceForCustomer(customer){
+  const key=normalizedPlaceName(customer);
+  if(!key) return null;
+  const valid=D.geofences || [];
+  return valid.find(g=>normalizedPlaceName(g.customer)===key)
+    || valid.find(g=>normalizedPlaceName(g.name)===key)
+    || valid.find(g=>normalizedPlaceName(g.area)===key)
+    || valid.find(g=>normalizedPlaceName(g.customer).includes(key)||key.includes(normalizedPlaceName(g.customer)))
+    || valid.find(g=>normalizedPlaceName(g.name).includes(key)||key.includes(normalizedPlaceName(g.name)));
+}
+function autoFillAreaFromCustomer(input){
+  const g=geofenceForCustomer(input.value);
+  if(!g) return;
+  const row=input.closest('.route-row');
+  const areaInput = row?.querySelector('.route-input, .edit-route-input, #dest-in, #edit-dest');
+  if(!areaInput) return;
+  areaInput.value = g.area || g.name || areaInput.value;
+}
 function homePoint(){
   const lat=parseFloat(D.homeLat), lng=parseFloat(D.homeLng);
   return isNaN(lat)||isNaN(lng) ? null : {lat,lng};
@@ -2029,34 +2216,79 @@ function geofenceRouteLegDistances(stops){
 }
 function newTrip(){
   document.getElementById('dest-in').value='';
+  document.getElementById('customer-in').value='';
   document.getElementById('route-extra').innerHTML='';
-  resetRoutePurposeButton(document.getElementById('main-route-purpose'));
+  resetRoutePurposeSelect(document.getElementById('main-route-purpose'));
   updateHomeDepartureWatch();
   showScreen('home');
 }
 
 // ROUTE DESTINATIONS AND GEOFENCES
 function placeNames(){ return D.geofences.map(g=>g.name).filter(Boolean); }
+function customerNames(){
+  const fromPlaces = D.geofences.flatMap(g=>[g.customer,g.name]).filter(Boolean);
+  const fromTrips = D.trips.flatMap(t=>Array.isArray(t.routeStops)?t.routeStops.map(s=>s.customer).filter(Boolean):[]);
+  return [...new Set([...fromPlaces,...fromTrips].map(v=>String(v).trim()).filter(Boolean))];
+}
 function renderPlaceSuggestions(){
   document.getElementById('place-suggestions').innerHTML = placeNames().map(n=>`<option value="${escapeAttr(n)}"></option>`).join('');
+  document.getElementById('customer-suggestions').innerHTML = customerNames().map(n=>`<option value="${escapeAttr(n)}"></option>`).join('');
+}
+function purposeOptions(){
+  return [
+    ...D.workCats.map(label=>({type:'work',label})),
+    ...personalCats().map(label=>({type:'personal',label}))
+  ];
+}
+function purposeValue(type,label){ return (type||'')+'|'+(label||''); }
+function parsePurposeValue(value){
+  const [type,...rest] = String(value||'').split('|');
+  const label = rest.join('|');
+  return {purposeType:type||'', purposeLabel:label||''};
+}
+function purposeOptionsHTML(type='',label=''){
+  const selected = purposeValue(type,label);
+  const work = D.workCats.map(c=>`<option value="${escapeAttr(purposeValue('work',c))}" ${selected===purposeValue('work',c)?'selected':''}>${escapeHTML(c)}</option>`).join('');
+  const personal = personalCats().map(c=>`<option value="${escapeAttr(purposeValue('personal',c))}" ${selected===purposeValue('personal',c)?'selected':''}>${escapeHTML(c)}</option>`).join('');
+  return `<option value="">Category</option><optgroup label="Work">${work}</optgroup><optgroup label="${escapeAttr(D.persLbl||'Personal')}">${personal}</optgroup>`;
+}
+function applyRoutePurposeSelect(sel){
+  const p=parsePurposeValue(sel.value);
+  sel.dataset.purposeType=p.purposeType;
+  sel.dataset.purposeLabel=p.purposeLabel;
+  sel.classList.remove('work','personal');
+  if(p.purposeType) sel.classList.add(p.purposeType);
+}
+function resetRoutePurposeSelect(sel){
+  if(!sel) return;
+  sel.innerHTML=purposeOptionsHTML();
+  sel.value='';
+  applyRoutePurposeSelect(sel);
 }
 function renderDestinationFields(){
   renderPlaceSuggestions();
+  const mainSel = document.getElementById('main-route-purpose');
+  const mainPurpose = routePurposeFromButton(mainSel);
+  if(mainSel){
+    mainSel.innerHTML=purposeOptionsHTML(mainPurpose.purposeType, mainPurpose.purposeLabel);
+    mainSel.value=purposeValue(mainPurpose.purposeType, mainPurpose.purposeLabel);
+    applyRoutePurposeSelect(mainSel);
+  }
   const box = document.getElementById('route-extra');
   const existing = Array.from(box.querySelectorAll('.route-row')).map(row=>({
     value: row.querySelector('.route-input')?.value || '',
-    purposeType: row.querySelector('.route-purpose')?.dataset.purposeType || '',
-    purposeLabel: row.querySelector('.route-purpose')?.dataset.purposeLabel || ''
+    customer: row.querySelector('.route-customer')?.value || '',
+    ...routePurposeFromButton(row.querySelector('.route-purpose'))
   }));
   box.innerHTML = existing.map(v=>routeFieldHTML(v.value,v)).join('');
 }
 function routeFieldHTML(value='',purpose={}){
   const type = purpose.purposeType || '';
   const label = purpose.purposeLabel || '';
-  const chipText = label || 'Purpose';
   return `<div class="route-row">
-    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="route-input" type="text" list="place-suggestions" placeholder="Next destination" value="${escapeAttr(value)}" onfocus="setActiveRoutePurposeButton(this.closest('.route-row').querySelector('.route-purpose'))"></div>
-    <button class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onclick="assignDestinationPurpose(this)">${escapeHTML(chipText)}</button>
+    <input class="route-customer" type="text" placeholder="Customer" list="customer-suggestions" value="${escapeAttr(purpose.customer||'')}" oninput="autoFillAreaFromCustomer(this)">
+    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="route-input" type="text" list="place-suggestions" placeholder="Area / address" value="${escapeAttr(value)}"></div>
+    <select class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onchange="applyRoutePurposeSelect(this)">${purposeOptionsHTML(type,label)}</select>
     <div class="route-remove" onclick="this.closest('.route-row').remove()"><i class="ti ti-trash" aria-hidden="true"></i></div>
   </div>`;
 }
@@ -2070,6 +2302,12 @@ function currentPurposeSnapshot(){
 function assignDestinationPurpose(btn){
   const p=currentPurposeSnapshot();
   setActiveRoutePurposeButton(btn);
+  if(btn?.tagName === 'SELECT'){
+    btn.innerHTML=purposeOptionsHTML(p.type,p.label);
+    btn.value=purposeValue(p.type,p.label);
+    applyRoutePurposeSelect(btn);
+    return;
+  }
   btn.dataset.purposeType=p.type;
   btn.dataset.purposeLabel=p.label;
   btn.textContent=p.label;
@@ -2077,6 +2315,7 @@ function assignDestinationPurpose(btn){
   btn.classList.add(p.type);
 }
 function resetRoutePurposeButton(btn){
+  if(btn?.tagName === 'SELECT'){ resetRoutePurposeSelect(btn); return; }
   if(!btn) return;
   btn.dataset.purposeType='';
   btn.dataset.purposeLabel='';
@@ -2090,6 +2329,7 @@ function autoAssignActiveRoutePurpose(){
   if(D.activeRoutePurposeButton) assignDestinationPurpose(D.activeRoutePurposeButton);
 }
 function routePurposeFromButton(btn){
+  if(btn?.tagName === 'SELECT') applyRoutePurposeSelect(btn);
   return {
     purposeType: btn?.dataset.purposeType || '',
     purposeLabel: btn?.dataset.purposeLabel || ''
@@ -2097,11 +2337,13 @@ function routePurposeFromButton(btn){
 }
 function getRouteStops(){
   const main = document.getElementById('dest-in').value.trim();
+  const mainCustomer = document.getElementById('customer-in').value.trim();
   const stops = [];
-  if(main) stops.push({destination:main, ...routePurposeFromButton(document.getElementById('main-route-purpose'))});
+  if(main) stops.push({destination:main, customer:mainCustomer, ...routePurposeFromButton(document.getElementById('main-route-purpose'))});
   document.querySelectorAll('#route-extra .route-row').forEach(row=>{
     const destination = row.querySelector('.route-input')?.value.trim();
-    if(destination) stops.push({destination, ...routePurposeFromButton(row.querySelector('.route-purpose'))});
+    const customer = row.querySelector('.route-customer')?.value.trim() || '';
+    if(destination) stops.push({destination, customer, ...routePurposeFromButton(row.querySelector('.route-purpose'))});
   });
   return stops;
 }
@@ -2112,11 +2354,13 @@ function editRouteFieldHTML(stop={}){
   const value = stop.destination || '';
   const type = stop.purposeType || '';
   const label = stop.purposeLabel ? compactPurposeLabel(stop.purposeLabel) : '';
+  const customer = stop.customer || '';
   const dist = parseFloat(stop.distKm);
   const distVal = !isNaN(dist) && dist>0 ? displayDistFromKm(dist).toFixed(1) : '';
   return `<div class="route-row">
-    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="edit-route-input" type="text" list="place-suggestions" placeholder="Next destination" value="${escapeAttr(value)}" onfocus="setActiveEditRoutePurposeButton(this.closest('.route-row').querySelector('.route-purpose'))"></div>
-    <button class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onclick="assignEditDestinationPurpose(this)">${escapeHTML(label||'Purpose')}</button>
+    <input class="route-customer" type="text" placeholder="Customer" list="customer-suggestions" value="${escapeAttr(customer)}" oninput="autoFillAreaFromCustomer(this)">
+    <div class="dinput"><i class="ti ti-map-pin" aria-hidden="true"></i><input class="edit-route-input" type="text" list="place-suggestions" placeholder="Area / address" value="${escapeAttr(value)}"></div>
+    <select class="route-purpose ${escapeAttr(type)}" data-purpose-type="${escapeAttr(type)}" data-purpose-label="${escapeAttr(label)}" onchange="applyRoutePurposeSelect(this)">${purposeOptionsHTML(type,label)}</select>
     <input class="route-dist" type="number" step="0.1" min="0" placeholder="${distLabel()}" value="${escapeAttr(distVal)}" oninput="updateEditTotalFromSegments()">
     <div class="route-remove" onclick="this.closest('.route-row').remove()"><i class="ti ti-trash" aria-hidden="true"></i></div>
   </div>`;
@@ -2131,6 +2375,12 @@ function editPurposeSnapshot(){
 function assignEditDestinationPurpose(btn){
   const p=editPurposeSnapshot();
   setActiveEditRoutePurposeButton(btn);
+  if(btn?.tagName === 'SELECT'){
+    btn.innerHTML=purposeOptionsHTML(p.type,p.label);
+    btn.value=purposeValue(p.type,p.label);
+    applyRoutePurposeSelect(btn);
+    return;
+  }
   btn.dataset.purposeType=p.type;
   btn.dataset.purposeLabel=p.label;
   btn.textContent=p.label;
@@ -2140,6 +2390,7 @@ function assignEditDestinationPurpose(btn){
 function setActiveEditRoutePurposeButton(btn){ D.activeEditRoutePurposeButton=btn; }
 function autoAssignActiveEditRoutePurpose(){ if(D.activeEditRoutePurposeButton) assignEditDestinationPurpose(D.activeEditRoutePurposeButton); }
 function resetEditRoutePurposeButton(btn){
+  if(btn?.tagName === 'SELECT'){ resetRoutePurposeSelect(btn); return; }
   if(!btn) return;
   btn.dataset.purposeType='';
   btn.dataset.purposeLabel='';
@@ -2147,6 +2398,7 @@ function resetEditRoutePurposeButton(btn){
   btn.classList.remove('work','personal');
 }
 function editRoutePurposeFromButton(btn){
+  if(btn?.tagName === 'SELECT') applyRoutePurposeSelect(btn);
   return {purposeType:btn?.dataset.purposeType||'', purposeLabel:btn?.dataset.purposeLabel||''};
 }
 function loadEditRouteStops(t){
@@ -2155,16 +2407,18 @@ function loadEditRouteStops(t){
   if(canImprove) stops = allocateRouteDistances(stops, tripDistKm(t));
   const main = stops[0] || {};
   document.getElementById('edit-dest').value = main.destination || '';
+  document.getElementById('edit-main-customer').value = main.customer || '';
   const mainDist=parseFloat(main.distKm);
   document.getElementById('edit-main-route-dist').value = !isNaN(mainDist)&&mainDist>0 ? displayDistFromKm(mainDist).toFixed(1) : '';
   document.getElementById('edit-main-route-dist').placeholder = distLabel();
   const mainBtn = document.getElementById('edit-main-route-purpose');
-  resetEditRoutePurposeButton(mainBtn);
+  resetRoutePurposeSelect(mainBtn);
   if(main.purposeLabel){
     mainBtn.dataset.purposeType=main.purposeType||'';
     mainBtn.dataset.purposeLabel=compactPurposeLabel(main.purposeLabel);
-    mainBtn.textContent=compactPurposeLabel(main.purposeLabel);
-    if(main.purposeType) mainBtn.classList.add(main.purposeType);
+    mainBtn.innerHTML=purposeOptionsHTML(main.purposeType||'', compactPurposeLabel(main.purposeLabel));
+    mainBtn.value=purposeValue(main.purposeType||'', compactPurposeLabel(main.purposeLabel));
+    applyRoutePurposeSelect(mainBtn);
   }
   document.getElementById('edit-route-extra').innerHTML = '';
   stops.slice(1).forEach(s=>addEditDestinationField(s));
@@ -2173,12 +2427,14 @@ function loadEditRouteStops(t){
 function getEditRouteStops(){
   const stops=[];
   const main=document.getElementById('edit-dest').value.trim();
+  const mainCustomer=document.getElementById('edit-main-customer').value.trim();
   const mainDist=parseFloat(document.getElementById('edit-main-route-dist').value);
-  if(main) stops.push({destination:main,...editRoutePurposeFromButton(document.getElementById('edit-main-route-purpose')),distKm:(!isNaN(mainDist)&&mainDist>0?(D.distUnit==='km'?mainDist:mainDist/0.621371):null),distSource:(!isNaN(mainDist)&&mainDist>0?'manual':null)});
+  if(main) stops.push({destination:main,customer:mainCustomer,...editRoutePurposeFromButton(document.getElementById('edit-main-route-purpose')),distKm:(!isNaN(mainDist)&&mainDist>0?(D.distUnit==='km'?mainDist:mainDist/0.621371):null),distSource:(!isNaN(mainDist)&&mainDist>0?'manual':null)});
   document.querySelectorAll('#edit-route-extra .route-row').forEach(row=>{
     const destination=row.querySelector('.edit-route-input')?.value.trim();
+    const customer=row.querySelector('.route-customer')?.value.trim()||'';
     const d=parseFloat(row.querySelector('.route-dist')?.value);
-    if(destination) stops.push({destination,...editRoutePurposeFromButton(row.querySelector('.route-purpose')),distKm:(!isNaN(d)&&d>0?(D.distUnit==='km'?d:d/0.621371):null),distSource:(!isNaN(d)&&d>0?'manual':null)});
+    if(destination) stops.push({destination,customer,...editRoutePurposeFromButton(row.querySelector('.route-purpose')),distKm:(!isNaN(d)&&d>0?(D.distUnit==='km'?d:d/0.621371):null),distSource:(!isNaN(d)&&d>0?'manual':null)});
   });
   return stops;
 }
@@ -2329,6 +2585,7 @@ function saveServiceReminder(){
     const targetDisplay = parseFloat(document.getElementById('svc-mileage').value);
     if(isNaN(targetDisplay) || targetDisplay <= 0) return alert('Please enter a target mileage.');
     reminder.targetKm = D.distUnit==='km' ? targetDisplay : targetDisplay/0.621371;
+    reminder.baseKm = D.serviceEditId ? (D.serviceReminders.find(x=>x.id===D.serviceEditId)?.baseKm ?? totalTripKm()) : totalTripKm();
   } else {
     const date = document.getElementById('svc-date').value;
     if(!date) return alert('Please choose a service date.');
@@ -2379,12 +2636,7 @@ function serviceProgress(r){
 function renderServiceReminders(){
   updateServiceModeUI();
   const el = document.getElementById('service-list');
-  if(!D.serviceReminders.length){
-    el.innerHTML = '<div class="empty"><i class="ti ti-bell-ringing" aria-hidden="true"></i>No service reminders yet.<br>Add one above to monitor maintenance.</div>';
-    updateBell();
-    return;
-  }
-  el.innerHTML = D.serviceReminders.map(r=>{
+  const activeHTML = D.serviceReminders.length ? D.serviceReminders.map(r=>{
     const p = serviceProgress(r);
     const fillClass = p.due ? 'due' : p.pct >= 80 ? 'warn' : '';
     return `<div class="service-card">
@@ -2399,16 +2651,64 @@ function renderServiceReminders(){
       <div class="service-status"><span>${escapeHTML(p.left)}</span><span>${escapeHTML(p.detail)}</span></div>
       ${r.note?`<div class="service-note">${escapeHTML(r.note)}</div>`:''}
       <div class="service-row-actions">
+        <div class="tabtn tadone" title="Mark done" onclick="openCompleteServiceReminder(${r.id})"><i class="ti ti-check" aria-hidden="true"></i></div>
         <div class="tabtn taedit" onclick="editServiceReminder(${r.id})"><i class="ti ti-pencil" aria-hidden="true"></i></div>
         <div class="tabtn tadelx" onclick="deleteServiceReminder(${r.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
       </div>
     </div>`;
-  }).join('');
+  }).join('') : '<div class="empty"><i class="ti ti-bell-ringing" aria-hidden="true"></i>No active service reminders.<br>Add one above to monitor maintenance.</div>';
+  el.innerHTML = activeHTML;
+  renderServiceArchiveBadge();
   updateBell();
+}
+function renderServiceArchiveBadge(){
+  const badge = document.getElementById('service-archive-count');
+  if(!badge) return;
+  const count = D.serviceArchive.length;
+  badge.textContent = count > 99 ? '99+' : count;
+  badge.classList.toggle('show', count > 0);
+}
+function renderServiceArchive(){
+  const el = document.getElementById('service-archive-list');
+  if(!el) return;
+  if(!D.serviceArchive.length){
+    el.innerHTML = '<div class="empty"><i class="ti ti-archive" aria-hidden="true"></i>No archived reminders yet.</div>';
+    return;
+  }
+  el.innerHTML = D.serviceArchive.map(r=>{
+    const done = r.completedAt ? new Date(r.completedAt).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}) : 'Completed';
+    return `<div class="service-card archived">
+      <div class="service-head">
+        <div>
+          <div class="service-title"><i class="ti ti-check" aria-hidden="true"></i> ${escapeHTML(r.title)}</div>
+          <div class="service-meta">Done ${escapeHTML(done)}</div>
+        </div>
+        <div class="service-cost">${r.cost>0?money(r.cost):''}</div>
+      </div>
+      <div class="service-status"><span>${escapeHTML(r.completedStatus || 'Completed')}</span><span>${escapeHTML(r.mode==='mileage'?'Mileage reminder':'Date reminder')}</span></div>
+      ${r.note?`<div class="service-note">${escapeHTML(r.note)}</div>`:''}
+      <div class="service-row-actions">
+        <div class="tabtn tadelx" onclick="deleteServiceReminder(${r.id})"><i class="ti ti-trash" aria-hidden="true"></i></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function openServiceArchive(){
+  renderServiceArchive();
+  openModal('modal-service-archive');
+}
+function clearServiceArchive(){
+  if(!D.serviceArchive.length) return;
+  if(!confirm('Clear all archived service reminders?')) return;
+  D.serviceArchive = [];
+  save('serviceArchive', D.serviceArchive);
+  renderServiceArchiveBadge();
+  renderServiceArchive();
 }
 function updateBell(){
   const due = D.serviceReminders.filter(r=>serviceProgress(r).due).length;
   const dot = document.getElementById('bell-dot');
+  if(!dot) return;
   dot.textContent = due;
   dot.classList.toggle('show', due > 0);
 }
@@ -2425,9 +2725,116 @@ function editServiceReminder(id){
   updateServiceModeUI();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function addDaysToISO(dateStr, days){
+  const base = dateStr ? new Date(dateStr+'T00:00:00') : new Date();
+  if(isNaN(base.getTime())) return new Date().toISOString().slice(0,10);
+  base.setDate(base.getDate()+Math.max(1, Math.round(days||1)));
+  return base.toISOString().slice(0,10);
+}
+function recurringDateDays(r){
+  const now = Date.now();
+  const target = r.targetDate ? new Date(r.targetDate+'T00:00:00').getTime() : now;
+  const created = parseFloat(r.createdAt) || now;
+  return Math.max(1, Math.round(Math.abs(target-created)/864e5) || 1);
+}
+function nextRecurringDate(r){
+  return addDaysToISO(r.targetDate || new Date().toISOString().slice(0,10), recurringDateDays(r));
+}
+function recurringMileageIntervalKm(r){
+  const target = parseFloat(r.targetKm) || 0;
+  const base = parseFloat(r.baseKm);
+  if(!isNaN(base) && target > base) return target - base;
+  return target > 0 ? target : 0;
+}
+function updateServiceRecurringSuggestion(){
+  const r = D.serviceReminders.find(x=>x.id===D.serviceCompleteId);
+  const el = document.getElementById('svc-rec-suggestion');
+  if(!el || !r) return;
+  const mode = document.getElementById('svc-rec-mode').value;
+  if(mode === 'mileage'){
+    const interval = recurringMileageIntervalKm(r);
+    const suggested = parseFloat(document.getElementById('svc-rec-mileage').value);
+    el.textContent = interval > 0
+      ? 'Suggestion: add '+displayDistFromKm(interval).toFixed(1)+' '+distLabel()+' from the previous service interval. Next target: '+(isNaN(suggested)?'—':suggested.toFixed(1))+' '+distLabel()+'.'
+      : 'Suggestion: enter the next mileage target.';
+  }else{
+    const days = recurringDateDays(r);
+    const date = document.getElementById('svc-rec-date').value;
+    el.textContent = 'Suggestion: add '+days+' day'+(days===1?'':'s')+' from the previous service date. Next date: '+(date || '—')+'.';
+  }
+}
+function openCompleteServiceReminder(id){
+  const r = D.serviceReminders.find(x=>x.id===id); if(!r) return;
+  D.serviceCompleteId = id;
+  document.getElementById('service-complete-msg').textContent = 'Archive "'+r.title+'", or create the next reminder before confirming.';
+  document.getElementById('svc-recurring-check').checked = false;
+  document.getElementById('svc-rec-title').value = r.title || 'Service reminder';
+  document.getElementById('svc-rec-mode').value = r.mode || 'date';
+  document.getElementById('svc-rec-date-mode').value = r.dateMode || 'countdown';
+  document.getElementById('svc-rec-date').value = r.mode === 'date' ? nextRecurringDate(r) : new Date().toISOString().slice(0,10);
+  const nextMileage = r.mode === 'mileage' ? (totalTripKm() + recurringMileageIntervalKm(r)) : (parseFloat(r.targetKm)||0);
+  document.getElementById('svc-rec-mileage').value = nextMileage ? displayDistFromKm(nextMileage).toFixed(1) : '';
+  document.getElementById('svc-rec-mileage').placeholder = 'Target mileage ('+distLabel()+')';
+  document.getElementById('svc-rec-cost').value = r.cost || '';
+  document.getElementById('svc-rec-note').value = r.note || '';
+  toggleServiceRecurringFields();
+  updateServiceRecurringModeUI();
+  updateServiceRecurringSuggestion();
+  openModal('modal-service-complete');
+}
+function toggleServiceRecurringFields(){
+  document.getElementById('svc-recurring-fields').classList.toggle('off', !document.getElementById('svc-recurring-check').checked);
+}
+function updateServiceRecurringModeUI(){
+  const isMileage = document.getElementById('svc-rec-mode').value === 'mileage';
+  document.getElementById('svc-rec-date-mode').style.display = isMileage ? 'none' : 'block';
+  document.getElementById('svc-rec-date').style.display = isMileage ? 'none' : 'block';
+  document.getElementById('svc-rec-mileage').style.display = isMileage ? 'block' : 'none';
+  updateServiceRecurringSuggestion();
+}
+function confirmCompleteServiceReminder(){
+  const idx = D.serviceReminders.findIndex(r=>r.id===D.serviceCompleteId);
+  if(idx < 0) return;
+  const reminder = D.serviceReminders[idx];
+  const p = serviceProgress(reminder);
+  D.serviceReminders.splice(idx, 1);
+  D.serviceArchive.unshift({...reminder, completedAt:Date.now(), completedStatus:p.left});
+  if(document.getElementById('svc-recurring-check').checked){
+    const mode = document.getElementById('svc-rec-mode').value;
+    const next = {
+      id: Date.now(),
+      title: document.getElementById('svc-rec-title').value.trim() || reminder.title || 'Service reminder',
+      mode,
+      cost: positiveNumber('svc-rec-cost'),
+      note: document.getElementById('svc-rec-note').value.trim(),
+      createdAt: Date.now()
+    };
+    if(mode === 'mileage'){
+      const targetDisplay = parseFloat(document.getElementById('svc-rec-mileage').value);
+      if(isNaN(targetDisplay) || targetDisplay <= 0) return alert('Please enter a target mileage for the next reminder.');
+      next.targetKm = D.distUnit === 'km' ? targetDisplay : targetDisplay/0.621371;
+      next.baseKm = totalTripKm();
+    }else{
+      const date = document.getElementById('svc-rec-date').value;
+      if(!date) return alert('Please choose a date for the next reminder.');
+      next.dateMode = document.getElementById('svc-rec-date-mode').value;
+      next.targetDate = date;
+    }
+    D.serviceReminders.unshift(next);
+  }
+  save('serviceReminders', D.serviceReminders);
+  save('serviceArchive', D.serviceArchive);
+  if(D.serviceEditId===reminder.id) resetServiceForm();
+  D.serviceCompleteId = null;
+  closeModal('modal-service-complete');
+  renderServiceReminders();
+  renderServiceArchive();
+}
 function deleteServiceReminder(id){
   D.serviceReminders = D.serviceReminders.filter(r=>r.id!==id);
+  D.serviceArchive = D.serviceArchive.filter(r=>r.id!==id);
   save('serviceReminders', D.serviceReminders);
+  save('serviceArchive', D.serviceArchive);
   if(D.serviceEditId===id) resetServiceForm();
   renderServiceReminders();
 }
@@ -2671,12 +3078,13 @@ function saveEditTrip(){
   const fuelCost=price>0&&litres>0?parseFloat((price*litres).toFixed(2)):0;
   const fcVal=fuelUseValue(litres,distKm);
   const cpkm=fuelCost>0&&dist>0?parseFloat((fuelCost/dist).toFixed(2)):null;
-  const purposeLbl=D.editPurpose==='work'?('Work – '+(D.editWorkSub||'Others')):personalLabel(D.editPersSub);
-  D.trips[idx]={...t,destination:dest,purpose:D.editPurpose,workSub:D.editWorkSub,persSub:D.editPersSub,purposeLbl,routeStops,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur,odoStart,odoEnd};
+  const p=primaryPurposeFromStops(routeStops,D.editPurpose,D.editWorkSub||D.editPersSub||'Others');
+  D.trips[idx]={...t,destination:dest,purpose:p.purpose,workSub:p.workSub,persSub:p.persSub,purposeLbl:p.purposeLbl,routeStops,distDisplay:dist,distKm,gasPrice:price,gasLitres:litres,fuelCost,fcVal,cpkm,duration:dur,odoStart,odoEnd};
   if(manualEdit && odoEnd!==null){
     D.odoStart=odoEnd;
     save('odoStart',D.odoStart);
-    document.getElementById('odo-start-in').value=D.odoStart.toFixed(1);
+    document.getElementById('odo-start-in').value=Math.round(D.odoStart).toString();
+    renderOdoRoller();
   }
   save('trips',D.trips);
   closeOverlay('ov-edit');
